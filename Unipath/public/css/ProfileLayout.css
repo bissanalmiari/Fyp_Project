@@ -1,0 +1,164 @@
+/* layout.css – Unipath Dashboard */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #F6F4FE;
+  --primary:    #C498F2;
+  --secondary:  #C3BFFA;
+  --highlight:  #CDDBFD;
+  --title:      #7F64CE;
+  --white:      #ffffff;
+  --text:       #3d3456;
+  --text-muted: #9b8fc0;
+  --text-light: #c0b8de;
+  --border:     #e6e0f8;
+  --shadow:     rgba(127, 100, 206, 0.10);
+  --shadow-md:  rgba(127, 100, 206, 0.18);
+  --radius:     14px;
+  --sidebar-w:  238px;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.profile-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ──────────────────────────── */
+.profile-sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--white);
+  border-right: 1.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 32px 0 28px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  flex-shrink: 0;
+  box-shadow: 4px 0 28px var(--shadow);
+}
+
+.sidebar-logo {
+  padding: 0 22px 26px;
+  border-bottom: 1.5px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.sidebar-logo span {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--title);
+}
+
+.sidebar-logo small {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+
+/* Section heading inside sidebar */
+.profile-sidebar  h3 {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  padding: 0 22px 10px;
+}
+
+.profile-sidebar ul {
+  list-style: none;
+  flex: 1;
+  padding: 0 10px;
+}
+
+.profile-sidebar ul li { margin-bottom: 2px; }
+
+.profile-sidebar ul li a {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.16s ease;
+}
+
+.profile-sidebar ul li a svg {
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+}
+
+.profile-sidebar ul li a:hover {
+  background: var(--bg);
+  color: var(--title);
+}
+
+.profile-sidebar ul li a.active {
+  background: linear-gradient(135deg, rgba(196,152,242,0.16) 0%, rgba(195,191,250,0.16) 100%);
+  color: var(--title);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1.5px rgba(127,100,206,0.2);
+}
+
+/* ── Main content ─────────────────────── */
+
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 15px;
+  border-top: 1px solid var(--border);
+}
+
+
+.sidebar-bottom a,
+.sidebar-bottom .logout-link {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 10px;
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+
+.sidebar-bottom svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+}
+
+
+.sidebar-bottom a:hover,
+.sidebar-bottom .logout-link:hover {
+  background: var(--bg);
+  color: var(--title);
+}

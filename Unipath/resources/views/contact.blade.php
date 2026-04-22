@@ -1,0 +1,567 @@
+<x-app-layout>
+    @if(session()->has('success'))
+        <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+            <div class="bg-[#F6F4FE] px-20 py-5 rounded-xl shadow-md text-center border border-[#C3BFFA]">
+                
+                <p class="text-[#4B3F72] mb-4 font-medium">
+                    {{ session('success') }}
+                </p>
+
+                <button type="button"
+                    onclick="this.closest('.fixed').remove()"
+                    class="px-6 py-1.5 bg-[#C498F2] text-white rounded-lg hover:bg-[#7F64CE] transition">
+                    Okay
+                </button>
+
+            </div>
+        </div>
+        @endif
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #F6F4FE;
+            scroll-behavior: smooth;
+        }
+
+        .fade-scroll {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+            will-change: opacity, transform;
+        }
+
+        .fade-scroll.animate-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-scroll[data-direction="left"] {
+            transform: translateX(-35px);
+        }
+
+        .fade-scroll[data-direction="right"] {
+            transform: translateX(35px);
+        }
+
+        .fade-scroll.animate-visible[data-direction="left"],
+        .fade-scroll.animate-visible[data-direction="right"] {
+            transform: translateX(0);
+        }
+    </style>
+
+    <section class="relative overflow-hidden bg-[#F6F4FE]">
+
+        <img src="{{ asset('images/c-shape.png') }}" alt="" class="pointer-events-none absolute -top-20 -left-20 w-[500px] opacity-20 lg:opacity-50"/>
+
+        <img src="{{ asset('images/c-shape.png') }}" class="pointer-events-none absolute bottom-[-80px] right-[-60px] w-[860px] opacity-20 lg:opacity-50 rotate-180"/>
+
+        <img src="{{ asset('images/c-shape.png') }}" class="pointer-events-none absolute bottom-[-20px] right-[-90px] w-[960px] opacity-20 lg:opacity-70 rotate-180"/>
+
+        <img src="{{ asset('images/c-shape.png') }}" class="pointer-events-none absolute bottom-[-40px] left-[-50px] w-[460px] opacity-20 lg:opacity-60 -rotate-180" />
+
+        <div class="mt-20 relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 md:px-8 lg:px-12 lg:py-20">
+            <div class="grid grid-cols-2 items-center gap-6 md:gap-8 lg:gap-10">
+
+                <div class="max-w-xl relative z-10">
+                    <h1 class="mt-4 text-3xl font-bold leading-tight text-[#C498F2] sm:text-4xl md:text-5xl">
+                        We’d love to hear from you
+                    </h1>
+
+                    <p class="mt-4 text-sm leading-7 text-gray-600 sm:mt-5 sm:text-base md:text-lg md:leading-8">
+                        Whether you have a question, need support, or want to share your experience,
+                        our team is here to help. Reach out and we’ll get back to you as soon as possible.
+                    </p>
+
+                    <div class="mt-6 flex flex-wrap gap-3 sm:mt-8 sm:gap-4">
+                        <a href="#send-message"
+                            class="inline-flex items-center justify-center rounded-full bg-[#C498F2] px-4 py-2 text-xs font-semibold text-white shadow-md shadow-purple-200/50 transition duration-300 hover:-translate-y-0.5 hover:bg-[#7F64CE] hover:shadow-lg sm:px-6 sm:py-3 sm:text-sm">
+                            Send a Message
+                        </a>
+
+                        <a href="#faq"
+                            class="inline-flex items-center justify-center rounded-full border border-[#C3BFFA] bg-white px-4 py-2 text-xs font-semibold text-[#7F64CE] shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#C498F2] hover:bg-[#F4EFFF] sm:px-6 sm:py-3 sm:text-sm">
+                            View FAQ
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex justify-end relative z-10">
+                    <img
+                        src="{{ asset('images/contact-pic.png') }}"
+                        alt="Contact Illustration"
+                        class="h-auto w-full max-w-[220px] object-contain sm:max-w-[280px] md:max-w-[360px] lg:max-w-[520px] xl:max-w-[620px]"
+                    >
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="send-message" class="bg-[#F6F4FE] py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                
+                <div class="max-w-xl fade-scroll" data-direction="left" data-delay="0s">
+                    <h2 class="mt-6 text-3xl md:text-4xl font-bold text-[#7F64CE] leading-tight">
+                        Let’s start the conversation
+                    </h2>
+
+                    <p class="mt-5 text-lg leading-8 text-gray-600">
+                        Have a question, need support, or want to get in touch with our team?
+                        Fill out the form and we’ll respond as soon as possible.
+                    </p>
+
+                    <div class="mt-8 space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 h-3 w-3 rounded-full bg-[#C498F2]"></div>
+                            <p class="text-gray-600">Friendly and fast communication</p>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 h-3 w-3 rounded-full bg-[#C3BFFA]"></div>
+                            <p class="text-gray-600">A clean and simple contact process</p>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 h-3 w-3 rounded-full bg-[#CDDBFD]"></div>
+                            <p class="text-gray-600">We usually reply within 24 hours</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex justify-start" style="transform: translateX(-90px)">
+                        <img 
+                            src="{{ asset('images/convo.png') }}" 
+                            alt="Conversation Illustration"
+                            class="w-full max-w-lg lg:max-w-xl object-contain opacity-80 -translate-y-6"
+                        >
+                    </div>
+                </div>
+
+                <div class="fade-scroll mt-6 rounded-3xl border border-[#C3BFFA]/60 bg-white/40 p-8 md:p-10" data-direction="right" data-delay="0.15s">
+                    
+                    @if ($errors->any())
+                        <div class="mb-6 rounded-xl bg-red-100 border border-red-300 px-4 py-3 text-sm text-red-700">
+                            <ul class="list-disc pl-5 space-y-1">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('contact.send') }}" method="POST" class="space-y-6">
+                        @csrf
+
+                        <div>
+                            <label for="full_name" class="block text-sm font-medium text-[#7F64CE] mb-2">
+                                Full Name
+                            </label>
+                            <input
+                                type="text"
+                                id="full_name"
+                                name="full_name"
+                                value="{{ old('full_name') }}"
+                                placeholder="Enter your full name"
+                                class="w-full rounded-xl border border-[#C3BFFA] bg-[#F6F4FE] px-4 py-3 text-gray-700 placeholder-gray-400 outline-none transition focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/20"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-[#7F64CE] mb-2">
+                                Email Address
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value="{{ old('email') }}"
+                                placeholder="Enter your email"
+                                class="w-full rounded-xl border border-[#C3BFFA] bg-[#F6F4FE] px-4 py-3 text-gray-700 placeholder-gray-400 outline-none transition focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/20"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-[#7F64CE] mb-2">
+                                Phone Number
+                            </label>
+                            <input
+                                type="text"
+                                id="phone"
+                                name="phone"
+                                value="{{ old('phone') }}"
+                                placeholder="Enter your phone number"
+                                class="w-full rounded-xl border border-[#C3BFFA] bg-[#F6F4FE] px-4 py-3 text-gray-700 placeholder-gray-400 outline-none transition focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/20"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-[#7F64CE] mb-2">
+                                Message
+                            </label>
+                            <textarea
+                                id="message"
+                                name="message"
+                                rows="5"
+                                placeholder="Write your message here..."
+                                class="w-full rounded-xl border border-[#C3BFFA] bg-[#F6F4FE] px-4 py-3 text-gray-700 placeholder-gray-400 outline-none transition focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/20"
+                            >{{ old('message') }}</textarea>
+                        </div>
+
+                        <div class="pt-4 flex justify-center">
+                            <button
+                                type="submit"
+                                class="inline-flex items-center justify-center rounded-full bg-[#C498F2] px-10 py-3 text-sm font-semibold text-white shadow-md shadow-purple-200/50 transition duration-300 hover:-translate-y-0.5 hover:bg-[#7F64CE] hover:shadow-lg"
+                            >
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="send-message" class="bg-[#F6F4FE] py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+            <div class="max-w-xl fade-scroll" data-delay="0s">
+                <h2 class="mt-6 text-3xl md:text-4xl font-bold text-[#7F64CE] leading-tight">
+                    Share Your Story
+                </h2>
+
+                <p class="mt-5 text-lg leading-8 text-gray-600">
+                    We’d love to hear how our platform, service, or support helped you.
+                    Your story can inspire others and help us continue improving what we offer.
+                </p>
+            </div>
+
+            <div class="fade-scroll mt-10 rounded-[28px] bg-[#F6F4FE] p-6 sm:p-8 md:p-10 border border-[#C3BFFA]/50 shadow-[0_4px_20px_rgba(127,100,206,0.08)]" data-delay="0.15s">
+                <form action="{{ route('success-stories.send') }}" method="POST" class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+                    @csrf
+                    <div class="space-y-6">
+                        <div>
+                            <label for="full_name" class="mb-3 block text-[15px] font-semibold text-[#7F64CE]">
+                                Full Name
+                            </label>
+                            <input
+                                type="text"
+                                id="full_name"
+                                name="full_name"
+                                placeholder="Enter your full name"
+                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-[#7F64CE] placeholder:text-[#8E97AE] outline-none transition duration-300 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="email" class="mb-3 block text-[15px] font-semibold text-[#7F64CE]">
+                                Email Address
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-[#7F64CE] placeholder:text-[#8E97AE] outline-none transition duration-300 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="phone" class="mb-3 block text-[15px] font-semibold text-[#7F64CE]">
+                                Phone Number
+                            </label>
+                            <input
+                                type="text"
+                                id="phone"
+                                name="phone"
+                                placeholder="Enter your phone number"
+                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-[#7F64CE] placeholder:text-[#8E97AE] outline-none transition duration-300 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div>
+                            <label for="story" class="mb-3 block text-[15px] font-semibold text-[#7F64CE]">
+                                Success Story
+                            </label>
+                            <textarea
+                                id="story"
+                                name="story"
+                                rows="8"
+                                placeholder="Write your story here..."
+                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-[#7F64CE] placeholder:text-[#8E97AE] outline-none transition duration-300 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
+                            ></textarea>
+                        </div>
+
+                        <div class="mt-10 flex justify-center">
+                            <button
+                                type="submit"
+                                class="inline-flex items-center justify-center rounded-full bg-[#C498F2] px-10 py-3 text-sm font-semibold text-white shadow-md shadow-purple-200/50 transition duration-300 hover:-translate-y-0.5 hover:bg-[#7F64CE] hover:shadow-lg"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="bg-[#F6F4FE] py-20">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="fade-scroll mb-10" data-delay="0s">
+                <h2 class="text-3xl font-bold tracking-tight text-[#7F64CE] md:text-4xl">
+                    Frequently Asked Questions
+                </h2>
+                <p class="mt-3 max-w-2xl text-base text-gray-600">
+                    Learn more about how Unipath helps students discover the right university path.
+                </p>
+            </div>
+
+            <div x-data="{ active: null }" class="grid grid-cols-1 items-start gap-6 md:grid-cols-2 xl:grid-cols-3">
+
+                <div class="fade-scroll self-start rounded-2xl bg-[#FFFFFF] shadow-sm ring-1 ring-[#C3BFFA]/40 transition duration-300 hover:-translate-y-1 hover:shadow-md" data-delay="0.1s">
+                    <button
+                        type="button"
+                        @click="active = active === 1 ? null : 1"
+                        class="w-full rounded-2xl text-left focus:outline-none"
+                    >
+                        <div class="flex items-center justify-between gap-4 px-6 py-5">
+                            <h3 class="text-lg font-semibold leading-snug text-[#7F64CE]">
+                                How can I get Recommendations?
+                            </h3>
+
+                            <svg
+                                class="h-5 w-5 shrink-0 text-[#7F64CE] transition-transform duration-500 ease-in-out"
+                                :class="{ 'rotate-90': active === 1 }"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+
+                        <div
+                            x-ref="container1"
+                            x-bind:style="active === 1 ? 'max-height:' + $refs.container1.scrollHeight + 'px' : 'max-height: 0px'"
+                            class="overflow-hidden transition-all duration-700 ease-in-out"
+                        >
+                            <div class="px-6 pb-6 text-sm leading-7 text-[#7F64CE]/80">
+                               Create an account, fill out your profile, and our system will generate personalized recommendations for you.
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="fade-scroll self-start rounded-2xl bg-[#FFFFFF] shadow-sm ring-1 ring-[#C3BFFA]/40 transition duration-300 hover:-translate-y-1 hover:shadow-md" data-delay="0.2s">
+                    <button
+                        type="button"
+                        @click="active = active === 2 ? null : 2"
+                        class="w-full rounded-2xl text-left focus:outline-none"
+                    >
+                        <div class="flex items-center justify-between gap-4 px-6 py-5">
+                            <h3 class="text-lg font-semibold leading-snug text-[#7F64CE]">
+                                How does Unipath recommend programs?
+                            </h3>
+
+                            <svg
+                                class="h-5 w-5 shrink-0 text-[#7F64CE] transition-transform duration-500 ease-in-out"
+                                :class="{ 'rotate-90': active === 2 }"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+
+                        <div
+                            x-ref="container2"
+                            x-bind:style="active === 2 ? 'max-height:' + $refs.container2.scrollHeight + 'px' : 'max-height: 0px'"
+                            class="overflow-hidden transition-all duration-700 ease-in-out"
+                        >
+                            <div class="px-6 pb-6 text-sm leading-7 text-[#7F64CE]/80">
+                                Unipath uses AI to recommend programs based on a student’s profile like as GPA, interests, skills, budget, and location.
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="fade-scroll self-start rounded-2xl bg-[#FFFFFF] shadow-sm ring-1 ring-[#C3BFFA]/40 transition duration-300 hover:-translate-y-1 hover:shadow-md" data-delay="0.3s">
+                    <button
+                        type="button"
+                        @click="active = active === 3 ? null : 3"
+                        class="w-full rounded-2xl text-left focus:outline-none"
+                    >
+                        <div class="flex items-center justify-between gap-4 px-6 py-5">
+                            <h3 class="text-lg font-semibold leading-snug text-[#7F64CE]">
+                                Can I save programs to review later?
+                            </h3>
+
+                            <svg
+                                class="h-5 w-5 shrink-0 text-[#7F64CE] transition-transform duration-500 ease-in-out"
+                                :class="{ 'rotate-90': active === 3 }"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+
+                        <div
+                            x-ref="container3"
+                            x-bind:style="active === 3 ? 'max-height:' + $refs.container3.scrollHeight + 'px' : 'max-height: 0px'"
+                            class="overflow-hidden transition-all duration-700 ease-in-out"
+                        >
+                            <div class="px-6 pb-6 text-sm leading-7 text-[#7F64CE]/80">
+                                Yes. Unipath allows you to save programs you are interested in so you can revisit and compare them later more easily.
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="fade-scroll self-start rounded-2xl bg-[#FFFFFF] shadow-sm ring-1 ring-[#C3BFFA]/40 transition duration-300 hover:-translate-y-1 hover:shadow-md" data-delay="0.4s">
+                    <button
+                        type="button"
+                        @click="active = active === 4 ? null : 4"
+                        class="w-full rounded-2xl text-left focus:outline-none"
+                    >
+                        <div class="flex items-center justify-between gap-4 px-6 py-5">
+                            <h3 class="text-lg font-semibold leading-snug text-[#7F64CE]">
+                               How does the Unipath quiz process work?
+                            </h3>
+
+                            <svg
+                                class="h-5 w-5 shrink-0 text-[#7F64CE] transition-transform duration-500 ease-in-out"
+                                :class="{ 'rotate-90': active === 4 }"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+
+                        <div
+                            x-ref="container4"
+                            x-bind:style="active === 4 ? 'max-height:' + $refs.container4.scrollHeight + 'px' : 'max-height: 0px'"
+                            class="overflow-hidden transition-all duration-700 ease-in-out"
+                        >
+                            <div class="px-6 pb-6 text-sm leading-7 text-[#7F64CE]/80">
+                                Our quiz asks questions about your interests, skills, and goals. 
+                                Based on your answers, it suggests the most fitting major for you!
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="fade-scroll self-start rounded-2xl bg-[#FFFFFF] shadow-sm ring-1 ring-[#C3BFFA]/40 transition duration-300 hover:-translate-y-1 hover:shadow-md" data-delay="0.5s">
+                    <button
+                        type="button"
+                        @click="active = active === 5 ? null : 5"
+                        class="w-full rounded-2xl text-left focus:outline-none"
+                    >
+                        <div class="flex items-center justify-between gap-4 px-6 py-5">
+                            <h3 class="text-lg font-semibold leading-snug text-[#7F64CE]">
+                                Can I compare different programs on Unipath?
+                            </h3>
+
+                            <svg
+                                class="h-5 w-5 shrink-0 text-[#7F64CE] transition-transform duration-500 ease-in-out"
+                                :class="{ 'rotate-90': active === 5 }"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+
+                        <div
+                            x-ref="container5"
+                            x-bind:style="active === 5 ? 'max-height:' + $refs.container5.scrollHeight + 'px' : 'max-height: 0px'"
+                            class="overflow-hidden transition-all duration-700 ease-in-out"
+                        >
+                            <div class="px-6 pb-6 text-sm leading-7 text-[#7F64CE]/80">
+                                Yes. You can compare programs side by side to see key details like tuition, location, and requirements,
+                                helping you choose the best option for you.
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="fade-scroll self-start rounded-2xl bg-[#FFFFFF] shadow-sm ring-1 ring-[#C3BFFA]/40 transition duration-300 hover:-translate-y-1 hover:shadow-md" data-delay="0.6s">
+                    <button
+                        type="button"
+                        @click="active = active === 6 ? null : 6"
+                        class="w-full rounded-2xl text-left focus:outline-none"
+                    >
+                        <div class="flex items-center justify-between gap-4 px-6 py-5">
+                            <h3 class="text-lg font-semibold leading-snug text-[#7F64CE]">
+                                Will Unipath help me understand future career opportunities?
+                            </h3>
+
+                            <svg
+                                class="h-5 w-5 shrink-0 text-[#7F64CE] transition-transform duration-500 ease-in-out"
+                                :class="{ 'rotate-90': active === 6 }"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+
+                        <div
+                            x-ref="container6"
+                            x-bind:style="active === 6 ? 'max-height:' + $refs.container6.scrollHeight + 'px' : 'max-height: 0px'"
+                            class="overflow-hidden transition-all duration-700 ease-in-out"
+                        >
+                            <div class="px-6 pb-6 text-sm leading-7 text-[#7F64CE]/80">
+                                Yes. Unipath provides insights into job demand, salaries, and trending fields so you can choose a path that matches both your interests and future opportunities.
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const animatedElements = document.querySelectorAll('.fade-scroll');
+
+            animatedElements.forEach((element) => {
+                const delay = element.dataset.delay || '0s';
+                element.style.transitionDelay = delay;
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-visible');
+                    } else {
+                        entry.target.classList.remove('animate-visible');
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+
+            animatedElements.forEach((element) => observer.observe(element));
+        });
+    </script>
+</x-app-layout>
