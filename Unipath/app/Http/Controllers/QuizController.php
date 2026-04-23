@@ -452,24 +452,38 @@ class QuizController extends Controller
         QuizAttemptResults::where('quiz_attempt_id', $attempt->id)->delete();
 
         $topThree = array_slice($majorTotals, 0, 3, true);
-        $highestScore = max($majorTotals);
+        $scores = array_values($majorTotals);
+
+        $highestScore = $scores[0] ?? 0;
+        $secondScore = $scores[1] ?? 0;
+
+        $dominanceRatio = $highestScore > 0
+            ? ($highestScore - $secondScore) / $highestScore
+            : 0;
+
+        $topCompatibility = round(85 + ($dominanceRatio * 12));
+        $topCompatibility = min(97, max(85, $topCompatibility));
 
         $rank = 1;
         $previousScore = null;
         $previousCompatibility = null;
 
         foreach ($topThree as $majorId => $score) {
-            $baseCompatibility = $highestScore > 0
-                ? round(35 + (($score / $highestScore) * 60))
-                : 35;
-
-            if ($previousScore !== null && $score === $previousScore) {
-                $compatibility = max(50, $previousCompatibility - 2);
+            if ($rank === 1) {
+                $compatibility = $topCompatibility;
             } else {
-                $compatibility = $baseCompatibility;
-            }
+                $baseCompatibility = $highestScore > 0
+                    ? round(35 + (($score / $highestScore) * 60))
+                    : 35;
 
-            $compatibility = min(95, max(35, $compatibility));
+                if ($previousScore !== null && $score === $previousScore) {
+                    $compatibility = max(50, $previousCompatibility - 2);
+                } else {
+                    $compatibility = $baseCompatibility;
+                }
+
+                $compatibility = min(95, max(35, $compatibility));
+            }
 
             QuizAttemptResults::create([
                 'quiz_attempt_id' => $attempt->id,
