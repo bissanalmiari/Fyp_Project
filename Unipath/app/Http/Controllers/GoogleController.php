@@ -37,18 +37,18 @@ class GoogleController extends Controller
                 'email' => $googleUser->getEmail(),
                 'password' => bcrypt(Str::random(24)),
             ]);
-
-            Student::firstOrCreate(
-                ['user_id' => $user->id],
-                [
-                    'name' => $user->name,
-                    'email' => $user->email,
-                ]
-            );
         }
+
+        Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
 
         Auth::login($user);
 
-        return redirect()->intended('/dashboard');
+        return redirect()->route('student.academic');
     }
 }
