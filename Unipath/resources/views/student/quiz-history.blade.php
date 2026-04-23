@@ -78,27 +78,42 @@
         <div class="result-grid">
 
           @foreach($topResults as $key => $result)
-          <div class="result-card rank-{{ $key + 1 }}">
-            <span class="result-rank">#{{ $key + 1 }}</span>
+            @php
+                $percent = (float) $result->compatibility_percent;
 
+                if ($percent >= 80) {
+                    $compatibilityLabel = 'Excellent Match';
+                } elseif ($percent >= 50) {
+                    $compatibilityLabel = 'Good Match';
+                } elseif ($percent > 0) {
+                    $compatibilityLabel = 'Possible Match';
+                } else {
+                    $compatibilityLabel = 'Related Option';
+                }
+            @endphp
 
-            <p class="result-major">
-              {{ $result->major->name }}
-            </p>
+            <div class="result-card rank-{{ $key + 1 }}">
+                <span class="result-rank">#{{ $key + 1 }}</span>
 
-            <div class="compatibility-bar-wrap">
-              <div class="compatibility-bar"
-                   style="width:{{ $result->compatibility_percent }}%">
-              </div>
+                <p class="result-major">
+                  {{ $result->major->name }}
+                </p>
+
+                <div class="compatibility-bar-wrap">
+                  <div class="compatibility-bar"
+                      style="width:{{ $result->compatibility_percent }}%">
+                  </div>
+                </div>
+
+                <p class="compatibility-pct">
+                  {{ $compatibilityLabel }}
+                </p>
+
+                <p class="compatibility-label">
+                  {{ number_format($percent, 0) }}% compatibility
+                </p>
             </div>
-
-            <p class="compatibility-pct">
-              {{ $result->compatibility_percent }}%
-            </p>
-
-            <p class="compatibility-label">Compatibility</p>
-          </div>
-          @endforeach
+            @endforeach
 
         </div>
       </div>

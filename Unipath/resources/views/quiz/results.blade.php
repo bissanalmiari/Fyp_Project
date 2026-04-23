@@ -42,9 +42,14 @@
             'Mathematics' => 'A strong match for analytical thinking, patterns, and problem-solving.',
 
             'Computer Science' => 'A strong fit for logical thinking, problem-solving, and programming.',
+            'Software Engineering' => 'A strong fit for designing, building, and maintaining software systems.',
             'Computer Engineering' => 'A strong fit for systems, hardware, and practical technology.',
             'Data Science' => 'A strong fit for working with data, patterns, and intelligent systems.',
             'Cybersecurity' => 'A strong fit for protecting systems, networks, and digital security.',
+
+            'Mechanical Engineering' => 'A strong fit for machines, mechanics, and how physical systems work.',
+            'Electrical Engineering' => 'A strong fit for circuits, power systems, and electrical technologies.',
+            'Industrial Engineering' => 'A strong fit for optimizing systems, improving efficiency, and solving real-world engineering problems.',
 
             'Graphic Design' => 'A strong fit for creativity, visual communication, and design thinking.',
             'Architecture' => 'A strong fit for creative planning, spatial design, and structured thinking.',
@@ -245,7 +250,7 @@
                         </p>
 
                         <div class="mt-6">
-                            <a href="{{ route('profile.edit') }}"
+                            <a href="{{ route('student.quiz-history') }}"
                                class="inline-flex w-full rounded-full bg-[#7F64CE] px-6 py-3 text-center text-sm font-semibold text-white shadow-md transition duration-300 hover:-translate-y-0.5 hover:bg-[#6F55C7] sm:w-auto">
                                 View Profile
                             </a>

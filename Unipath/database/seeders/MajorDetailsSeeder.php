@@ -137,6 +137,38 @@ class MajorDetailsSeeder extends Seeder
                 'what_you_study' => 'Students often study digital design, animation, video editing, interactive media, user experience, and creative software tools.',
                 'career_paths' => 'This major can lead to careers in multimedia production, motion graphics, digital content creation, UX-related design, and creative media.',
             ],
+
+            'Software Engineering' => [
+                'slug' => 'software-engineering',
+                'details_image' => 'software2.png',
+                'short_description' => 'Software Engineering focuses on designing, building, testing, and maintaining software systems.',
+                'what_you_study' => 'Students often study software design, programming, databases, testing, system analysis, and software development methodologies.',
+                'career_paths' => 'This major can lead to careers in software development, backend development, mobile apps, quality assurance, and software architecture.',
+            ],
+
+            'Mechanical Engineering' => [
+                'slug' => 'mechanical-engineering',
+                'details_image' => 'mechanical2.png',
+                'short_description' => 'Mechanical Engineering focuses on machines, motion, mechanics, and how physical systems work.',
+                'what_you_study' => 'Students often study mechanics, thermodynamics, machine design, materials, manufacturing, and engineering analysis.',
+                'career_paths' => 'This major can lead to careers in machine design, manufacturing, maintenance, automotive systems, and industrial engineering roles.',
+            ],
+
+            'Electrical Engineering' => [
+                'slug' => 'electrical-engineering',
+                'details_image' => 'Electrical2.png',
+                'short_description' => 'Electrical Engineering focuses on circuits, power systems, electronics, and electrical technologies.',
+                'what_you_study' => 'Students often study circuit analysis, electronics, power systems, control systems, signals, and electrical design.',
+                'career_paths' => 'This major can lead to careers in power systems, electronics, control engineering, telecommunications, and electrical design roles.',
+            ],
+
+            'Industrial Engineering' => [
+                'slug' => 'industrial-engineering',
+                'details_image' => 'Industrial2.png',
+                'short_description' => 'Industrial Engineering focuses on optimizing systems, processes, and efficiency in real-world operations.',
+                'what_you_study' => 'Students often study operations research, systems optimization, production systems, statistics, and process improvement.',
+                'career_paths' => 'This major can lead to careers in operations management, logistics, supply chain, process engineering, and system optimization roles.',
+            ],
         ];
 
         foreach ($majorDetails as $majorName => $details) {

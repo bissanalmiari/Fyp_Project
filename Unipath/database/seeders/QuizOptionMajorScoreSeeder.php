@@ -17,17 +17,25 @@ class QuizOptionMajorScoreSeeder extends Seeder
 
         $majors = Major::whereIn('name', [
             'Computer Science',
-            'Computer Engineering',
             'Data Science',
             'Cybersecurity',
+            'Software Engineering',
+
+            'Computer Engineering',
+            'Mechanical Engineering',
+            'Electrical Engineering',
+            'Industrial Engineering',
+
             'Business Administration',
             'Marketing',
             'Finance',
             'Economics',
+
             'Nursing',
             'Psychology',
             'Education',
             'Biology',
+
             'Graphic Design',
             'Mathematics',
             'Architecture',
@@ -70,23 +78,20 @@ class QuizOptionMajorScoreSeeder extends Seeder
             }
         };
 
-        
-
-        
         $assignScores('tech', 1, 1, [
             'Computer Science' => 3,
             'Data Science' => 1,
         ]);
         $assignScores('tech', 1, 2, [
             'Cybersecurity' => 3,
-            'Computer Engineering' => 1,
+            'Software Engineering' => 1,
         ]);
         $assignScores('tech', 1, 3, [
             'Data Science' => 3,
             'Computer Science' => 1,
         ]);
         $assignScores('tech', 1, 4, [
-            'Computer Engineering' => 3,
+            'Software Engineering' => 3,
         ]);
 
         $assignScores('tech', 2, 1, [
@@ -95,14 +100,14 @@ class QuizOptionMajorScoreSeeder extends Seeder
         ]);
         $assignScores('tech', 2, 2, [
             'Cybersecurity' => 3,
-            'Computer Engineering' => 1,
+            'Software Engineering' => 1,
         ]);
         $assignScores('tech', 2, 3, [
             'Data Science' => 3,
             'Computer Science' => 1,
         ]);
         $assignScores('tech', 2, 4, [
-            'Computer Engineering' => 3,
+            'Software Engineering' => 3,
         ]);
 
         $assignScores('tech', 3, 1, [
@@ -110,14 +115,14 @@ class QuizOptionMajorScoreSeeder extends Seeder
         ]);
         $assignScores('tech', 3, 2, [
             'Cybersecurity' => 3,
-            'Computer Engineering' => 1,
+            'Software Engineering' => 1,
         ]);
         $assignScores('tech', 3, 3, [
             'Data Science' => 3,
             'Computer Science' => 1,
         ]);
         $assignScores('tech', 3, 4, [
-            'Computer Engineering' => 3,
+            'Software Engineering' => 3,
         ]);
 
         $assignScores('tech', 4, 1, [
@@ -132,7 +137,7 @@ class QuizOptionMajorScoreSeeder extends Seeder
             'Computer Science' => 1,
         ]);
         $assignScores('tech', 4, 4, [
-            'Computer Engineering' => 3,
+            'Software Engineering' => 3,
         ]);
 
         $assignScores('tech', 5, 1, [
@@ -146,7 +151,7 @@ class QuizOptionMajorScoreSeeder extends Seeder
             'Mathematics' => 1,
         ]);
         $assignScores('tech', 5, 4, [
-            'Computer Engineering' => 3,
+            'Software Engineering' => 3,
         ]);
 
         $assignScores('tech', 6, 1, [
@@ -159,10 +164,90 @@ class QuizOptionMajorScoreSeeder extends Seeder
             'Data Science' => 3,
         ]);
         $assignScores('tech', 6, 4, [
-            'Computer Engineering' => 3,
+            'Software Engineering' => 3,
         ]);
 
-        
+        $assignScores('engineering', 1, 1, [
+            'Computer Engineering' => 3,
+            'Electrical Engineering' => 1,
+        ]);
+        $assignScores('engineering', 1, 2, [
+            'Mechanical Engineering' => 3,
+            'Industrial Engineering' => 1,
+        ]);
+        $assignScores('engineering', 1, 3, [
+            'Electrical Engineering' => 3,
+            'Computer Engineering' => 1,
+        ]);
+        $assignScores('engineering', 1, 4, [
+            'Industrial Engineering' => 3,
+            'Mechanical Engineering' => 1,
+        ]);
+
+        $assignScores('engineering', 2, 1, [
+            'Computer Engineering' => 3,
+        ]);
+        $assignScores('engineering', 2, 2, [
+            'Mechanical Engineering' => 3,
+        ]);
+        $assignScores('engineering', 2, 3, [
+            'Electrical Engineering' => 3,
+        ]);
+        $assignScores('engineering', 2, 4, [
+            'Industrial Engineering' => 3,
+        ]);
+
+        $assignScores('engineering', 3, 1, [
+            'Computer Engineering' => 3,
+        ]);
+        $assignScores('engineering', 3, 2, [
+            'Mechanical Engineering' => 3,
+        ]);
+        $assignScores('engineering', 3, 3, [
+            'Electrical Engineering' => 3,
+        ]);
+        $assignScores('engineering', 3, 4, [
+            'Industrial Engineering' => 3,
+        ]);
+
+        $assignScores('engineering', 4, 1, [
+            'Computer Engineering' => 3,
+        ]);
+        $assignScores('engineering', 4, 2, [
+            'Mechanical Engineering' => 3,
+        ]);
+        $assignScores('engineering', 4, 3, [
+            'Electrical Engineering' => 3,
+        ]);
+        $assignScores('engineering', 4, 4, [
+            'Industrial Engineering' => 3,
+        ]);
+
+        $assignScores('engineering', 5, 1, [
+            'Computer Engineering' => 3,
+        ]);
+        $assignScores('engineering', 5, 2, [
+            'Mechanical Engineering' => 3,
+        ]);
+        $assignScores('engineering', 5, 3, [
+            'Electrical Engineering' => 3,
+        ]);
+        $assignScores('engineering', 5, 4, [
+            'Industrial Engineering' => 3,
+        ]);
+
+        $assignScores('engineering', 6, 1, [
+            'Computer Engineering' => 3,
+        ]);
+        $assignScores('engineering', 6, 2, [
+            'Mechanical Engineering' => 3,
+        ]);
+        $assignScores('engineering', 6, 3, [
+            'Electrical Engineering' => 3,
+        ]);
+        $assignScores('engineering', 6, 4, [
+            'Industrial Engineering' => 3,
+        ]);
 
         
         $assignScores('business', 1, 1, [

@@ -29,6 +29,11 @@ class QuizMajorImageSeeder extends Seeder
         'Mathematics' => 'maths.png',
         'Architecture' => 'architecture.png',
         'Multimedia Design' => 'multimedia-design.png',
+
+        'Software Engineering' => 'software.png',
+        'Mechanical Engineering' => 'mechanical.png',
+        'Electrical Engineering' => 'electrical.png',
+        'Industrial Engineering' => 'industrial.png',
     ];
 
         foreach ($images as $majorName => $imageFile) {
