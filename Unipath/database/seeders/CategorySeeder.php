@@ -27,7 +27,8 @@ class CategorySeeder extends Seeder
             'Hospitality & Tourism', 
             'Sports & Events', 
             'Transport, Aviation & Maritime', 
-            'Interdisciplinary & Emerging Fields' 
+            'Interdisciplinary & Emerging Fields',
+            'Psychology & Behavioral Sciences' 
         ];
 
         foreach ($categories as $category) {
