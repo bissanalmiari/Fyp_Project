@@ -111,16 +111,18 @@
 
                         $percent = (float) $result->compatibility_percent;
 
-                        if ($percent >= 80) {
+                        if ($percent >= 85) {
                             $compatibilityLabel = 'Excellent Match';
-                        } elseif ($percent >= 50) {
-                            $compatibilityLabel = 'Good Match';
-                        } elseif ($percent > 0) {
-                            $compatibilityLabel = 'Possible Match';
+                        } elseif ($percent >= 70) {
+                            $compatibilityLabel = 'Strong Match';
+                        } elseif ($percent >= 55) {
+                            $compatibilityLabel = 'Moderate Match';
+                        } elseif ($percent >= 35) {
+                            $compatibilityLabel = 'Potential Match';
                         } else {
-                            $compatibilityLabel = 'Related Option';
+                            $compatibilityLabel = 'Alternative Match';
                         }
-                    @endphp
+                @endphp
 
                     <div class="
                         result-card

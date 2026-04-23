@@ -460,14 +460,16 @@ class QuizController extends Controller
 
         foreach ($topThree as $majorId => $score) {
             $baseCompatibility = $highestScore > 0
-                ? round(($score / $highestScore) * 95)
-                : 0;
+                ? round(35 + (($score / $highestScore) * 60))
+                : 35;
 
             if ($previousScore !== null && $score === $previousScore) {
-                $compatibility = max(50, $previousCompatibility - 4);
+                $compatibility = max(50, $previousCompatibility - 2);
             } else {
                 $compatibility = $baseCompatibility;
             }
+
+            $compatibility = min(95, max(35, $compatibility));
 
             QuizAttemptResults::create([
                 'quiz_attempt_id' => $attempt->id,
