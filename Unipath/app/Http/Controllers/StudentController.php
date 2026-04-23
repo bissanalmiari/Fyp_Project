@@ -29,63 +29,82 @@ class StudentController extends Controller
         return view('student.personal', compact('student', 'user', 'languages'));
     }
     
-       
 
   
-public function personalstore(Request $request)
-{
-    // Get the authenticated student
-    $student = Student::where('user_id', Auth::id())->firstOrFail();
+    public function personalstore(Request $request)
+    {
+        // Get the authenticated student
+        $user = Auth::user();
 
-    // Validate the fields
-    $request->validate([
-        'dob' => 'nullable|date',
-        'nationality' => 'nullable|string|max:100',
-        'country' => 'nullable|string|max:100',
-        'city' => 'nullable|string|max:100',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
-        'languages' => 'nullable|array',
-    ]);
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
 
-    // Update student profile
-    $student->dob = $request->dob;
-    $student->nationality = $request->nationality;
-    $student->country = $request->country;
-    $student->city = $request->city;
+        // Validate the fields
+        $request->validate([
+            'dob' => 'nullable|date',
+            'nationality' => 'nullable|string|max:100',
+            'country' => 'nullable|string|max:100',
+            'city' => 'nullable|string|max:100',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+            'languages' => 'nullable|array',
+        ]);
 
-    // Handle profile image safely
-    if ($request->hasFile('image') && $request->file('image')->isValid()) {
-        // Delete old image if exists
-        if ($student->image) {
-            Storage::disk('public')->delete($student->image);
+        // Update student profile
+        $student->dob = $request->dob;
+        $student->nationality = $request->nationality;
+        $student->country = $request->country;
+        $student->city = $request->city;
+
+        // Handle profile image safely
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            // Delete old image if exists
+            if ($student->image) {
+                Storage::disk('public')->delete($student->image);
+            }
+
+            // Store new image
+            $path = $request->file('image')->store('students', 'public');
+            $student->image = $path;
         }
 
-        // Store new image
-        $path = $request->file('image')->store('students', 'public');
-        $student->image = $path;
+            $student->languages()->sync($request->input('languages', []));
+        $student->save();
+
+        return redirect()->back()->with('success', 'Personal information updated successfully.');
     }
-
-         $student->languages()->sync($request->input('languages', []));
-    $student->save();
-
-    
-   
-
-
-    return redirect()->back()->with('success', 'Personal information updated successfully.');
-}
 
     // Show academic info form
     public function academic()
     {
-        $student = Student::where('user_id', Auth::id())->firstOrFail();
+        $user = Auth::user();
+
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
         return view('student.academic', compact('student'));
     }
 
     // Save academic info
     public function academicStore(Request $request)
     {
-        $student = Student::where('user_id', Auth::id())->firstOrFail();
+        $user = Auth::user();
+
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
 
         $request->validate([
             'academic_level' => 'required|string',
@@ -123,14 +142,30 @@ public function personalstore(Request $request)
     // Show preferences form
     public function preferences()
     {
-        $student = Student::where('user_id', Auth::id())->firstOrFail();
+        $user = Auth::user();
+
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
         return view('student.preferences', compact('student'));
     }
 
     // Save preferences
     public function preferencesStore(Request $request)
     {
-        $student = Student::where('user_id', Auth::id())->firstOrFail();
+        $user = Auth::user();
+
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
 
         $request->validate([
             'preferred_location' => 'nullable|string|max:255',
@@ -145,16 +180,16 @@ public function personalstore(Request $request)
         $student->preferred_course_intensity = $request->preferred_course_intensity;
         $student->budget = $request->budget;
 
-if ($request->hasFile('image') && $request->file('image')->isValid()) {
-        // Delete old image if exists
-        if ($student->image) {
-            Storage::disk('public')->delete($student->image);
-        }
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            // Delete old image if exists
+            if ($student->image) {
+                Storage::disk('public')->delete($student->image);
+            }
 
-        // Store new image
-        $path = $request->file('image')->store('students', 'public');
-        $student->image = $path;
-    }
+            // Store new image
+            $path = $request->file('image')->store('students', 'public');
+            $student->image = $path;
+        }
 
         $student->save();
 
@@ -163,7 +198,15 @@ if ($request->hasFile('image') && $request->file('image')->isValid()) {
 
     public function professional()
     {
-        $student = Student::where('user_id', Auth::id())->firstOrFail();
+        $user = Auth::user();
+
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
         $categories = Category::all();
         $subcategories = SubCategory::all();
         
@@ -172,44 +215,59 @@ if ($request->hasFile('image') && $request->file('image')->isValid()) {
     }
 
     public function professionalstore(Request $request)
-{
-    // Get the authenticated student
-    $student = Student::where('user_id', Auth::id())->firstOrFail();
+    {
+        // Get the authenticated student
+        $user = Auth::user();
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
 
-    // Validate the fields
-    $request->validate([
-        'subcategories' => 'nullable|array',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
-        'interests' => 'nullable|array',
-        
-    ]);
+        // Validate the fields
+        $request->validate([
+            'subcategories' => 'nullable|array',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+            'interests' => 'nullable|array',
+            
+        ]);
 
 
-    // Handle profile image safely
-    if ($request->hasFile('image') && $request->file('image')->isValid()) {
-        // Delete old image if exists
-        if ($student->image) {
-            Storage::disk('public')->delete($student->image);
+        // Handle profile image safely
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            // Delete old image if exists
+            if ($student->image) {
+                Storage::disk('public')->delete($student->image);
+            }
+
+            // Store new image
+            $path = $request->file('image')->store('students', 'public');
+            $student->image = $path;
         }
+        
+        $student->save();
 
-        // Store new image
-        $path = $request->file('image')->store('students', 'public');
-        $student->image = $path;
+    
+        $student->categories()->sync($request->input('interests', []));
+        $student->subcategories()->sync($request->input('subcategories', []));
+
+        return redirect()->back()->with('success', 'Personal information updated successfully.');
     }
-      
-    $student->save();
-
-   
-    $student->categories()->sync($request->input('interests', []));
-$student->subcategories()->sync($request->input('subcategories', []));
-
-    return redirect()->back()->with('success', 'Personal information updated successfully.');
-}
 
     // Show favorite items
     public function favorite()
     {
-        $student = Student::where('user_id', Auth::id())->firstOrFail();
+        $user = Auth::user();
+
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
         $favorites = $student->favorites()->with(['programs'])->get();
          
         return view('student.favorite', compact('student', 'favorites'));
@@ -217,20 +275,28 @@ $student->subcategories()->sync($request->input('subcategories', []));
 
     // Show quiz history
     public function quizHistory()
-{
-    $student = Student::where('user_id', Auth::id())->first();
+    {
+        $user = Auth::user();
 
-    $attempts = QuizAttempt::with([
-            'quiz',
-            'answers.quizOption',
-            'answers.quizQuestion',
-            'quizAttemptResults.major'
-        ])
-        ->where('student_id', $student->id)
-        ->orderBy('created_at', 'desc')
-        ->get();
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
 
-    return view('student.quiz-history', compact('attempts'));
-}
+        $attempts = QuizAttempt::with([
+                'quiz',
+                'answers.quizOption',
+                'answers.quizQuestion',
+                'quizAttemptResults.major'
+            ])
+            ->where('student_id', $student->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('student.quiz-history', compact('attempts'));
+    }
     
 }

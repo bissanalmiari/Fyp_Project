@@ -11,17 +11,25 @@ class QuizMajorSeeder extends Seeder
     {
         $majors = [
         'Computer Science',
-        'Computer Engineering',
         'Data Science',
         'Cybersecurity',
+        'Software Engineering',
+
+        'Computer Engineering',
+        'Mechanical Engineering',
+        'Electrical Engineering',
+        'Industrial Engineering',
+
         'Business Administration',
         'Marketing',
         'Finance',
         'Economics',
+
         'Nursing',
         'Psychology',
         'Education',
         'Biology',
+
         'Graphic Design',
         'Mathematics',
         'Architecture',

@@ -20,9 +20,15 @@ class QuizController extends Controller
     private const TRACK_MAJOR_NAMES = [
         'tech' => [
             'Computer Science',
-            'Computer Engineering',
             'Data Science',
             'Cybersecurity',
+            'Software Engineering',
+        ],
+        'engineering' => [
+            'Computer Engineering',
+            'Mechanical Engineering',
+            'Electrical Engineering',
+            'Industrial Engineering',
         ],
         'business' => [
             'Business Administration',
@@ -249,6 +255,23 @@ class QuizController extends Controller
                 'suggests' => 'This suggests you may enjoy a creative path focused on digital design, motion, and multimedia experiences.',
                 'next' => 'Explore courses like animation, digital media, interactive design, and multimedia production before choosing.',
             ],
+            'Mechanical Engineering' => [
+                'why' => 'Your answers showed interest in machines, systems, and how things work physically.',
+                'suggests' => 'This suggests you may enjoy a path focused on mechanics, design, and engineering systems.',
+                'next' => 'Explore courses like thermodynamics, mechanics, and machine design before deciding.',
+            ],
+
+            'Electrical Engineering' => [
+                'why' => 'Your answers showed interest in electricity, circuits, and technical systems.',
+                'suggests' => 'This suggests you may fit a path focused on electrical systems, power, and electronics.',
+                'next' => 'Explore courses like circuit analysis, power systems, and electronics before choosing.',
+            ],
+
+            'Industrial Engineering' => [
+                'why' => 'Your answers showed balanced interest across multiple technical and engineering areas.',
+                'suggests' => 'This suggests you may prefer a flexible engineering path with broad applications.',
+                'next' => 'Explore industrial engineering programs focusing on systems optimization, operations, and decision-making before deciding.',
+            ],
         ];
 
         $dynamicInsights = $insightMap[$topMajorName] ?? [
@@ -310,6 +333,7 @@ class QuizController extends Controller
     {
         $trackScores = [
             'tech' => 0,
+            'engineering' => 0,
             'business' => 0,
             'health_social' => 0,
             'creative_analytical' => 0,
@@ -329,6 +353,7 @@ class QuizController extends Controller
             if ($questionOrder === 1) {
                 if ($optionOrder === 1) {
                     $trackScores['tech'] += 2;
+                    $trackScores['engineering'] += 2;
                     $trackScores['creative_analytical'] += 2;
                 } elseif ($optionOrder === 2) {
                     $trackScores['business'] += 3;
@@ -342,6 +367,7 @@ class QuizController extends Controller
             if ($questionOrder === 2) {
                 if ($optionOrder === 1) {
                     $trackScores['creative_analytical'] += 3;
+                    $trackScores['engineering'] += 2;
                     $trackScores['tech'] += 1;
                 } elseif ($optionOrder === 2) {
                     $trackScores['tech'] += 3;
@@ -354,7 +380,8 @@ class QuizController extends Controller
 
             if ($questionOrder === 3) {
                 if ($optionOrder === 1) {
-                    $trackScores['tech'] += 3;
+                    $trackScores['tech'] += 2;
+                    $trackScores['engineering'] += 2;
                 } elseif ($optionOrder === 2) {
                     $trackScores['business'] += 3;
                 } elseif ($optionOrder === 3) {
@@ -366,7 +393,8 @@ class QuizController extends Controller
 
             if ($questionOrder === 4) {
                 if ($optionOrder === 1) {
-                    $trackScores['tech'] += 3;
+                    $trackScores['tech'] += 2;
+                    $trackScores['engineering'] += 2;
                 } elseif ($optionOrder === 2) {
                     $trackScores['business'] += 3;
                 } elseif ($optionOrder === 3) {
@@ -376,9 +404,7 @@ class QuizController extends Controller
                 }
             }
         }
-
         arsort($trackScores);
-
         return array_key_first($trackScores);
     }
 
@@ -426,21 +452,37 @@ class QuizController extends Controller
         QuizAttemptResults::where('quiz_attempt_id', $attempt->id)->delete();
 
         $topThree = array_slice($majorTotals, 0, 3, true);
-        $highestScore = max($majorTotals);
+        $scores = array_values($majorTotals);
+
+        $highestScore = $scores[0] ?? 0;
+        $secondScore = $scores[1] ?? 0;
+
+        $dominanceRatio = $highestScore > 0
+            ? ($highestScore - $secondScore) / $highestScore
+            : 0;
+
+        $topCompatibility = round(85 + ($dominanceRatio * 12));
+        $topCompatibility = min(97, max(85, $topCompatibility));
 
         $rank = 1;
         $previousScore = null;
         $previousCompatibility = null;
 
         foreach ($topThree as $majorId => $score) {
-            $baseCompatibility = $highestScore > 0
-                ? round(($score / $highestScore) * 95)
-                : 0;
-
-            if ($previousScore !== null && $score === $previousScore) {
-                $compatibility = max(50, $previousCompatibility - 4);
+            if ($rank === 1) {
+                $compatibility = $topCompatibility;
             } else {
-                $compatibility = $baseCompatibility;
+                $baseCompatibility = $highestScore > 0
+                    ? round(35 + (($score / $highestScore) * 60))
+                    : 35;
+
+                if ($previousScore !== null && $score === $previousScore) {
+                    $compatibility = max(50, $previousCompatibility - 2);
+                } else {
+                    $compatibility = $baseCompatibility;
+                }
+
+                $compatibility = min(95, max(35, $compatibility));
             }
 
             QuizAttemptResults::create([

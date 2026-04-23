@@ -71,7 +71,7 @@ class QuizQuestionSeeder extends Seeder
                     'Building a program or app',
                     'Protecting systems and networks',
                     'Analyzing data and finding patterns',
-                    'Working with computer hardware',
+                    'Designing and developing software systems',
                 ],
             ],
             [
@@ -82,7 +82,7 @@ class QuizQuestionSeeder extends Seeder
                     'Coding and logic',
                     'System security and networks',
                     'Data analysis and intelligent tools',
-                    'Understanding computer components',
+                    'Designing software solutions',
                 ],
             ],
             [
@@ -93,7 +93,7 @@ class QuizQuestionSeeder extends Seeder
                     'A programming bug',
                     'A security or access issue',
                     'A data pattern or prediction problem',
-                    'A hardware performance issue',
+                    'A software system design problem',
                 ],
             ],
             [
@@ -104,7 +104,7 @@ class QuizQuestionSeeder extends Seeder
                     'Algorithms and programming',
                     'Digital security and system protection',
                     'Data patterns and intelligent systems',
-                    'Computer devices and components',
+                    'Software architecture and system design',
                 ],
             ],
             [
@@ -115,7 +115,7 @@ class QuizQuestionSeeder extends Seeder
                     'Programming languages',
                     'Network security and systems',
                     'Data analysis and machine learning',
-                    'Digital electronics',
+                    'Software development methodologies',
                 ],
             ],
             [
@@ -126,11 +126,77 @@ class QuizQuestionSeeder extends Seeder
                     'Writing code',
                     'Protecting systems and networks',
                     'Working with data and intelligent tools',
-                    'Working with hardware and embedded systems',
+                    'Building and maintaining software systems',
                 ],
             ],
 
-     
+            [
+                'track_key' => 'engineering',
+                'order_index' => 1,
+                'question_text' => 'Which task sounds most enjoyable?',
+                'options' => [
+                    'Designing computer-based systems',
+                    'Working with machines and mechanical parts',
+                    'Working with electrical power and circuits',
+                    'Solving broad engineering problems',
+                ],
+            ],
+            [
+                'track_key' => 'engineering',
+                'order_index' => 2,
+                'question_text' => 'What do you prefer?',
+                'options' => [
+                    'Computers, processors, and embedded systems',
+                    'Machines, motion, and manufacturing',
+                    'Circuits, power, and electrical systems',
+                    'General engineering design and problem-solving',
+                ],
+            ],
+            [
+                'track_key' => 'engineering',
+                'order_index' => 3,
+                'question_text' => 'What kind of problem would you rather solve?',
+                'options' => [
+                    'Improving a smart device or digital system',
+                    'Improving the performance of a machine',
+                    'Fixing an electrical system issue',
+                    'Designing an efficient engineering solution',
+                ],
+            ],
+            [
+                'track_key' => 'engineering',
+                'order_index' => 4,
+                'question_text' => 'What sounds most interesting to you?',
+                'options' => [
+                    'Microprocessors and computer-controlled systems',
+                    'Engines, mechanics, and production systems',
+                    'Electricity, electronics, and power systems',
+                    'Applying engineering principles to different fields',
+                ],
+            ],
+            [
+                'track_key' => 'engineering',
+                'order_index' => 5,
+                'question_text' => 'What would you enjoy learning more?',
+                'options' => [
+                    'Embedded systems and digital design',
+                    'Thermodynamics and machine design',
+                    'Circuit analysis and power distribution',
+                    'General engineering methods and design thinking',
+                ],
+            ],
+            [
+                'track_key' => 'engineering',
+                'order_index' => 6,
+                'question_text' => 'What environment suits you best?',
+                'options' => [
+                    'Working on computer-integrated systems',
+                    'Working in mechanical workshops or production settings',
+                    'Working in electrical labs or power environments',
+                    'Working on interdisciplinary engineering projects',
+                ],
+            ],
+
             [
                 'track_key' => 'business',
                 'order_index' => 1,
@@ -197,7 +263,6 @@ class QuizQuestionSeeder extends Seeder
                     'Research or policy environment',
                 ],
             ],
-
 
             [
                 'track_key' => 'health_social',
@@ -266,7 +331,6 @@ class QuizQuestionSeeder extends Seeder
                 ],
             ],
 
-       
             [
                 'track_key' => 'creative_analytical',
                 'order_index' => 1,
