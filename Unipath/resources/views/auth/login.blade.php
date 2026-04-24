@@ -73,6 +73,14 @@
 
                             <div class="relative" style="width: 85%; margin: 0 auto;">
                                 <input id="password"type="password" name="password" required autocomplete="current-password" style="width: 100%;" class="block rounded-2xl border @error('password') border-red-400 @else border-gray-200 @enderror bg-white px-5 py-3 pr-12 text-gray-700 shadow-sm focus:border-[#C498F2]  focus:ring-2 focus:ring-[#C498F2]/40 focus:ring-offset-0 focus:outline-none transition">
+                                @if (Route::has('password.request'))
+                                    <div style="width: 85%; margin: 0 auto; text-align: right;">
+                                        <a href="{{ route('password.request') }}"
+                                        class="text-sm font-medium text-[#7F64CE] hover:underline">
+                                            Forgot your password?
+                                        </a>
+                                    </div>
+                                @endif
                                 <button type="button" onclick="togglePassword()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #6B7280;">
                                     <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round"d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
