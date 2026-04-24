@@ -1,13 +1,7 @@
-@extends('layout')
+<x-app-layout>
 
-
-@section('style')
 
 <link rel="stylesheet" href="{{ asset('css/career.css') }}">
-@endsection
-
-@section('content')
-
  
 <!-- HERO -->
 <section class="hero">
@@ -192,8 +186,8 @@
 </section>
  
 </div>
-@endsection
-@section('script')
+
+
 
 <script src="{{asset('js/career.js')}}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -276,5 +270,5 @@ $(document).ready(function () {
 
 });
 </script>
-@endsection
+</x-app-layout>
 
