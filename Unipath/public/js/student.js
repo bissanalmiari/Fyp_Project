@@ -84,14 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     /* ───── ANIMATION ───── */
-    window.addEventListener('load', () => {
-        document.querySelectorAll('.compatibility-bar').forEach(bar => {
-            const target = bar.style.width;
-            bar.style.width = '0%';
-            setTimeout(() => {
-                bar.style.width = target;
-            }, 400);
-        });
+   window.addEventListener('load', () => {
+     document.querySelectorAll('.compatibility-bar').forEach(bar => {
+        const target = getComputedStyle(bar).width;
+
+        bar.style.width = '0px';
+
+        setTimeout(() => {
+            bar.style.width = target;
+        }, 100);
+      });
     });
 
 });
