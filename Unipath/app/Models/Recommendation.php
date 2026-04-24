@@ -15,7 +15,8 @@ class Recommendation extends Model
         'program_id',
         'score',
         'rank', 
-        'explanation'
+        'explanation',
+        'preference_hash',
     ];
 
     public function student()

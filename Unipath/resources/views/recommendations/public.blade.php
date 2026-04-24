@@ -1,0 +1,324 @@
+@extends('layout')
+
+@section('style')
+<link rel="stylesheet" href="{{ asset('css/public-recommendations.css') }}">
+@endsection
+
+@section('content')
+<main class="rec-public-page">
+    <nav class="rec-public-nav">
+        <a href="{{ url('/') }}" class="brand">Unipath</a>
+        <div>
+            <a href="{{ url('/') }}">Home</a>
+            <a href="{{ route('career') }}">Careers</a>
+            @auth
+                <a href="{{ route('student.recommendations') }}">Student Portal</a>
+            @else
+                <a href="{{ route('login') }}">Sign In</a>
+            @endauth
+        </div>
+    </nav>
+
+    @if(session('success'))
+        <div class="rec-public-alert">{{ session('success') }}</div>
+    @endif
+
+    <section class="rec-public-hero">
+        <div class="rec-hero-copy">
+            <span>Recommendation System</span>
+            <h1>Personalized Program Recommendations</h1>
+            <p>
+                Unipath recommends programs by reading the academic profile, preferences, interests, skills, favorite programs, feedback, GPA, and test scores saved in the student dashboard.
+            </p>
+            <div class="rec-public-actions">
+                @auth
+                    <form action="{{ route('public.recommendations.generate') }}" method="POST">
+                        @csrf
+                        <span class="rec-action-tooltip" data-tooltip="{{ $refreshTooltip }}">
+                        <button type="submit" title="{{ $refreshTooltip }}" {{ $canGenerate ? '' : 'disabled' }}>
+                            {{ $recommendations->isEmpty() ? 'Generate My Recommendation' : 'Refresh Recommendation' }}
+                        </button>
+                        </span>
+                    </form>
+                    <a href="{{ route('student.academic') }}">Update Dashboard Info</a>
+                @else
+                    <a href="{{ route('login') }}">Sign In To Recommend</a>
+                    <a href="{{ route('register') }}">Create Account</a>
+                @endauth
+            </div>
+        </div>
+
+        <aside class="rec-hero-panel">
+            <div class="rec-hero-status">
+                <span>{{ $isSignedIn ? 'Signed in' : 'Visitor mode' }}</span>
+                <strong>{{ $isSignedIn ? ($student->major ?: 'Major not set') : 'Preview only' }}</strong>
+                <p>
+                    @if($isSignedIn)
+                        {{ $lastGeneratedAt ? 'Last generated ' . $lastGeneratedAt->diffForHumans() : 'No active recommendation set yet' }}
+                    @else
+                        Explore how Unipath recommends programs before creating a student profile.
+                    @endif
+                </p>
+            </div>
+            <div class="rec-readiness">
+                <div>
+                    <small>Profile readiness</small>
+                    <strong>{{ $profileReadiness ? $profileReadiness['percent'] . '%' : '--' }}</strong>
+                </div>
+                <div class="rec-readiness-track">
+                    <span style="width: {{ $profileReadiness['percent'] ?? 0 }}%"></span>
+                </div>
+                <p>{{ $profileReadiness ? $profileReadiness['completed'] . ' of ' . $profileReadiness['total'] . ' signals completed' : 'Sign in to calculate readiness' }}</p>
+            </div>
+        </aside>
+    </section>
+
+    <section class="rec-signal-strip">
+        @foreach($signalSummary as $signal)
+            <article>
+                <span>{{ $signal['label'] }}</span>
+                <p>{{ $signal['value'] }}</p>
+            </article>
+        @endforeach
+    </section>
+
+    @guest
+        <section class="rec-public-section rec-guest-guide">
+            <div class="rec-public-section-head">
+                <span>Visitor Guide</span>
+                <h2>How Recommendations Work Before You Sign In</h2>
+                <p>Visitors can preview the logic behind the recommendation system. Actual recommendations are generated only after sign in, using saved dashboard information.</p>
+            </div>
+
+            <div class="rec-guide-grid">
+                <article>
+                    <strong>1</strong>
+                    <h3>Build Your Profile</h3>
+                    <p>Students complete academic information, preferences, interests, skills, scores, and favorite programs in the dashboard.</p>
+                </article>
+                <article>
+                    <strong>2</strong>
+                    <h3>Rank Programs</h3>
+                    <p>The system compares profile signals with program category, level, location, study mode, intensity, tuition, and requirements.</p>
+                </article>
+                <article>
+                    <strong>3</strong>
+                    <h3>Explain The Match</h3>
+                    <p>Each recommendation includes reasons, including preference matches and GPA or test-score requirement notes.</p>
+                </article>
+                <article>
+                    <strong>4</strong>
+                    <h3>Learn From Feedback</h3>
+                    <p>Liked programs and recommendation ratings help future recommendations become more personalized.</p>
+                </article>
+            </div>
+
+            <div class="rec-guest-prepare">
+                <h3>What To Prepare</h3>
+                <div>
+                    <span>Current major or field</span>
+                    <span>Preferred countries</span>
+                    <span>Study mode and intensity</span>
+                    <span>Budget range</span>
+                    <span>Interest categories</span>
+                    <span>Skills or specializations</span>
+                    <span>GPA</span>
+                    <span>IELTS / TOEFL / SAT</span>
+                    <span>Programs you already like</span>
+                </div>
+            </div>
+        </section>
+    @endguest
+
+    <section class="rec-public-section">
+        <div class="rec-public-section-head">
+            <span>Section 2</span>
+            <h2>Three Matching Programs</h2>
+            <p>Signed-in students see matches generated from dashboard data. Visitors see how the recommendation area will work after signing in.</p>
+        </div>
+
+        @if($recommendations->isEmpty())
+            @guest
+                <div class="rec-preview-grid">
+                    <article>
+                        <span>Example Rank #1</span>
+                        <h3>Strong Academic Fit</h3>
+                        <p>A program can rank highly when it matches the student major, interests, and detailed skills.</p>
+                        <div class="rec-card-meter"><span style="width: 92%"></span></div>
+                    </article>
+                    <article>
+                        <span>Example Rank #2</span>
+                        <h3>Preference Fit</h3>
+                        <p>Country, study mode, course intensity, and budget help separate suitable programs from weak matches.</p>
+                        <div class="rec-card-meter"><span style="width: 78%"></span></div>
+                    </article>
+                    <article>
+                        <span>Example Rank #3</span>
+                        <h3>Requirement Awareness</h3>
+                        <p>The explanation can show whether GPA, IELTS, TOEFL, or SAT meet program requirements.</p>
+                        <div class="rec-card-meter"><span style="width: 64%"></span></div>
+                    </article>
+                </div>
+            @else
+                <div class="rec-public-empty">
+                    <h3>No recommendation generated yet</h3>
+                    <p>Click generate to create recommendations from your saved dashboard profile.</p>
+                </div>
+            @endguest
+        @else
+            <div class="rec-program-grid">
+                @foreach($recommendations as $recommendation)
+                    @php
+                        $details = json_decode($recommendation->explanation ?? '{}', true) ?: [];
+                        $program = $recommendation->program;
+                        $score = min(100, max(0, $recommendation->score));
+                    @endphp
+                    <article class="rec-program-card">
+                        <div class="rec-program-topline">
+                            <span>#{{ $recommendation->rank }}</span>
+                            <small>{{ $score }}% match</small>
+                        </div>
+                        <h3>{{ $program->name ?? 'Program unavailable' }}</h3>
+                        <p>{{ $program?->university?->name ?? ($details['university'] ?? 'University unavailable') }} - {{ $program?->university?->country ?? ($details['country'] ?? 'Country unavailable') }}</p>
+                        <div class="rec-program-tags">
+                            <small>{{ $program->level ?? 'Level not set' }}</small>
+                            <small>{{ $program->study_mode ?? 'Mode not set' }}</small>
+                            <small>{{ $program->course_intensity ?? 'Intensity not set' }}</small>
+                        </div>
+                        <div class="rec-card-meter">
+                            <span style="width: {{ $score }}%"></span>
+                        </div>
+                        @if($program?->url)
+                            <a href="{{ $program->url }}" target="_blank" rel="noopener">Show Program</a>
+                        @endif
+                    </article>
+                @endforeach
+            </div>
+        @endif
+    </section>
+
+    <section class="rec-public-section">
+        <div class="rec-public-section-head">
+            <span>Section 3</span>
+            <h2>Explainability Panel</h2>
+            <p>Every match includes the reasons behind the recommendation.</p>
+        </div>
+
+        @if($recommendations->isEmpty())
+            <div class="rec-explain-grid">
+                <div><strong>Academic</strong><p>Academic level and major guide the program field.</p></div>
+                <div><strong>Interests</strong><p>Interests and skills refine broad and detailed matches.</p></div>
+                <div><strong>Preferences</strong><p>Country, mode, intensity, and budget shape fit.</p></div>
+                <div><strong>Requirements</strong><p>GPA, IELTS, TOEFL, and SAT are compared with requirements.</p></div>
+                <div><strong>Behavior</strong><p>Favorites and feedback improve future recommendations.</p></div>
+            </div>
+            @guest
+                <div class="rec-explain-example">
+                    <h3>Example Explanation</h3>
+                    <ul>
+                        <li>Matches your selected skill or major specialization.</li>
+                        <li>Matches your preferred country and study mode.</li>
+                        <li>Fits your budget range.</li>
+                        <li>Your IELTS score meets the requirement, or the system tells you if it is below the requirement.</li>
+                        <li>Similar to programs you liked before.</li>
+                    </ul>
+                </div>
+            @endguest
+        @else
+            <div class="rec-explain-list">
+                @foreach($recommendations as $recommendation)
+                    @php
+                        $details = json_decode($recommendation->explanation ?? '{}', true) ?: [];
+                        $reasons = $details['details'] ?? [];
+                    @endphp
+                    <article>
+                        <h3>{{ $recommendation->program->name ?? 'Program unavailable' }}</h3>
+                        @if(! empty($details['summary']))
+                            <p>{{ $details['summary'] }}</p>
+                        @endif
+                        <ul>
+                            @forelse($reasons as $reason)
+                                <li>{{ $reason }}</li>
+                            @empty
+                                <li>This program matched the saved recommendation profile.</li>
+                            @endforelse
+                        </ul>
+                    </article>
+                @endforeach
+            </div>
+        @endif
+    </section>
+
+    <section class="rec-public-section">
+        <div class="rec-public-section-head">
+            <span>Section 4</span>
+            <h2>Overall Confidence Score</h2>
+            <p>The confidence score summarizes how strongly the current recommendation set matches the saved dashboard profile.</p>
+        </div>
+
+        <div class="rec-confidence-card">
+            <div class="rec-confidence-score">
+                <strong>{{ $confidence !== null ? $confidence . '%' : '--' }}</strong>
+                <span>{{ $confidenceLabel }}</span>
+                <div class="rec-confidence-ring" style="--score: {{ $confidence ?? 0 }}"></div>
+            </div>
+            <div class="rec-confidence-copy">
+                <h3>How confidence is interpreted</h3>
+                <p>
+                    @if($confidence !== null)
+                        This score is based on the average match score across the visible recommended programs.
+                    @else
+                        Guests can use this section to understand the confidence scale. Sign in and generate a recommendation to see a real score from your saved profile.
+                    @endif
+                </p>
+                <div class="rec-confidence-scale">
+                    <i style="width: {{ $confidence ?? 0 }}%"></i>
+                    <span>Low</span>
+                    <span>Medium</span>
+                    <span>High</span>
+                </div>
+                @guest
+                    <div class="rec-confidence-notes">
+                        <p><strong>Low:</strong> few saved signals match the available programs.</p>
+                        <p><strong>Medium:</strong> some important academic and preference signals match.</p>
+                        <p><strong>High:</strong> major, interests, skills, preferences, and requirements align strongly.</p>
+                    </div>
+                @endguest
+            </div>
+        </div>
+    </section>
+
+    <section class="rec-public-section">
+        <div class="rec-public-section-head">
+            <span>Section 5</span>
+            <h2>Recommendation Rate</h2>
+            <p>Signed-in students can rate the recommendation quality as low, medium, or high. This feedback can improve future recommendations.</p>
+        </div>
+
+        <div class="rec-rate-card">
+            <div>
+                <strong>{{ $feedbackRate ? ucfirst($feedbackRate) : 'Not rated yet' }}</strong>
+                <span>Current feedback rate</span>
+                <div class="rec-rate-indicator rate-{{ $feedbackRate ?: 'none' }}">
+                    <i></i><i></i><i></i>
+                </div>
+            </div>
+
+            @if($recommendations->isNotEmpty())
+                <form action="{{ route('public.recommendations.feedback') }}" method="POST">
+                    @csrf
+                    <button class="{{ $currentFeedbackRate === 'low' ? 'active-rate' : '' }}" name="rate" value="low" type="submit">Low</button>
+                    <button class="{{ $currentFeedbackRate === 'medium' ? 'active-rate' : '' }}" name="rate" value="medium" type="submit">Medium</button>
+                    <button class="{{ $currentFeedbackRate === 'high' ? 'active-rate' : '' }}" name="rate" value="high" type="submit">High</button>
+                </form>
+            @else
+                @guest
+                    <p>After signing in, students can rate a recommendation set as low, medium, or high. That rating becomes part of the personalization signal for future recommendations.</p>
+                @else
+                    <p>Generate recommendations first, then rate them.</p>
+                @endguest
+            @endif
+        </div>
+    </section>
+</main>
+@endsection

@@ -1,0 +1,26 @@
+student_id,academic_level,preferred_location,study_mode,intensity,budget_min,budget_max,category,language,ielts,toefl,sat
+1,high_school,"Italy, Spain",oncampus,full-time,3000,8000,Computing & Technology,English,,80,1200
+2,undergraduate,Germany,oncampus,full-time,5000,12000,Business & Management,English,6,75,1100
+3,high_school,France,online,part-time,2000,6000,Humanities & Languages,English,5.5,70,1000
+4,undergraduate,USA,hybrid,full-time,10000,20000,Computing & Technology,English,7,95,1300
+5,high_school,Spain,oncampus,full-time,4000,9000,Engineering,English,6.5,85,1250
+6,undergraduate,Italy,online,part-time,3000,7000,Business & Management,English,6,78,1150
+7,high_school,Germany,oncampus,full-time,2000,5000,Natural & Physical Sciences,English,6,75,1050
+8,undergraduate,France,hybrid,full-time,6000,15000,Health & Medicine,English,7.5,100,1350
+9,high_school,USA,oncampus,full-time,8000,18000,Computing & Technology,English,6.5,90,1250
+10,undergraduate,Spain,online,part-time,3000,8000,Social Sciences,English,6,80,1100
+11,high_school,Italy,oncampus,full-time,2500,7000,Business & Management,English,6,75,1050
+12,undergraduate,Germany,hybrid,full-time,7000,14000,Engineering,English,7,90,1300
+13,high_school,Lebanon,oncampus,full-time,2000,6000,Humanities & Languages,English,5.5,70,1000
+14,undergraduate,USA,oncampus,full-time,12000,25000,Health & Medicine,English,7.5,105,1400
+15,high_school,Spain,online,part-time,3000,7000,Computing & Technology,English,6.5,85,1200
+16,high_school,"Spain, Lebanon","oncampus, online","full-time, part-time",3000,9000,"Computing & Technology, Data Science & Artificial Intelligence",English,6,80,1150
+17,undergraduate,"Germany, Canada","hybrid, oncampus",full-time,6000,15000,"Engineering, Natural & Physical Sciences",English,6.5,88,1250
+18,high_school,Lebanon,oncampus,full-time,2500,5000,Media & Communication,English,5.5,70,1000
+19,undergraduate,"USA, Canada","oncampus, hybrid",full-time,12000,26000,"Health & Medicine, Life Sciences",English,7,95,1300
+20,high_school,Spain,oncampus,full-time,2000,7000,"Arts, Design & Architecture",English,5.5,72,980
+21,undergraduate,"Germany, Spain","online, hybrid",part-time,3000,9000,"Business & Management, Social Sciences",English,6.5,85,1200
+22,high_school,USA,oncampus,full-time,20000,60000,Natural & Physical Sciences,English,7.5,100,1400
+23,undergraduate,"Canada, USA","oncampus, online",part-time,10000,35000,"Media & Communication, Arts, Design & Architecture",English,6.5,90,1200
+24,high_school,Germany,oncampus,full-time,2000,12000,"Environment & Agriculture, Natural & Physical Sciences",English,6,78,1080
+25,undergraduate,"Lebanon, Spain","online, oncampus",part-time,2500,8000,"Humanities & Languages, Education",English,6,80,1100

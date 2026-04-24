@@ -128,6 +128,21 @@
                 </a>
             </li>
 
+            <!-- Recommendations -->
+            <li>
+                <a href="{{ route('student.recommendations') }}"
+                   class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm transition
+                   {{ request()->routeIs('student.recommendations') ? 'bg-purple-100 text-title font-semibold' : 'text-muted hover:bg-bg hover:text-title' }}">
+
+                    <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z"/>
+                        <path d="M19 3v4M21 5h-4"/>
+                    </svg>
+
+                    Recommendations
+                </a>
+            </li>
+
             <!-- Quiz -->
             <li>
                 <a href="{{ route('student.quiz-history') }}"

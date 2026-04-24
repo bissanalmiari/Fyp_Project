@@ -9,6 +9,7 @@ use App\Models\Language;
 use App\Models\Skill;
 use App\Models\QuizAttempt;
 use App\Models\SubCategory;
+use App\Services\ProgramRecommendationService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -297,6 +298,64 @@ class StudentController extends Controller
             ->get();
 
         return view('student.quiz-history', compact('attempts'));
+    }
+
+    public function recommendations(ProgramRecommendationService $recommendationService)
+    {
+        $user = Auth::user();
+
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
+
+        $profileHash = $recommendationService->preferenceHash($student);
+        $recommendations = $recommendationService->latestRecommendations($student, $profileHash);
+        $canGenerate = $recommendationService->canGenerate($student, $profileHash);
+        $nextAvailableAt = $recommendationService->nextAvailableAt($student, $profileHash);
+        $recommendationHistory = $recommendationService->recommendationHistory($student, $profileHash);
+
+        return view('student.recommendations', compact(
+            'student',
+            'recommendations',
+            'canGenerate',
+            'nextAvailableAt',
+            'recommendationHistory'
+        ));
+    }
+
+    public function generateRecommendations(ProgramRecommendationService $recommendationService)
+    {
+        $user = Auth::user();
+
+        $student = Student::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        );
+
+        if (! $recommendationService->canGenerate($student)) {
+            return redirect()
+                ->route('student.recommendations')
+                ->with('success', 'Your recommendations are already up to date. You can refresh them again after 3 days, unless your major or preferences change.');
+        }
+
+        $recommendations = $recommendationService->generate($student);
+
+        if ($recommendations->isEmpty()) {
+            return redirect()
+                ->route('student.recommendations')
+                ->with('success', 'No matching programs were found yet. Please complete your academic information, preferences, and interests, then try again.');
+        }
+
+        return redirect()
+            ->route('student.recommendations')
+            ->with('success', 'Your top 3 matching programs are ready.');
     }
     
 }

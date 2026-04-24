@@ -7,7 +7,7 @@ use App\Models\Program;
 
 class Progrem_Requirement extends Model
 {
-    protected $table = 'program_requirments';
+    protected $table = 'program_requirements';
     protected $fillable = [
         'sat',
         'ielts',
@@ -17,6 +17,6 @@ class Progrem_Requirement extends Model
 
     public function programs()
     {
-        return $this->hasMany(Program::class, 'prog_requirement_id');
+        return $this->hasMany(Program::class, 'program_requirement_id');
     }
 }

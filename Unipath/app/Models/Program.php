@@ -15,7 +15,7 @@ class Program extends Model
 
     protected $fillable = [
         'university_id',
-        'program_requirments_id',
+        'program_requirement_id',
         'category_id',
         'subcategory_id',
         'name',
@@ -60,7 +60,7 @@ class Program extends Model
 
     public function requirement()
     {
-       return $this->belongsTo(Progrem_Requirement::class, 'program_requirments_id');
+       return $this->belongsTo(Progrem_Requirement::class, 'program_requirement_id');
     }
 
     public function subcategories()
