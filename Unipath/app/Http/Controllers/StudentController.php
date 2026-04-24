@@ -208,11 +208,10 @@ class StudentController extends Controller
                 'email' => $user->email,
             ]
         );
-        $categories = Category::all();
-        $subcategories = SubCategory::all();
+        $categories = Category::with('subcategories')->get();
         
-      $student->load('categories', 'subcategories');      
-        return view('student.professional', compact('student','categories', 'subcategories'));
+      $student->load('categories');      
+        return view('student.professional', compact('student','categories'));
     }
 
     public function professionalstore(Request $request)
@@ -248,11 +247,15 @@ class StudentController extends Controller
             $student->image = $path;
         }
         
-        $student->save();
+      $student->save();
 
-    
-        $student->categories()->sync($request->input('interests', []));
-        $student->subcategories()->sync($request->input('subcategories', []));
+
+$interests = $request->input('interests', []);
+$subcategories = $request->input('subcategories', []);
+
+// sync
+$student->categories()->sync($interests);
+$student->subcategories()->sync($subcategories);
 
         return redirect()->back()->with('success', 'Personal information updated successfully.');
     }

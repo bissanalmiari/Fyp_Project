@@ -4,7 +4,7 @@
         <div class="icon-box">
             @if(Str::startsWith($career->image_path, 'images'))
                 <img src="{{ asset($career->image_path) }}"
-                     class="w-full h-full object-cover rounded-full">
+                     class="w-full h-full object-cover ">
             @else
                 <img src="{{ asset('storage/' . $career->image_path) }}"
                      class="w-full h-full object-cover rounded-full">

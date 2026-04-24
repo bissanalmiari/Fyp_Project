@@ -51,7 +51,7 @@
       <div class="question-list">
 
         @foreach($attempt->answers as $i => $answer)
-        <div class="question-row {{ $i == 3 ? 'highlighted' : '' }}">
+        <div class="question-row ">
           <span class="question-number">
             Question {{ $i + 1 }}
           </span>
@@ -94,8 +94,7 @@
                   }
             @endphp
 
-            <div class="result-card rank-{{ $key + 1 }}">
-                <span class="result-rank">#{{ $key + 1 }}</span>
+            <div class="result-card ">
 
                 <p class="result-major">
                   {{ $result->major->name }}

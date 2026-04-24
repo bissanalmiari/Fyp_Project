@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="{{ asset('css/student.css') }}">
 @endsection
 
+
+@section('content')
+
 @if(session('success'))
 <div id="success-popup" class="popup-overlay">
     <div class="popup-content">
@@ -11,8 +14,6 @@
     </div>
 </div>
 @endif
-
-@section('content')
 <div class="profile-content">
     <h1 class="page-title">Professional Information</h1>
     <p class="page-subtitle">Highlight your skills and interests</p>
@@ -47,54 +48,49 @@
     </div>
 </div>
 
-        <div class="form-card">
-            <p class="card-label">Interests</p>
-            <div class="form-grid">
-               
-               <div class="form-group full-width">
-    
+      <div class="form-card">
+    <p class="card-label">Interests</p>
+
     <div class="checkbox-group">
-    @foreach($categories as $category)
-        <label class="checkbox-item">
-           <input type="checkbox" name="interests[]" value="{{ $category->id }}"
-    {{ (is_array(old('interests')) && in_array($category->id, old('interests'))) 
-        || ($student->categories && $student->categories->contains($category->id)) 
+        @foreach($categories as $category)
+            <label class="checkbox-item">
+                <input type="checkbox" name="interests[]" value="{{ $category->id }}" {{ (is_array(old('interests')) && in_array($category->id, old('interests')))
+        || ($student->categories && $student->categories->contains($category->id))
         ? 'checked' : '' }}>
-            {{ $category->name }}
-        </label>
-    @endforeach
+                {{ $category->name }}
+            </label>
+        @endforeach
+    </div>
 </div>
-</div>
-            </div>
-        </div>
+<div class="form-card">
+    <p class="card-label">Fields</p>
 
-          <div class="form-card">
-    <p class="card-label">Skills</p>
+    @foreach($categories as $category)
+        <div class="subcategory-box" data-category="{{ $category->id }}" style="display:none; margin-top:15px;">
 
-    <div class="form-grid">
-        <div class="form-group full-width">
+            <p class="subcategory-title">
+                What are the fields you are interested in {{ $category->name }}?
+            </p>
 
             <div class="checkbox-group">
-
-                @foreach($subcategories as $subcategory)
+                @foreach($category->subcategories as $subcategory)
                     <label class="checkbox-item">
-                        <input type="checkbox" name="subcategories[]" value="{{ $subcategory->id }}"
-                        {{ (is_array(old('subcategories')) && in_array($subcategory->id, old('subcategories')))
-                            || ($student->subcategories && $student->subcategories->contains($subcategory->id))
-                            ? 'checked' : '' }}>
-                        
+                        <input type="checkbox" name="subcategories[]" value="{{ $subcategory->id }}" {{ (is_array(old('subcategories')) && in_array($subcategory->id, old('subcategories')))
+        || ($student->subcategories && $student->subcategories->contains($subcategory->id))
+        ? 'checked' : '' }}>
                         {{ $subcategory->name }}
                     </label>
                 @endforeach
-
             </div>
 
         </div>
-    </div>
+    @endforeach
 </div>
+
 
         <button type="submit" class="btn-save">Save Information</button>
     </form>
 </div>
+<script src="{{asset('js/student.js')}}"></script>
 
 @endsection
