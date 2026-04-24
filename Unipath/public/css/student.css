@@ -788,6 +788,13 @@ select[multiple].input-select {
     color: var(--text-light);
     margin-top: 2px;
 }
+.subcategory-title{
+    font-family: poppins, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+}
 
 
 @media (max-width: 1024px) {
