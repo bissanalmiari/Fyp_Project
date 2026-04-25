@@ -221,102 +221,102 @@
             </div>
         </section>
 
-        <section id="why-unipath" class="relative overflow-hidden py-16 md:py-20">
-            <img
-                src="{{ asset('images/Shape3.png') }}"
-                class="pointer-events-none absolute right-[-250px] top-[80px] z-0 w-[750px] opacity-25"
-                alt=""
-            >
+        <section id="why-unipath" class="relative overflow-visible py-16 md:py-20">
+                <img
+                    src="{{ asset('images/Shape3.png') }}"
+                    class="pointer-events-none absolute right-[-250px] top-[80px] z-0 w-[750px] opacity-25"
+                    alt="" 
+                >
 
-            <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
-                <div class="mx-auto max-w-2xl text-center fade-scroll" data-delay="0s">
-                    <h2 class="mt-3 text-2xl font-extrabold text-[#C498F2] md:text-3xl lg:text-4xl">
-                        Why Choose Unipath
-                    </h2>
+                <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+                    <div class="mx-auto max-w-2xl text-center fade-scroll" data-delay="0s">
+                        <h2 class="mt-3 text-2xl font-extrabold text-[#C498F2] md:text-3xl lg:text-4xl">
+                            Why Choose Unipath
+                        </h2>
 
-                    <!-- 
-                  <span class="[blanche-font]"
-                        style="font-size: 30px; color: #7F64CE; display: inline-block; margin-top: 6px;
-                                text-shadow: 0.6px 0.6px 0 #7F64CE;">
-                        Why Choose Unipath?
-                    </span>  -->
+                        <!-- 
+                    <span class="[blanche-font]"
+                            style="font-size: 30px; color: #7F64CE; display: inline-block; margin-top: 6px;
+                                    text-shadow: 0.6px 0.6px 0 #7F64CE;">
+                            Why Choose Unipath?
+                        </span>  -->
 
-                    <p class="mt-6 text-sm leading-7 text-[#6B6780] md:text-base">
-                        We help students make confident academic decisions with smart tools,
-                        clear guidance, and trusted recommendations.
-                    </p>
+                        <p class="mt-6 text-sm leading-7 text-[#6B6780] md:text-base">
+                            We help students make confident academic decisions with smart tools,
+                            clear guidance, and trusted recommendations.
+                        </p>
 
+                    </div>
+
+                    <div class="mt-0 grid items-center gap-0 lg:grid-cols-[1.1fr_0.9fr]">
+                    <div class="fade-scroll relative hidden lg:block group" data-direction="left" data-delay="0.1s">
+
+                        <img
+                            src="{{ asset('images/student-unipath4.png') }}"
+                            alt="Student Illustration"
+                            class="relative z-10 w-[125%] max-w-none -translate-x-20 object-contain transition-opacity duration-500 ease-in-out"
+                        >
+                    </div>
+
+                <div class="mt-12 relative mx-auto w-full max-w-[620px]">
+                    <div class="absolute left-[16px] top-2 h-[calc(100%-18px)] w-[3px] rounded-full bg-gradient-to-b from-[#7F64CE] via-[#C498F2] to-[#CDDBFD]"></div>
+
+                    <div class="space-y-8">
+                        <div class="fade-scroll group relative flex items-start gap-4" data-direction="right" data-delay="0.15s">
+                            <div class="absolute left-[16px] top-8 h-20 w-[3px] -translate-x-1/2 rounded-full bg-[#C498F2] opacity-0 transition-all duration-300"></div>
+
+                            <span class="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#CFC4F6] aspect-square transition-all duration-300 group-hover:bg-[#7F64CE]">
+                                <span class="h-2.5 w-2.5 rounded-full bg-white transition-all duration-300 group-hover:scale-125"></span>
+                            </span>
+
+                            <div class="px-4 py-3 transition-all duration-300 group-hover:translate-x-1">
+                                <h3 class="text-xl font-semibold text-[#4B3F72] transition-colors duration-300 group-hover:text-[#7F64CE]">
+                                    Personalized Guidance
+                                </h3>
+                                <p class="mt-2 text-base leading-8 text-[#6B6780]">
+                                    We match students with programs that align with their interests,
+                                    skills, and academic background.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="fade-scroll group relative flex items-start gap-4" data-direction="right" data-delay="0.3s">
+                            <div class="absolute left-[16px] top-8 h-20 w-[3px] -translate-x-1/2 rounded-full bg-[#C498F2] opacity-0 transition-all duration-300"></div>
+
+                            <span class="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#CFC4F6] aspect-square transition-all duration-300 group-hover:bg-[#7F64CE]">
+                                <span class="h-2.5 w-2.5 rounded-full bg-white transition-all duration-300 group-hover:scale-125"></span>
+                            </span>
+
+                            <div class="px-4 py-3 transition-all duration-300 group-hover:translate-x-1">
+                                <h3 class="text-xl font-semibold text-[#4B3F72] transition-colors duration-300 group-hover:text-[#7F64CE]">
+                                    Smarter Program Exploration
+                                </h3>
+                                <p class="mt-2 text-base leading-8 text-[#6B6780]">
+                                    Our platform simplifies searching and comparing programs.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="fade-scroll group relative flex items-start gap-4" data-direction="right" data-delay="0.45s">
+                            <div class="absolute left-[16px] top-8 h-20 w-[3px] -translate-x-1/2 rounded-full bg-[#C498F2] opacity-0 transition-all duration-300"></div>
+
+                            <span class="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#CFC4F6] aspect-square transition-all duration-300 group-hover:bg-[#7F64CE]">
+                                <span class="h-2.5 w-2.5 rounded-full bg-white transition-all duration-300 group-hover:scale-125"></span>
+                            </span>
+
+                            <div class="px-4 py-3 transition-all duration-300 group-hover:translate-x-1">
+                                <h3 class="text-xl font-semibold text-[#4B3F72] transition-colors duration-300 group-hover:text-[#7F64CE]">
+                                    Find Your Ideal Major   
+                                </h3>
+                                <p class="mt-2 text-base leading-8 text-[#6B6780]">
+                                    Our quiz analyzes your answers to recommend majors that align with your interests, skills, and future goals.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="mt-0 grid items-center gap-0 lg:grid-cols-[1.1fr_0.9fr]">
-                   <div class="fade-scroll relative hidden lg:block group" data-direction="left" data-delay="0.1s">
-
-                    <img
-                        src="{{ asset('images/student-unipath4.png') }}"
-                        alt="Student Illustration"
-                        class="relative z-10 w-[125%] max-w-none -translate-x-32 object-contain transition-opacity duration-500 ease-in-out"
-                    >
-                </div>
-
-            <div class="mt-12 relative mx-auto w-full max-w-[620px]">
-                <div class="absolute left-[16px] top-2 h-[calc(100%-18px)] w-[3px] rounded-full bg-gradient-to-b from-[#7F64CE] via-[#C498F2] to-[#CDDBFD]"></div>
-
-                <div class="space-y-8">
-                    <div class="fade-scroll group relative flex items-start gap-4" data-direction="right" data-delay="0.15s">
-                        <div class="absolute left-[16px] top-8 h-20 w-[3px] -translate-x-1/2 rounded-full bg-[#C498F2] opacity-0 transition-all duration-300"></div>
-
-                        <span class="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#CFC4F6] aspect-square transition-all duration-300 group-hover:bg-[#7F64CE]">
-                            <span class="h-2.5 w-2.5 rounded-full bg-white transition-all duration-300 group-hover:scale-125"></span>
-                        </span>
-
-                        <div class="px-4 py-3 transition-all duration-300 group-hover:translate-x-1">
-                            <h3 class="text-xl font-semibold text-[#4B3F72] transition-colors duration-300 group-hover:text-[#7F64CE]">
-                                Personalized Guidance
-                            </h3>
-                            <p class="mt-2 text-base leading-8 text-[#6B6780]">
-                                We match students with programs that align with their interests,
-                                skills, and academic background.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="fade-scroll group relative flex items-start gap-4" data-direction="right" data-delay="0.3s">
-                        <div class="absolute left-[16px] top-8 h-20 w-[3px] -translate-x-1/2 rounded-full bg-[#C498F2] opacity-0 transition-all duration-300"></div>
-
-                        <span class="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#CFC4F6] aspect-square transition-all duration-300 group-hover:bg-[#7F64CE]">
-                            <span class="h-2.5 w-2.5 rounded-full bg-white transition-all duration-300 group-hover:scale-125"></span>
-                        </span>
-
-                        <div class="px-4 py-3 transition-all duration-300 group-hover:translate-x-1">
-                            <h3 class="text-xl font-semibold text-[#4B3F72] transition-colors duration-300 group-hover:text-[#7F64CE]">
-                                Smarter Program Exploration
-                            </h3>
-                            <p class="mt-2 text-base leading-8 text-[#6B6780]">
-                                Our platform simplifies searching and comparing programs.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="fade-scroll group relative flex items-start gap-4" data-direction="right" data-delay="0.45s">
-                        <div class="absolute left-[16px] top-8 h-20 w-[3px] -translate-x-1/2 rounded-full bg-[#C498F2] opacity-0 transition-all duration-300"></div>
-
-                        <span class="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#CFC4F6] aspect-square transition-all duration-300 group-hover:bg-[#7F64CE]">
-                            <span class="h-2.5 w-2.5 rounded-full bg-white transition-all duration-300 group-hover:scale-125"></span>
-                        </span>
-
-                        <div class="px-4 py-3 transition-all duration-300 group-hover:translate-x-1">
-                            <h3 class="text-xl font-semibold text-[#4B3F72] transition-colors duration-300 group-hover:text-[#7F64CE]">
-                                Find Your Ideal Major   
-                            </h3>
-                            <p class="mt-2 text-base leading-8 text-[#6B6780]">
-                                 Our quiz analyzes your answers to recommend majors that align with your interests, skills, and future goals.
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </div>
-            </div>
-        </div>
         </section>
         
         <section id="how-it-works" class="py-12 md:py-16 -mt-12">
@@ -336,7 +336,7 @@
                 <div class="relative mt-10">
                     <div class="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-[#DCCFFD] lg:block"></div>
 
-                    <div class="space-y-16 md:space-y-20">
+                    <div class="space-y-32 md:space-y-40 lg:space-y-48">
                         <div class="fade-scroll relative grid items-center gap-8 text-center lg:grid-cols-[1.2fr_0.8fr] lg:text-left" data-delay="0.15s">
 
                             <div class="mx-auto max-w-xl lg:mx-0 lg:pr-16">
@@ -362,9 +362,7 @@
                                 />
                             </div>
 
-                            <div class="absolute left-1/2 top-8 z-10 hidden h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border border-white/70 bg-[#7F64CE] text-lg font-bold text-white shadow-[0_8px_20px_rgba(127,100,206,0.25)] lg:flex">
-                                1
-                            </div>
+                       
                         </div>
 
                         <div class="fade-scroll relative grid items-center gap-8 text-center lg:grid-cols-2 lg:text-left" data-delay="0.35s">
@@ -391,9 +389,7 @@
                                 </p>
                             </div>
 
-                            <div class="absolute left-1/2 top-8 z-10 hidden h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border border-white/70 bg-[#7F64CE] text-lg font-bold text-white shadow-[0_8px_20px_rgba(127,100,206,0.25)] lg:flex">
-                                2
-                            </div>
+                       
                         </div>
 
                         <div class="fade-scroll relative grid items-center gap-8 text-center lg:grid-cols-2 lg:text-left" data-delay="0.55s">
@@ -419,12 +415,7 @@
                                     class="w-full max-w-[260px] object-contain md:max-w-[340px] lg:max-w-none lg:scale-125 lg:translate-x-10"
                                 />
                             </div>
-
-                            <div class="absolute left-1/2 top-8 z-10 hidden h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border border-white/70 bg-[#7F64CE] text-lg font-bold text-white shadow-[0_8px_20px_rgba(127,100,206,0.25)] lg:flex">
-                                3
-                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
