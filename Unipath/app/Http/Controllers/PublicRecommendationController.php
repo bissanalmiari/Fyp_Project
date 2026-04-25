@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FeedbackRecommendation;
+use App\Models\Program;
 use App\Models\Student;
 use App\Services\ProgramRecommendationService;
 use Illuminate\Http\Request;
@@ -22,6 +23,12 @@ class PublicRecommendationController extends Controller
         }
 
         $student = $this->student();
+
+        if (Program::doesntExist()) {
+            return redirect()
+                ->route('public.recommendations')
+                ->with('success', 'Program data is not loaded yet. Please run the database seeders before generating recommendations.');
+        }
 
         if (! $recommendationService->canGenerate($student)) {
             return redirect()
@@ -122,13 +129,7 @@ class PublicRecommendationController extends Controller
     {
         $user = Auth::user();
 
-        return Student::firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
+        return Student::firstOrCreate(['user_id' => $user->id]);
     }
 
     private function confidenceLabel(?int $confidence): string
