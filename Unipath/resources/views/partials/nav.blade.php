@@ -37,7 +37,7 @@
                         <div class="w-64 bg-white rounded-2xl shadow-lg border border-gray-100 py-3">
                             <a href="{{ url('/quiz') }}"
                                 class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">Quiz</a>
-                            <a href="{{ url('/recommendation') }}"
+                            <a href="{{ route('public.recommendations') }}"
                                 class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">Recommendation</a>
                             <a href="{{ url('/comparison') }}"
                                 class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">Comparison Tool</a>
@@ -99,7 +99,7 @@
                         class="overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-in-out ml-4 flex flex-col gap-2">
                         <a href="{{ url('/quiz') }}"
                             class="px-3 py-2 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] rounded-lg transition">Quiz</a>
-                        <a href="{{ url('/recommendation') }}"
+                        <a href="{{ route('public.recommendations') }}"
                             class="px-3 py-2 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] rounded-lg transition">Recommendation</a>
                         <a href="{{ url('/comparison') }}"
                             class="px-3 py-2 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] rounded-lg transition">Comparison Tool</a>

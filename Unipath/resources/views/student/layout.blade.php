@@ -3,51 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unipath – Dashboard</title>
+    <title>Unipath - Dashboard</title>
 
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Theme -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#C498F2",
-                        secondary: "#C3BFFA",
-                        highlight: "#CDDBFD",
-                        title: "#7F64CE",
-                        bg: "#F6F4FE",
-                        textMain: "#3d3456",
-                        muted: "#9b8fc0",
-                        lightText: "#c0b8de",
-                        borderC: "#e6e0f8"
-                    }
-                }
-            }
-        }
-    </script>
-<link rel="stylesheet" href="{{ asset('css/ProfileLayout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ProfileLayout.css') }}">
     @yield('style')
 </head>
 
-<body class="bg-bg text-textMain font-sans">
+<body class="bg-bg text-text-main font-sans">
 
 <div class="flex min-h-screen">
 
-    <!-- ───── Sidebar ───── -->
-    <aside class="w-[238px] bg-white border-r border-borderC flex flex-col sticky top-0 h-screen shadow-md">
+    <!-- Sidebar -->
+    <aside class="w-[238px] bg-white border-r border-border-c flex flex-col sticky top-0 h-screen shadow-md">
 
         <!-- Logo -->
-        <div class="px-6 py-6 border-b border-borderC">
+        <div class="px-6 py-6 border-b border-border-c">
             <span class="text-lg font-bold text-title">Unipath</span>
-            <small class="block text-[10px] uppercase tracking-widest text-lightText mt-1">
+            <small class="block text-[10px] uppercase tracking-widest text-light-text mt-1">
                 Student Portal
             </small>
         </div>
 
-        <h3 class="text-[10px] font-bold tracking-widest uppercase text-lightText px-6 py-3">
+        <h3 class="text-[10px] font-bold tracking-widest uppercase text-light-text px-6 py-3">
             Profile
         </h3>
 
@@ -161,7 +140,7 @@
         </ul>
 
         <!-- Bottom -->
-        <div class="p-4 border-t border-borderC space-y-2">
+        <div class="p-4 border-t border-border-c space-y-2">
 
             <!-- Home -->
             <a href="{{ url('/') }}"
@@ -195,7 +174,7 @@
 
     </aside>
 
-    <!-- ───── Content ───── -->
+    <!-- Content -->
     <main class="flex-1 p-10 overflow-y-auto ">
         @yield('content')
     </main>

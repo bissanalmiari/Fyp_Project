@@ -25,7 +25,7 @@
         </div>
         <div class="recommendation-snapshot">
             <span>{{ $student->major ?: 'Major not set' }}</span>
-            <small>{{ $student->preferred_location ?: 'Any country' }} · {{ $student->preferred_study_mode ?: 'Any mode' }} · {{ $student->budget ?: 'Any budget' }}</small>
+            <small>{{ $student->preferred_location ?: 'Any country' }} &middot; {{ $student->preferred_study_mode ?: 'Any mode' }} &middot; {{ $student->budget ?: 'Any budget' }}</small>
         </div>
     </section>
 
@@ -161,7 +161,7 @@
                         <div class="history-card-header">
                             <div>
                                 <h3>{{ $historySet['is_current'] ? 'Current Recommendation Set' : 'Previous Recommendation Set' }}</h3>
-                                <p>{{ optional($historySet['generated_at'])->format('M d, Y · h:i A') }}</p>
+                                <p>{{ optional($historySet['generated_at'])->format('M d, Y') }} &middot; {{ optional($historySet['generated_at'])->format('h:i A') }}</p>
                             </div>
                             @if($historySet['is_current'])
                                 <span>Current</span>
@@ -181,7 +181,7 @@
                                         <h4>{{ $historyProgram->name ?? 'Program unavailable' }}</h4>
                                         <p>
                                             {{ $historyProgram?->university?->name ?? ($historyDetails['university'] ?? 'University unavailable') }}
-                                            ·
+                                            &middot;
                                             {{ $historyProgram?->university?->country ?? ($historyDetails['country'] ?? 'Country not set') }}
                                         </p>
                                     </div>
