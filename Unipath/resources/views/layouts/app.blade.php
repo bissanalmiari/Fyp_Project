@@ -10,18 +10,21 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+         <!-- link to poppins font -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Rammetto+One&display=swap"
+            rel="stylesheet">
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link rel="stylesheet" href="{{ asset('css/common.css') }}">
-         
+        
+        @stack('styles')
+        
     </head>
     <body class="font-sans antialiased">
 
         {{-- NAVBAR --}}
         @include('partials.nav')
 
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-[#F6F4FE]">
 
             {{-- Page Heading --}}
             @isset($header)
@@ -43,5 +46,6 @@
         @include('partials.footer')
         <script src="{{ asset('js/common.js') }}"></script>
         
+        @stack('scripts')
     </body>
 </html>
