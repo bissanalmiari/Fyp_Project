@@ -40,7 +40,7 @@ class QuizMajorImageSeeder extends Seeder
             'Interior Design' => 'interior.png',
             'Architecture' => 'architecture.png',
 
-            'Software Engineering' => 'software.png',
+            'Software Engineering' => 'software-engineering.png',
             'Mechanical Engineering' => 'mechanical.png',
             'Electrical Engineering' => 'electrical.png',
             'Industrial Engineering' => 'industrial.png',

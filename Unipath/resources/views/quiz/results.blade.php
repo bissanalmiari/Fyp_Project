@@ -35,6 +35,19 @@
             transform: translateY(-6px);
             box-shadow: 0 18px 40px rgba(127, 100, 206, 0.14);
         }
+
+        @keyframes floatSoft {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+        }
+
+        .animate-float {
+            animation: floatSoft 3s ease-in-out infinite;
+        }
     </style>
 
     @php
@@ -91,6 +104,100 @@
         ];
     @endphp
 
+    @guest
+    <div id="saveQuizModal"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-[#2E2A4A]/35 px-4 backdrop-blur-sm">
+
+        <div id="saveQuizCard"
+            class="relative w-full max-w-3xl scale-90 overflow-hidden rounded-[32px] border border-[#C3BFFA]/40 bg-[#F6F4FE] p-6 opacity-0 shadow-[0_25px_80px_rgba(127,100,206,0.25)] transition-all duration-500 sm:p-8">
+
+            <button type="button"
+                    id="closeSaveQuizModal"
+                    class="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#7F64CE] shadow-sm transition hover:bg-[#F4EFFF]">
+                ×
+            </button>
+
+            <div class="grid items-center gap-8 md:grid-cols-2">
+                <div>
+                    <p class="text-sm font-semibold uppercase tracking-wide text-[#7F64CE]">
+                        Save your progress
+                    </p>
+
+                    <h3 class="mt-2 text-2xl font-bold leading-tight text-[#2E2A4A] sm:text-3xl">
+                        Want to save your quiz history?
+                    </h3>
+
+                    <p class="mt-4 text-sm leading-7 text-gray-600 sm:text-base">
+                        Create an account or log in to save this result and revisit your quiz history anytime.
+                    </p>
+
+                    <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                        <a href="{{ route('login') }}"
+                        class="rounded-full bg-[#7F64CE] px-6 py-3 text-center text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#6F55C7]">
+                            Log In
+                        </a>
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}"
+                            class="rounded-full border border-[#C3BFFA]/40 bg-white px-6 py-3 text-center text-sm font-semibold text-[#7F64CE] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#F8F4FF]">
+                                Create Account
+                            </a>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <img src="{{ asset('images/history.png') }}"
+                        alt="Quiz history"
+                        class="max-h-[240px] w-auto animate-float object-contain">
+                </div>
+            </div>
+        </div>
+    </div>
+    @endguest
+
+    @auth
+<div id="historyReminderModal"
+     class="fixed inset-0 z-50 hidden items-center justify-center bg-[#2E2A4A]/35 px-4 backdrop-blur-sm">
+
+    <div id="historyReminderCard"
+         class="relative w-full max-w-2xl scale-90 overflow-hidden rounded-[32px] border border-[#C3BFFA]/40 bg-[#F6F4FE] p-6 opacity-0 shadow-[0_25px_80px_rgba(127,100,206,0.25)] transition-all duration-500 sm:p-8">
+
+        <button type="button"
+                id="closeHistoryReminderModal"
+                class="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#7F64CE] shadow-sm transition hover:bg-[#F4EFFF]">
+            ×
+        </button>
+
+        <div class="text-center">
+            <p class="text-sm font-semibold uppercase tracking-wide text-[#7F64CE]">
+                Your progress is saved
+            </p>
+
+            <h3 class="mt-2 text-2xl font-bold text-[#2E2A4A] sm:text-3xl">
+                You can revisit your results anytime
+            </h3>
+
+            <p class="mt-4 text-sm text-gray-600 sm:text-base">
+                Your quiz history is saved in your account. You can view it anytime from your dashboard.
+            </p>
+
+            <div class="mt-6 flex justify-center gap-3 flex-col sm:flex-row">
+                <a href="{{ url('student/quiz-history') }}"
+                   class="rounded-full bg-[#7F64CE] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#6F55C7]">
+                    View History
+                </a>
+
+                <button id="continueLoggedUser"
+                        class="rounded-full border border-[#C3BFFA]/40 bg-white px-6 py-3 text-sm font-semibold text-[#7F64CE] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#F8F4FF]">
+                    Continue Exploring
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@endauth
+
     <section class="relative overflow-hidden bg-[#F6F4FE] px-4 py-12 sm:px-6 sm:py-14 md:px-8 md:py-16 lg:px-12">
         <img src="{{ asset('images/c-shape.png') }}"
              class="pointer-events-none absolute -top-20 -left-20 w-[300px] opacity-20 sm:w-[400px] lg:w-[500px] lg:opacity-50" />
@@ -98,7 +205,7 @@
         <img src="{{ asset('images/c-shape.png') }}"
              class="pointer-events-none absolute bottom-[-80px] right-[-60px] w-[420px] rotate-180 opacity-20 sm:w-[600px] lg:w-[860px] lg:opacity-50" />
 
-        <div class="mt-8 text-center sm:mt-12 lg:mt-20 reveal-up reveal-delay-1">
+        <div class="mt-8 text-center sm:mt-12 lg:mt-20 reveal-up reveal-delay-1"style="transform: translateY(-100px)">
             <h3 class="text-2xl font-bold text-[#7F64CE] sm:text-3xl md:text-4xl">
                 Your Results
             </h3>
@@ -107,7 +214,7 @@
             </p>
         </div>
 
-        <div class="mt-12 flex -translate-y-10 justify-center sm:mt-16 lg:mt-20">
+        <div class="mt-12 flex justify-center sm:mt-16 lg:mt-20 -mb-20" style="transform: translateY(-135px)">
             <div class="grid w-full max-w-7xl grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
 
                 @foreach($orderedResults as $index => $result)
@@ -179,7 +286,7 @@
             </div>
         </div>
 
-        <div class="reveal-up reveal-delay-5 mx-auto mt-14 max-w-5xl rounded-[32px] border border-[#C3BFFA]/20 bg-[#F6F4FE] p-5 shadow-[0_16px_50px_rgba(127,100,206,0.10)] backdrop-blur sm:mt-16 sm:p-6 md:mt-20 md:p-8">
+        <div class="reveal-up reveal-delay-5 mx-auto mt-2 max-w-5xl rounded-[32px] border border-[#C3BFFA]/20 bg-[#F6F4FE] p-5 shadow-[0_16px_50px_rgba(127,100,206,0.10)] backdrop-blur sm:mt-16 sm:p-6 md:mt-20 md:p-8">
             <div class="grid gap-5 md:grid-cols-3 md:gap-6">
                 <div class="rounded-2xl bg-[#F6F4FE] p-4 sm:p-5">
                     <p class="text-sm font-semibold text-[#7F64CE]">Why this fits you</p>
@@ -216,67 +323,7 @@
             </div>
         </div>
 
-        <div class="reveal-up reveal-delay-5 mx-auto mt-10 max-w-5xl rounded-[32px] bg-[#F6F4FE] p-6 sm:p-8 md:mt-12">
-            <div class="grid items-center gap-8 md:grid-cols-2">
-                
-                <div class="text-left">
-                    @guest
-                        <p class="text-sm font-semibold uppercase tracking-wide text-[#7F64CE]">
-                            Save your progress
-                        </p>
-
-                        <h3 class="mt-2 text-2xl font-bold leading-tight text-[#2E2A4A] sm:text-3xl">
-                            Want to save your quiz history?
-                        </h3>
-
-                        <p class="mt-4 text-sm leading-7 text-gray-600 sm:text-base">
-                            Log in to save your quiz attempts and revisit your previous results anytime from your profile.
-                        </p>
-
-                        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                            <a href="{{ route('login') }}"
-                               class="w-full rounded-full bg-[#7F64CE] px-6 py-3 text-center text-sm font-semibold text-white shadow-md transition duration-300 hover:-translate-y-0.5 hover:bg-[#6F55C7] sm:w-auto">
-                                Log In
-                            </a>
-
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}"
-                                   class="w-full rounded-full border border-[#C3BFFA]/40 bg-white px-6 py-3 text-center text-sm font-semibold text-[#7F64CE] shadow-sm transition duration-300 hover:-translate-y-0.5 hover:bg-[#F8F4FF] sm:w-auto">
-                                    Create Account
-                                </a>
-                            @endif
-                        </div>
-                    @endguest
-
-                    @auth
-                        <p class="text-sm font-semibold uppercase tracking-wide text-[#7F64CE]">
-                            Your account
-                        </p>
-
-                        <h3 class="mt-2 text-2xl font-bold leading-tight text-[#2E2A4A] sm:text-3xl">
-                            Want to check your quiz history?
-                        </h3>
-
-                        <p class="mt-4 text-sm leading-7 text-gray-600 sm:text-base">
-                            Visit your profile to review your recent quiz attempts and compare your past results.
-                        </p>
-
-                        <div class="mt-6">
-                            <a href="{{ route('student.quiz-history') }}"
-                               class="inline-flex w-full rounded-full bg-[#7F64CE] px-6 py-3 text-center text-sm font-semibold text-white shadow-md transition duration-300 hover:-translate-y-0.5 hover:bg-[#6F55C7] sm:w-auto">
-                                View Profile
-                            </a>
-                        </div>
-                    @endauth
-                </div>
-
-                <div class="flex justify-center md:justify-end">
-                    <img src="{{ asset('images/history.png') }}"
-                         alt="Quiz history"
-                         class="max-h-[240px] w-auto object-contain transition duration-500 hover:scale-[1.02]">
-                </div>
-            </div>
-        </div>
+        
     </section>
 
     <script>
@@ -295,6 +342,75 @@
             });
 
             elements.forEach((el) => observer.observe(el));
+
+            const showModal = (modal, card, storageKey) => {
+                if (!modal || !card || sessionStorage.getItem(storageKey)) {
+                    return;
+                }
+
+                setTimeout(() => {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+
+                    sessionStorage.setItem(storageKey, 'true');
+
+                    setTimeout(() => {
+                        card.classList.remove('scale-90', 'opacity-0');
+                        card.classList.add('scale-100', 'opacity-100');
+                    }, 80);
+                }, 3000);
+            };
+
+            const closeModal = (modal, card) => {
+                card.classList.remove('scale-100', 'opacity-100');
+                card.classList.add('scale-90', 'opacity-0');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 350);
+            };
+
+            const guestModal = document.getElementById('saveQuizModal');
+            const guestCard = document.getElementById('saveQuizCard');
+            const closeGuestBtn = document.getElementById('closeSaveQuizModal');
+
+            showModal(guestModal, guestCard, 'saveQuizModalShown');
+
+            closeGuestBtn?.addEventListener('click', function () {
+                closeModal(guestModal, guestCard);
+            });
+
+            guestModal?.addEventListener('click', function (event) {
+                if (event.target === guestModal) {
+                    closeModal(guestModal, guestCard);
+                }
+            });
+
+            const historyModal = document.getElementById('historyReminderModal');
+            const historyCard = document.getElementById('historyReminderCard');
+            const closeHistoryBtn = document.getElementById('closeHistoryReminderModal');
+            document.addEventListener('click', function (e) {
+                if (e.target && e.target.id === 'continueLoggedUser') {
+                    closeModal(historyModal, historyCard);
+                }
+            });
+
+            showModal(historyModal, historyCard, 'historyReminderShown');
+
+            closeHistoryBtn?.addEventListener('click', function () {
+                closeModal(historyModal, historyCard);
+            });
+
+            continueLoggedUser?.addEventListener('click', function () {
+                closeModal(historyModal, historyCard);
+            });
+
+            historyModal?.addEventListener('click', function (event) {
+                if (event.target === historyModal) {
+                    closeModal(historyModal, historyCard);
+                }
+            });
         });
     </script>
 </x-app-layout>
