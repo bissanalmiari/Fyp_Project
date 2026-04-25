@@ -46,8 +46,7 @@
                         </div>
                     </div>
                 </div>
-
-                <a href="{{ url('/profile') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Profile</a>
+                <a href="{{ url('student/personal') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Profile</a>            
             </div>
 
             <!-- Mobile Menu Button -->
@@ -108,7 +107,7 @@
                     </div>
                 </div>
 
-                <a href="{{ url('/profile') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Profile</a>
+                <a href="{{ url('student/personal') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Profile</a>           
             </div>
         </div>
     </div>
