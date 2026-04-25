@@ -29,7 +29,7 @@
 
                 <ul class="space-y-3 text-sm text-gray-500 text-center md:text-left font-[Poppins]">
                     <li><a href="{{ url('/quiz') }}" class="hover:text-[#7F64CE] transition">Quiz</a></li>
-                    <li><a href="{{ url('/recommendation') }}" class="hover:text-[#7F64CE] transition">Recommendation</a></li>
+                    <li><a href="{{ route('public.recommendations') }}" class="hover:text-[#7F64CE] transition">Recommendation</a></li>
                     <li><a href="{{ url('/comparison') }}" class="hover:text-[#7F64CE] transition">Comparison Tool</a></li>
                     <li><a href="{{ url('/careers') }}" class="hover:text-[#7F64CE] transition">Careers</a></li>
                 </ul>
@@ -52,7 +52,7 @@
         <!-- Bottom -->
         <div
             class="border-t border-gray-200 mt-10 pt-6 flex flex-col sm:flex-row justify-center items-center text-sm text-gray-400">
-            <p>© {{ date('Y') }} UniPath. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} UniPath. All rights reserved.</p>
         </div>
 
     </div>

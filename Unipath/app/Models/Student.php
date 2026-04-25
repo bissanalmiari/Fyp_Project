@@ -78,7 +78,14 @@ class Student extends Model
 
     public function recommendationFeedback()
     {
-        return $this->hasMany(RecommendationFeedback::class, 'student_id');
+        return $this->hasManyThrough(
+            FeedbackRecommendation::class,
+            Recommendation::class,
+            'student_id',
+            'recommendation_id',
+            'id',
+            'id'
+        );
     }
 
     public function successStories()

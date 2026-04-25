@@ -39,13 +39,7 @@ class GoogleController extends Controller
             ]);
         }
 
-        Student::firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
+        Student::firstOrCreate(['user_id' => $user->id]);
 
         Auth::login($user);
 

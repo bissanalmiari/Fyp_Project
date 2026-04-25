@@ -3,36 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unipath – Dashboard</title>
+    <title>Unipath - Dashboard</title>
 
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Theme -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#C498F2",
-                        secondary: "#C3BFFA",
-                        highlight: "#CDDBFD",
-                        title: "#7F64CE",
-                        bg: "#F6F4FE",
-                        textMain: "#3d3456",
-                        muted: "#9b8fc0",
-                        lightText: "#c0b8de",
-                        borderC: "#e6e0f8"
-                    }
-                }
-            }
-        }
-    </script>
-<link rel="stylesheet" href="{{ asset('css/ProfileLayout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ProfileLayout.css') }}">
     @yield('style')
 </head>
 
-<body class="bg-bg text-textMain font-sans">
+<body class="bg-bg text-text-main font-sans">
 
 <button id="menuToggle" class="md:hidden p-4 text-title fixed top-2 left-2 z-50 bg-white rounded-lg shadow">
     <!-- 3 lines icon -->
@@ -44,28 +23,22 @@
 </button>
 <div id="overlay" class="fixed inset-0 bg-black/40 hidden md:hidden z-40"></div>
 
-<div class="flex min-h-screen">
-
-    <!-- ───── Sidebar ───── -->
-
-<aside id="sidebar"
-class=" w-[238px] bg-white border-r border-borderC flex flex-col
-fixed md:sticky top-0 left-0 h-screen shadow-md
--translate-x-full md:translate-x-0
-transition-transform duration-300 z-50">
+<div class="student-shell">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="student-sidebar">
 
 <button id="closeSidebar" class="md:hidden absolute top-4 right-4 text-title text-2xl">
     &times;
 </button>
         <!-- Logo -->
-        <div class="px-6 py-6 border-b border-borderC">
+        <div class="px-6 py-6 border-b border-border-c">
             <span class="text-lg font-bold text-title">Unipath</span>
-            <small class="block text-[10px] uppercase tracking-widest text-lightText mt-1">
+            <small class="block text-[10px] uppercase tracking-widest text-light-text mt-1">
                 Student Portal
             </small>
         </div>
 
-        <h3 class="text-[10px] font-bold tracking-widest uppercase text-lightText px-6 py-3">
+        <h3 class="text-[10px] font-bold tracking-widest uppercase text-light-text px-6 py-3">
             Profile
         </h3>
 
@@ -146,6 +119,21 @@ transition-transform duration-300 z-50">
                 </a>
             </li>
 
+            <!-- Recommendations -->
+            <li>
+                <a href="{{ route('student.recommendations') }}"
+                   class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm transition
+                   {{ request()->routeIs('student.recommendations') ? 'bg-purple-100 text-title font-semibold' : 'text-muted hover:bg-bg hover:text-title' }}">
+
+                    <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z"/>
+                        <path d="M19 3v4M21 5h-4"/>
+                    </svg>
+
+                    Recommendations
+                </a>
+            </li>
+
             <!-- Quiz -->
             <li>
                 <a href="{{ route('student.quiz-history') }}"
@@ -164,7 +152,7 @@ transition-transform duration-300 z-50">
         </ul>
 
         <!-- Bottom -->
-        <div class="p-4 border-t border-borderC space-y-2">
+        <div class="p-4 border-t border-border-c space-y-2">
 
             <!-- Home -->
             <a href="{{ url('/') }}"
@@ -198,8 +186,8 @@ transition-transform duration-300 z-50">
 
     </aside>
 
-    <!-- ───── Content ───── -->
-    <main class="flex-1 p-10 overflow-y-auto ">
+    <!-- Content -->
+    <main class="student-main">
         @yield('content')
     </main>
 

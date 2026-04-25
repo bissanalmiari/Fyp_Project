@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\SuccessStoryController;
 use App\Http\Controllers\CareerController;
+use App\Http\Controllers\PublicRecommendationController;
 
 
 Route::middleware(['auth'])->group(function() {
@@ -27,6 +28,9 @@ Route::middleware(['auth'])->group(function() {
     Route::get('student/favorite', [StudentController::class, 'favorite'])->name('student.favorite');
 
     Route::get('student/quiz-history', [StudentController::class, 'quizHistory'])->name('student.quiz-history');
+
+    Route::get('student/recommendations', [StudentController::class, 'recommendations'])->name('student.recommendations');
+    Route::post('student/recommendations/generate', [StudentController::class, 'generateRecommendations'])->name('student.recommendations.generate');
 });
 use App\Http\Controllers\HomeController;
 
@@ -34,6 +38,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/careers', [CareerController::class, 'index'])->name('career');
 Route::post('/match-career', [CareerController::class, 'match'])->name('match-career');
+Route::get('/recommendations', [PublicRecommendationController::class, 'index'])->name('public.recommendations');
+Route::post('/recommendations/generate', [PublicRecommendationController::class, 'generate'])->name('public.recommendations.generate');
+Route::post('/recommendations/feedback', [PublicRecommendationController::class, 'feedback'])->name('public.recommendations.feedback');
 
 Route::get('admin/users', [AdminController::class, 'users'])->name('Admin.users');
 Route::delete('admin/users/{id}', [AdminController::class, 'deleteUser'])->name('Admin.users.delete');
@@ -102,4 +109,3 @@ Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
 
 require __DIR__.'/auth.php';
-

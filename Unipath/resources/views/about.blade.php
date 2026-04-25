@@ -45,40 +45,43 @@
         transform: translateX(0);
     }
 </style>
-<div class="relative overflow-hidden bg-[#F6F4FE] text-[#4B3F72]" style="font-family: 'Poppins', sans-serif;">
-    <img src="{{ asset('images/Shape1.png') }}" class="pointer-events-none absolute left-0 top-0 w-[900px] opacity-70"alt="">
+<div class="relative overflow-x-hidden bg-[#F6F4FE] text-[#4B3F72]" style="font-family: 'Poppins', sans-serif;">
+    <img src="{{ asset('images/Shape1.png') }}" class="pointer-events-none absolute left-0 top-0 w-[min(900px,100vw)] opacity-70" alt="">
 
-    <div class="relative z-10 mx-auto max-w-6xl px-6 py-0 md:py-0 lg:px-0">
+    <div class="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-12">
 
-        <section class="relative grid grid-cols-2 items-center gap-4 px-4 sm:gap-6 md:gap-10 lg:mt-32" style="margin-top: 200px;">
+        <section class="relative grid items-center gap-10 py-16 sm:py-20 md:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:py-24">
     
-            <div class="relative z-20">
-                <h1 class="text-xl font-bold leading-tight text-[#C498F2] sm:text-3xl md:text-5xl">
-                    <span class="whitespace-nowrap">Shaping the right</span>
+            <div class="relative z-20 max-w-xl">
+                <h1 class="text-4xl font-bold leading-tight text-[#C498F2] sm:text-5xl lg:text-6xl">
+                    <span>Shaping the right</span>
 
-                    <span class="blanche-font block text-[#7F64CE] text-lg -mt-1 sm:text-2xl sm:-mt-2 md:text-4xl">academic path</span>
+                    <span class="blanche-font mt-1 block text-4xl text-[#7F64CE] sm:text-5xl lg:text-6xl">academic path</span>
                 </h1>
 
-                <p class="mt-3 text-xs leading-6 text-[#6B6780] sm:text-base md:text-lg md:leading-8">Unipath helps students discover university programs that truly fit their goals, interests, skills, and budget through smart recommendations, interactive quizzes, and career-driven insights.</p>
+                <p class="mt-5 max-w-lg text-base leading-8 text-[#6B6780] md:text-lg">Unipath helps students discover university programs that truly fit their goals, interests, skills, and budget through smart recommendations, interactive quizzes, and career-driven insights.</p>
 
-                <div class="relative z-30 mt-4 flex flex-wrap gap-2 sm:mt-6 sm:gap-4">
-                    <a href="#why-unipath" class="inline-flex items-center justify-center rounded-full bg-[#C498F2] px-3 py-2 text-[10px] font-semibold text-white shadow-md shadow-purple-200/50 transition duration-300 sm:px-6 sm:py-3 sm:text-sm hover:-translate-y-0.5 hover:bg-[#7F64CE] hover:shadow-lg">Why UniPath?</a>
+                <div class="relative z-30 mt-6 flex flex-wrap gap-3 sm:gap-4">
+                    <a href="#why-unipath" class="inline-flex items-center justify-center rounded-full bg-[#C498F2] px-5 py-3 text-sm font-semibold text-white shadow-md shadow-purple-200/50 transition duration-300 hover:-translate-y-0.5 hover:bg-[#7F64CE] hover:shadow-lg">Why UniPath?</a>
 
-                    <a href="#features" class="inline-flex items-center justify-center rounded-full border border-[#C3BFFA] bg-white px-3 py-2 text-[10px] font-semibold text-[#7F64CE] shadow-sm transition duration-300 sm:px-6 sm:py-3 sm:text-sm hover:-translate-y-0.5 hover:border-[#C498F2] hover:bg-[#F4EFFF]"> Explore Features </a>
+                    <a href="#features" class="inline-flex items-center justify-center rounded-full border border-[#C3BFFA] bg-white px-5 py-3 text-sm font-semibold text-[#7F64CE] shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#C498F2] hover:bg-[#F4EFFF]">Explore Features</a>
                 </div>
             </div>
 
-            <div class="relative flex justify-end">
+            <div class="relative flex justify-center md:justify-end">
                 <div class="pointer-events-none absolute right-[5%] top-[10%] z-0 h-[80px] w-[80px] sm:h-[120px] sm:w-[120px] rounded-full blur-[4px] bg-[radial-gradient(circle,rgba(196,152,242,0.30)_0%,rgba(196,152,242,0.06)_60%,transparent_75%)]">   </div>
-                <img src="{{ asset('images/swirls.png') }}" class="pointer-events-none absolute bottom-[-20px] right-[-10px] z-0 w-[140%] max-w-[300px] opacity-50 sm:max-w-[500px] md:max-w-[700px]" alt="Background Swirls">
-                <img src="{{ asset('images/student-unipath2.png') }}" class="relative z-10 w-full max-w-[160px] sm:max-w-[220px] md:max-w-[320px] lg:max-w-[600px] xl:max-w-[750px] lg:translate-x-16 xl:translate-x-24 object-contain drop-shadow-[0_25px_50px_rgba(127,100,206,0.30)]" alt="Student Illustration">
+                <img src="{{ asset('images/swirls.png') }}" class="pointer-events-none absolute bottom-[-20px] right-0 z-0 w-full max-w-[300px] opacity-50 sm:max-w-[500px] md:max-w-[620px]" alt="Background Swirls">
+                <img src="{{ asset('images/student-unipath2.png') }}" class="relative z-10 w-full max-w-[280px] object-contain drop-shadow-[0_25px_50px_rgba(127,100,206,0.30)] sm:max-w-[360px] md:max-w-[460px] lg:max-w-[540px]" alt="Student Illustration">
             </div>
         </section>
 
-        <section id="features" class="relative py-10 sm:py-14 lg:py-18">
-            <img  src="{{ asset('images/Shape2.png') }}" class="pointer-events-none absolute right-0 top-10 z-0 w-[800px] translate-x-[300px] opacity-35" alt="" >
 
-            <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+        <section id="features" class="relative py-12 md:py-16">
+            <img src="{{ asset('images/Shape2.png') }}" class="pointer-events-none absolute right-0 top-10 z-0 w-[min(800px,90vw)] translate-x-[33%] opacity-35" alt="">
+
+            <div class="relative z-10 mx-auto max-w-7xl">
+
+
                 <div class="mx-auto max-w-3xl text-center fade-scroll" data-delay="0s">
                     <!-- 
                     <p class="inline-flex items-center justify-center text-xs font-semibold uppercase tracking-[0.25em] text-[#C498F2]"> Core Features</p>-->
@@ -254,7 +257,7 @@
                     <img
                         src="{{ asset('images/student-unipath4.png') }}"
                         alt="Student Illustration"
-                        class="relative z-10 w-[125%] max-w-none -translate-x-32 object-contain transition-opacity duration-500 ease-in-out"
+                        class="relative z-10 w-full max-w-[620px] object-contain transition-opacity duration-500 ease-in-out"
                     >
                 </div>
 
@@ -358,7 +361,7 @@
                                 <img
                                     src="{{ asset('images/student-typing.png') }}"
                                     alt="Student typing illustration"
-                                    class="w-full max-w-[220px] object-contain md:max-w-[280px] lg:max-w-none lg:scale-150 lg:translate-y-10"
+                                    class="w-full max-w-[220px] object-contain md:max-w-[280px] lg:max-w-[420px] lg:translate-y-10"
                                 />
                             </div>
 
@@ -372,7 +375,7 @@
                                 <img
                                     src="{{ asset('images/students.png') }}"
                                     alt="Students illustration"
-                                    class="w-full max-w-[260px] object-contain md:max-w-[340px] lg:max-w-none lg:scale-125 lg:-translate-x-10"
+                                    class="w-full max-w-[260px] object-contain md:max-w-[340px] lg:max-w-[440px]"
                                 />
                             </div>
 
@@ -416,7 +419,7 @@
                                 <img
                                     src="{{ asset('images/students2.png') }}"
                                     alt="Students recommendation illustration"
-                                    class="w-full max-w-[260px] object-contain md:max-w-[340px] lg:max-w-none lg:scale-125 lg:translate-x-10"
+                                    class="w-full max-w-[260px] object-contain md:max-w-[340px] lg:max-w-[440px]"
                                 />
                             </div>
 
@@ -447,40 +450,40 @@
 
                 <div class="mt-14 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
                     <div class="group flex flex-col items-center text-center transition duration-300">
-                        <div class="h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-[#EDE9FE] shadow-md transition duration-300 group-hover:scale-105 group-hover:shadow-xl">
-                            <img src="{{ asset('images/member1.jpg') }}" alt="Member 1" class="h-full w-full object-cover">
+                        <div class="flex h-32 w-32 items-center justify-center rounded-full border-4 border-white bg-gradient-to-br from-[#C498F2] to-[#7F64CE] text-3xl font-extrabold text-white shadow-md transition duration-300 group-hover:scale-105 group-hover:shadow-xl">
+                            MM
                         </div>
                         <p class="mt-4 text-base font-semibold text-[#4B3F72]">Mira Masri</p>
                         <p class="text-sm text-[#6B6780]">Frontend Developer</p>
                     </div>
 
                     <div class="group flex flex-col items-center text-center transition duration-300">
-                        <div class="h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-[#EDE9FE] shadow-md transition duration-300 group-hover:scale-105 group-hover:shadow-xl">
-                            <img src="{{ asset('images/member2.jpg') }}" alt="Member 2" class="h-full w-full object-cover">
+                        <div class="flex h-32 w-32 items-center justify-center rounded-full border-4 border-white bg-gradient-to-br from-[#C3BFFA] to-[#7F64CE] text-3xl font-extrabold text-white shadow-md transition duration-300 group-hover:scale-105 group-hover:shadow-xl">
+                            MM
                         </div>
                         <p class="mt-4 text-base font-semibold text-[#4B3F72]">Mohammad Marakebji</p>
                         <p class="text-sm text-[#6B6780]">Backend Developer</p>
                     </div>
 
                     <div class="group flex flex-col items-center text-center transition duration-300">
-                        <div class="h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-[#EDE9FE] shadow-md transition duration-300 group-hover:scale-105 group-hover:shadow-xl">
-                            <img src="{{ asset('images/member3.jpg') }}" alt="Member 3" class="h-full w-full object-cover">
+                        <div class="flex h-32 w-32 items-center justify-center rounded-full border-4 border-white bg-gradient-to-br from-[#CDDBFD] to-[#7F64CE] text-3xl font-extrabold text-white shadow-md transition duration-300 group-hover:scale-105 group-hover:shadow-xl">
+                            NM
                         </div>
                         <p class="mt-4 text-base font-semibold text-[#4B3F72]">Noha Mardini</p>
                         <p class="text-sm text-[#6B6780]">UI/UX Designer</p>
                     </div>
 
                     <div class="group flex flex-col items-center text-center transition duration-300">
-                        <div class="h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-[#EDE9FE] shadow-md transition duration-300 group-hover:scale-105 group-hover:shadow-xl">
-                            <img src="{{ asset('images/member4.jpg') }}" alt="Member 4" class="h-full w-full object-cover">
+                        <div class="flex h-32 w-32 items-center justify-center rounded-full border-4 border-white bg-gradient-to-br from-[#C498F2] to-[#4B3F72] text-3xl font-extrabold text-white shadow-md transition duration-300 group-hover:scale-105 group-hover:shadow-xl">
+                            KN
                         </div>
                         <p class="mt-4 text-base font-semibold text-[#4B3F72]">Khodor Nahhas</p>
                         <p class="text-sm text-[#6B6780]">Database Engineer</p>
                     </div>
 
                     <div class="group flex flex-col items-center text-center transition duration-300">
-                        <div class="h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-[#EDE9FE] shadow-md transition duration-300 group-hover:scale-105 group-hover:shadow-xl">
-                            <img src="{{ asset('images/member5.jpg') }}" alt="Member 5" class="h-full w-full object-cover">
+                        <div class="flex h-32 w-32 items-center justify-center rounded-full border-4 border-white bg-gradient-to-br from-[#C3BFFA] to-[#4B3F72] text-3xl font-extrabold text-white shadow-md transition duration-300 group-hover:scale-105 group-hover:shadow-xl">
+                            BA
                         </div>
                         <p class="mt-4 text-base font-semibold text-[#4B3F72]">Bissan Al Miaari</p>
                         <p class="text-sm text-[#6B6780]">Project Manager</p>

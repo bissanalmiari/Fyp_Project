@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Program; 
-use App\Models\Students;
 use App\Models\FeedbackRecommendation;
 class Recommendation extends Model
 {
@@ -15,7 +14,8 @@ class Recommendation extends Model
         'program_id',
         'score',
         'rank', 
-        'explanation'
+        'explanation',
+        'preference_hash',
     ];
 
     public function student()

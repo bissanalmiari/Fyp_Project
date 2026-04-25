@@ -9,6 +9,7 @@ use App\Models\Language;
 use App\Models\Skill;
 use App\Models\QuizAttempt;
 use App\Models\SubCategory;
+use App\Services\ProgramRecommendationService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +21,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
 
-        $student = Student::firstOrCreate(['user_id' => $user->id], ['name' => $user->name, 'email' => $user->email]);
+        $student = Student::firstOrCreate(['user_id' => $user->id]);
 
        
         $languages= Language::all();
@@ -36,13 +37,7 @@ class StudentController extends Controller
         // Get the authenticated student
         $user = Auth::user();
 
-        $student = Student::firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
+        $student = Student::firstOrCreate(['user_id' => $user->id]);
 
         // Validate the fields
         $request->validate([
@@ -83,26 +78,14 @@ class StudentController extends Controller
     {
         $user = Auth::user();
 
-        $student = Student::firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
+        $student = Student::firstOrCreate(['user_id' => $user->id]);
         return view('student.academic', compact('student'));
     }
 
     // Save academic info
    public function academicStore(Request $request)
 {
-    $student = Student::firstOrCreate(
-        ['user_id' => Auth::id()],
-        [
-            'name' => Auth::user()->name,
-            'email' => Auth::user()->email,
-        ]
-    );
+    $student = Student::firstOrCreate(['user_id' => Auth::id()]);
 
     $request->validate([
         'academic_level' => 'required|string',
@@ -147,13 +130,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
 
-        $student = Student::firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
+        $student = Student::firstOrCreate(['user_id' => $user->id]);
         return view('student.preferences', compact('student'));
     }
 
@@ -162,13 +139,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
 
-        $student = Student::firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
+        $student = Student::firstOrCreate(['user_id' => $user->id]);
 
         $request->validate([
             'preferred_location' => 'nullable|string|max:255',
@@ -203,13 +174,7 @@ class StudentController extends Controller
     {
         $user = Auth::user();
 
-        $student = Student::firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
+        $student = Student::firstOrCreate(['user_id' => $user->id]);
         $categories = Category::with('subcategories')->get();
         
       $student->load('categories');      
@@ -220,13 +185,7 @@ class StudentController extends Controller
     {
         // Get the authenticated student
         $user = Auth::user();
-        $student = Student::firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
+        $student = Student::firstOrCreate(['user_id' => $user->id]);
 
         // Validate the fields
         $request->validate([
@@ -267,13 +226,7 @@ $student->subcategories()->sync($subcategories);
     {
         $user = Auth::user();
 
-        $student = Student::firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
+        $student = Student::firstOrCreate(['user_id' => $user->id]);
         $favorites = $student->favorites()->with(['programs'])->get();
          
         return view('student.favorite', compact('student', 'favorites'));
@@ -284,13 +237,7 @@ $student->subcategories()->sync($subcategories);
     {
         $user = Auth::user();
 
-        $student = Student::firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
+        $student = Student::firstOrCreate(['user_id' => $user->id]);
 
         $attempts = QuizAttempt::with([
                 'quiz',
@@ -303,6 +250,58 @@ $student->subcategories()->sync($subcategories);
             ->get();
 
         return view('student.quiz-history', compact('attempts'));
+    }
+
+    public function recommendations(ProgramRecommendationService $recommendationService)
+    {
+        $user = Auth::user();
+
+        $student = Student::firstOrCreate(['user_id' => $user->id]);
+
+        $profileHash = $recommendationService->preferenceHash($student);
+        $recommendations = $recommendationService->latestRecommendations($student, $profileHash);
+        $canGenerate = $recommendationService->canGenerate($student, $profileHash);
+        $nextAvailableAt = $recommendationService->nextAvailableAt($student, $profileHash);
+        $recommendationHistory = $recommendationService->recommendationHistory($student, $profileHash);
+
+        return view('student.recommendations', compact(
+            'student',
+            'recommendations',
+            'canGenerate',
+            'nextAvailableAt',
+            'recommendationHistory'
+        ));
+    }
+
+    public function generateRecommendations(ProgramRecommendationService $recommendationService)
+    {
+        $user = Auth::user();
+
+        $student = Student::firstOrCreate(['user_id' => $user->id]);
+
+        if (\App\Models\Program::doesntExist()) {
+            return redirect()
+                ->route('student.recommendations')
+                ->with('success', 'Program data is not loaded yet. Please run the database seeders before generating recommendations.');
+        }
+
+        if (! $recommendationService->canGenerate($student)) {
+            return redirect()
+                ->route('student.recommendations')
+                ->with('success', 'Your recommendations are already up to date. You can refresh them again after 3 days, unless your major or preferences change.');
+        }
+
+        $recommendations = $recommendationService->generate($student);
+
+        if ($recommendations->isEmpty()) {
+            return redirect()
+                ->route('student.recommendations')
+                ->with('success', 'No matching programs were found yet. Please complete your academic information, preferences, and interests, then try again.');
+        }
+
+        return redirect()
+            ->route('student.recommendations')
+            ->with('success', 'Your top 3 matching programs are ready.');
     }
     
 }
