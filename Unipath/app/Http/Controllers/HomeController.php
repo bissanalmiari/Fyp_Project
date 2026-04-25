@@ -8,7 +8,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $stories = SuccessStory::where('is_published', true)
+        $stories = SuccessStory::where('status', 'approved')
             ->latest()
             ->get();
 

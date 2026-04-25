@@ -227,7 +227,7 @@
 
     <section id="send-message" class="bg-[#F6F4FE] py-20">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
-
+            @auth
             <div class="max-w-xl fade-scroll" data-delay="0s">
                 <h2 class="mt-6 text-3xl md:text-4xl font-bold text-[#7F64CE] leading-tight">
                     Share Your Story
@@ -238,9 +238,11 @@
                     Your story can inspire others and help us continue improving what we offer.
                 </p>
             </div>
+            @endauth
 
             <div class="fade-scroll mt-10 rounded-[28px] bg-[#F6F4FE] p-6 sm:p-8 md:p-10 border border-[#C3BFFA]/50 shadow-[0_4px_20px_rgba(127,100,206,0.08)]" data-delay="0.15s">
-                <form action="{{ route('success-stories.send') }}" method="POST" class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+                @auth
+                <form action="{{ route('success-stories.send') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
                     @csrf
                     <div class="space-y-6">
                         <div>
@@ -281,6 +283,24 @@
                                 class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-[#7F64CE] placeholder:text-[#8E97AE] outline-none transition duration-300 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
                             >
                         </div>
+
+                        <div>
+                            <label for="profile_image" class="mb-3 block text-[15px] font-semibold text-[#7F64CE]">
+                                Profile Picture <span class="text-sm font-normal text-gray-400">(Optional)</span>
+                            </label>
+
+                            <input
+                                type="file"
+                                id="profile_image"
+                                name="profile_image"
+                                accept="image/*"
+                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-[#7F64CE] file:mr-4 file:rounded-full file:border-0 file:bg-[#C498F2] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-[#7F64CE]"
+                            >
+
+                            <p class="mt-2 text-xs text-gray-500">
+                                If no image is uploaded, a default guest image will be used.
+                            </p>
+                        </div>
                     </div>
 
                     <div class="flex flex-col">
@@ -306,8 +326,105 @@
                             </button>
                         </div>
                     </div>
-
                 </form>
+                @endauth
+
+              @guest
+                <div class="fade-scroll px-2 sm:px-4 lg:px-0" data-delay="0.15s">
+                    <div class="grid items-center gap-14 lg:grid-cols-2">
+
+                        <div>
+                            <div class="mb-8 max-w-xl text-left">
+                                <h3 class="mt-5 text-3xl font-bold text-[#7F64CE] md:text-4xl">
+                                    Share Your Success Story
+                                </h3>
+
+                                <p class="mt-4 text-base leading-7 text-gray-600">
+                                    Log in to submit a verified story and inspire other students through your UniPath journey.
+                                </p>
+                            </div>
+
+                            <div class="relative flex justify-center lg:justify-start">
+                                <div class="absolute h-72 w-72 rounded-full bg-[#C498F2]/20 blur-3xl"></div>
+                                <img
+                                    src="{{ asset('images/share.png') }}"
+                                    alt="Share story illustration"
+                                    class="relative z-10 max-h-[340px] w-auto object-contain"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute left-7 top-8 hidden h-[275px] border-l-4 border-dotted border-[#C498F2]/40 md:block"></div>
+
+                            <div class="space-y-8">
+                                <div class="flex gap-5">
+                                    <div class="z-10 flex h-14 w-14 aspect-square shrink-0 items-center justify-center rounded-full bg-[#C498F2] text-lg font-bold leading-none text-white shadow-lg">
+                                        01
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-[#7F64CE]">Log In</h3>
+                                        <p class="mt-1 text-sm leading-6 text-gray-600">
+                                            Sign in with your student account so your story can be verified.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-5">
+                                    <div class="z-10 flex h-14 w-14 aspect-square shrink-0 items-center justify-center rounded-full bg-[#C498F2] text-lg font-bold leading-none text-white shadow-lg">
+                                        02
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-[#7F64CE]">Write Your Story</h3>
+                                        <p class="mt-1 text-sm leading-6 text-gray-600">
+                                            Share how UniPath helped you explore majors or move closer to your goals.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-5">
+                                    <div class="z-10 flex h-14 w-14 aspect-square shrink-0 items-center justify-center rounded-full bg-[#C498F2] text-lg font-bold leading-none text-white shadow-lg">
+                                        03
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-[#7F64CE]">Admin Review</h3>
+                                        <p class="mt-1 text-sm leading-6 text-gray-600">
+                                            Your story stays pending until an admin approves it.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-5">
+                                    <div class="z-10 flex h-14 w-14 aspect-square shrink-0 items-center justify-center rounded-full bg-[#7F64CE] text-lg font-bold leading-none text-white shadow-lg">
+                                        04
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-[#7F64CE]">Get Featured</h3>
+                                        <p class="mt-1 text-sm leading-6 text-gray-600">
+                                            Approved stories appear on the homepage to inspire others.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+                                <a href="{{ route('login') }}"
+                                class="rounded-full bg-[#7F64CE] px-7 py-3 text-center text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#6F55C7]">
+                                    Log In
+                                </a>
+
+                                @if(Route::has('register'))
+                                    <a href="{{ route('register') }}"
+                                    class="rounded-full border border-[#C3BFFA]/40 bg-white px-7 py-3 text-center text-sm font-semibold text-[#7F64CE] transition hover:-translate-y-0.5 hover:bg-[#F8F4FF]">
+                                        Create Account
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                @endguest
             </div>
         </div>
     </section>
