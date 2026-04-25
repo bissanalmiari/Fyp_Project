@@ -114,8 +114,10 @@ class AdminController extends Controller
     public function deleteCareer($id)
     {
         $career = Career::findOrFail($id);
+        if ($career->image) {
+        Storage::disk('public')->delete($career->image);
+    }
         $career->delete();
-
         return redirect()->route('Admin.careers')->with('success', 'Career deleted successfully.');
     }
 
@@ -145,10 +147,13 @@ class AdminController extends Controller
                 CASE 
                     WHEN track_key = 'core' THEN 1
                     WHEN track_key = 'tech' THEN 2
-                    WHEN track_key = 'business' THEN 3
-                    WHEN track_key = 'health_social' THEN 4
-                    WHEN track_key = 'creative_analytical' THEN 5
-                    ELSE 6
+                    WHEN track_key = 'engineering' THEN 3
+                    WHEN track_key = 'business' THEN 4
+                    WHEN track_key = 'health' THEN 5
+                    WHEN track_key = 'creative' THEN 6
+                    WHEN track_key = 'science' THEN 7
+                    WHEN track_key = 'social' THEN 8
+                    ELSE 9
                 END
             ")
             ->orderBy('order_index')

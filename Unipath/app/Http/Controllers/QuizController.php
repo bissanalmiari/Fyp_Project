@@ -36,17 +36,29 @@ class QuizController extends Controller
             'Finance',
             'Economics',
         ],
-        'health_social' => [
+        'health' => [
             'Nursing',
-            'Psychology',
-            'Education',
+            'Dentistry',
+            'Pharmacy',
+            'Medical Laboratory Sciences',
+        ],
+        'creative' => [
+            'Graphic Design',
+            'Multimedia Design',
+            'Interior Design',
+            'Architecture',
+        ],
+        'science' => [
+            'Mathematics',
+            'Physics',
+            'Chemistry',
             'Biology',
         ],
-        'creative_analytical' => [
-            'Graphic Design',
-            'Mathematics',
-            'Architecture',
-            'Multimedia Design',
+        'social' => [
+            'Psychology',
+            'Social Sciences',
+            'Sociology',
+            'Education',
         ],
     ];
 
@@ -179,11 +191,6 @@ class QuizController extends Controller
                 'suggests' => 'This suggests you may enjoy a tech path focused on software, algorithms, and analytical thinking.',
                 'next' => 'Explore courses like programming, algorithms, and databases, then compare them with your other top matches.',
             ],
-            'Computer Engineering' => [
-                'why' => 'Your answers showed interest in systems, hardware, and practical technology.',
-                'suggests' => 'This suggests you may prefer a technical path that connects computing with devices and engineering.',
-                'next' => 'Explore courses like digital systems, electronics, and computer architecture before making your final choice.',
-            ],
             'Data Science' => [
                 'why' => 'Your answers reflected strong interest in data, patterns, and analytical thinking.',
                 'suggests' => 'This suggests you may enjoy working with data analysis, intelligent systems, and real-world insights.',
@@ -194,6 +201,33 @@ class QuizController extends Controller
                 'suggests' => 'This suggests you may fit a technology path focused on securing networks, systems, and information.',
                 'next' => 'Explore courses like network security, ethical hacking, and system protection before choosing.',
             ],
+            'Software Engineering' => [
+                'why' => 'Your answers showed interest in designing, building, and improving software systems.',
+                'suggests' => 'This suggests you may enjoy a tech path focused on software development, testing, and system design.',
+                'next' => 'Explore courses like software design, databases, testing, and software development methodologies before choosing.',
+            ],
+
+            'Computer Engineering' => [
+                'why' => 'Your answers showed interest in systems, hardware, and practical technology.',
+                'suggests' => 'This suggests you may prefer a technical path that connects computing with devices and engineering.',
+                'next' => 'Explore courses like digital systems, electronics, and computer architecture before making your final choice.',
+            ],
+            'Mechanical Engineering' => [
+                'why' => 'Your answers showed interest in machines, systems, and how things work physically.',
+                'suggests' => 'This suggests you may enjoy a path focused on mechanics, design, and engineering systems.',
+                'next' => 'Explore courses like thermodynamics, mechanics, and machine design before deciding.',
+            ],
+            'Electrical Engineering' => [
+                'why' => 'Your answers showed interest in electricity, circuits, and technical systems.',
+                'suggests' => 'This suggests you may fit a path focused on electrical systems, power, and electronics.',
+                'next' => 'Explore courses like circuit analysis, power systems, and electronics before choosing.',
+            ],
+            'Industrial Engineering' => [
+                'why' => 'Your answers showed balanced interest across multiple technical and engineering areas.',
+                'suggests' => 'This suggests you may prefer a flexible engineering path with broad applications.',
+                'next' => 'Explore industrial engineering programs focusing on systems optimization, operations, and decision-making before deciding.',
+            ],
+
             'Business Administration' => [
                 'why' => 'Your answers showed strength in leadership, planning, and decision-making.',
                 'suggests' => 'This suggests you may do well in a business path involving management, organization, and strategy.',
@@ -214,35 +248,42 @@ class QuizController extends Controller
                 'suggests' => 'This suggests you may enjoy understanding how markets, policies, and economic systems work.',
                 'next' => 'Explore courses like microeconomics, macroeconomics, and policy analysis before choosing.',
             ],
+
             'Nursing' => [
                 'why' => 'Your answers showed empathy, care, and interest in helping others directly.',
                 'suggests' => 'This suggests you may fit a health-focused path centered on patient care and wellbeing.',
                 'next' => 'Explore courses in nursing practice, health sciences, and clinical care before deciding.',
             ],
-            'Psychology' => [
-                'why' => 'Your answers reflected interest in people, behavior, and emotional support.',
-                'suggests' => 'This suggests you may enjoy a path focused on understanding the mind and helping others.',
-                'next' => 'Explore courses like developmental psychology, counseling, and behavioral science before choosing.',
+            'Dentistry' => [
+                'why' => 'Your answers showed interest in health care, precision, and diagnosing patient problems.',
+                'suggests' => 'This suggests you may fit a health path focused on oral care, treatment, and patient wellbeing.',
+                'next' => 'Explore courses in dental anatomy, oral health, and clinical dental practice before choosing.',
             ],
-            'Education' => [
-                'why' => 'Your answers showed strength in communication, guidance, and helping others learn.',
-                'suggests' => 'This suggests you may fit a path centered on teaching, mentoring, and learning support.',
-                'next' => 'Explore courses in teaching methods, child development, and educational practice before deciding.',
+            'Pharmacy' => [
+                'why' => 'Your answers showed interest in medicine, accuracy, and supporting patient treatment.',
+                'suggests' => 'This suggests you may enjoy a health path focused on drugs, safety, and medical guidance.',
+                'next' => 'Explore courses like pharmacology, chemistry, and patient counseling before deciding.',
             ],
-            'Biology' => [
-                'why' => 'Your answers reflected curiosity about science, life, and natural systems.',
-                'suggests' => 'This suggests you may enjoy a science path focused on living organisms and research.',
-                'next' => 'Explore courses like genetics, microbiology, and human biology, then compare them with your other top matches.',
+            'Medical Laboratory Sciences' => [
+                'why' => 'Your answers reflected interest in lab work, testing, and scientific medical analysis.',
+                'suggests' => 'This suggests you may fit a health path focused on diagnosis, lab testing, and medical investigation.',
+                'next' => 'Explore courses like microbiology, hematology, clinical chemistry, and diagnostic testing before choosing.',
             ],
+
             'Graphic Design' => [
                 'why' => 'Your answers showed creativity, visual thinking, and interest in design.',
                 'suggests' => 'This suggests you may fit a path focused on visual communication, branding, and creative projects.',
                 'next' => 'Explore courses like typography, branding, and digital design, and review sample student portfolios too.',
             ],
-            'Mathematics' => [
-                'why' => 'Your answers reflected strong analytical thinking, logic, and pattern recognition.',
-                'suggests' => 'This suggests you may enjoy a path focused on reasoning, abstract thinking, and problem-solving.',
-                'next' => 'Explore courses like calculus, statistics, and applied mathematics before making your decision.',
+            'Multimedia Design' => [
+                'why' => 'Your answers reflected digital creativity, visual storytelling, and interest in interactive media.',
+                'suggests' => 'This suggests you may enjoy a creative path focused on digital design, motion, and multimedia experiences.',
+                'next' => 'Explore courses like animation, digital media, interactive design, and multimedia production before choosing.',
+            ],
+            'Interior Design' => [
+                'why' => 'Your answers showed interest in designing spaces, style, and practical visual planning.',
+                'suggests' => 'This suggests you may enjoy a creative path focused on indoor environments and functional design.',
+                'next' => 'Explore courses like space planning, lighting, materials, and interior design software before choosing.',
             ],
             'Architecture' => [
                 'why' => 'Your answers showed strength in creative planning, visual thinking, and structured design.',
@@ -250,27 +291,46 @@ class QuizController extends Controller
                 'next' => 'Explore courses like architectural design, drafting, structures, and space planning before making your final choice.',
             ],
 
-            'Multimedia Design' => [
-                'why' => 'Your answers reflected digital creativity, visual storytelling, and interest in interactive media.',
-                'suggests' => 'This suggests you may enjoy a creative path focused on digital design, motion, and multimedia experiences.',
-                'next' => 'Explore courses like animation, digital media, interactive design, and multimedia production before choosing.',
+            'Mathematics' => [
+                'why' => 'Your answers reflected strong analytical thinking, logic, and pattern recognition.',
+                'suggests' => 'This suggests you may enjoy a path focused on reasoning, abstract thinking, and problem-solving.',
+                'next' => 'Explore courses like calculus, statistics, and applied mathematics before making your decision.',
             ],
-            'Mechanical Engineering' => [
-                'why' => 'Your answers showed interest in machines, systems, and how things work physically.',
-                'suggests' => 'This suggests you may enjoy a path focused on mechanics, design, and engineering systems.',
-                'next' => 'Explore courses like thermodynamics, mechanics, and machine design before deciding.',
+            'Physics' => [
+                'why' => 'Your answers showed interest in forces, motion, systems, and understanding how the world works.',
+                'suggests' => 'This suggests you may enjoy a science path focused on matter, energy, and physical laws.',
+                'next' => 'Explore courses like mechanics, electricity, waves, and experimental physics before deciding.',
+            ],
+            'Chemistry' => [
+                'why' => 'Your answers reflected interest in experiments, reactions, substances, and scientific discovery.',
+                'suggests' => 'This suggests you may enjoy a science path focused on materials, chemical processes, and lab analysis.',
+                'next' => 'Explore courses like organic chemistry, analytical chemistry, and laboratory methods before choosing.',
+            ],
+            'Biology' => [
+                'why' => 'Your answers reflected curiosity about science, life, and natural systems.',
+                'suggests' => 'This suggests you may enjoy a science path focused on living organisms and research.',
+                'next' => 'Explore courses like genetics, microbiology, and human biology, then compare them with your other top matches.',
             ],
 
-            'Electrical Engineering' => [
-                'why' => 'Your answers showed interest in electricity, circuits, and technical systems.',
-                'suggests' => 'This suggests you may fit a path focused on electrical systems, power, and electronics.',
-                'next' => 'Explore courses like circuit analysis, power systems, and electronics before choosing.',
+            'Psychology' => [
+                'why' => 'Your answers reflected interest in people, behavior, and emotional support.',
+                'suggests' => 'This suggests you may enjoy a path focused on understanding the mind and helping others.',
+                'next' => 'Explore courses like developmental psychology, counseling, and behavioral science before choosing.',
             ],
-
-            'Industrial Engineering' => [
-                'why' => 'Your answers showed balanced interest across multiple technical and engineering areas.',
-                'suggests' => 'This suggests you may prefer a flexible engineering path with broad applications.',
-                'next' => 'Explore industrial engineering programs focusing on systems optimization, operations, and decision-making before deciding.',
+            'Social Sciences' => [
+                'why' => 'Your answers showed interest in society, people, culture, and social issues.',
+                'suggests' => 'This suggests you may enjoy a social path focused on understanding communities and human relationships.',
+                'next' => 'Explore courses like social research, communication, culture, and public service before deciding.',
+            ],
+            'Sociology' => [
+                'why' => 'Your answers reflected interest in groups, communities, and how society works.',
+                'suggests' => 'This suggests you may enjoy studying social behavior, social change, and real-world social problems.',
+                'next' => 'Explore courses like social theory, research methods, inequality, and community studies before choosing.',
+            ],
+            'Education' => [
+                'why' => 'Your answers showed strength in communication, guidance, and helping others learn.',
+                'suggests' => 'This suggests you may fit a path centered on teaching, mentoring, and learning support.',
+                'next' => 'Explore courses in teaching methods, child development, and educational practice before deciding.',
             ],
         ];
 
@@ -329,14 +389,16 @@ class QuizController extends Controller
         return self::CORE_COUNT + $branchCount;
     }
 
-    private function determineSelectedTrack(QuizAttempt $attempt): string
+   private function determineSelectedTrack(QuizAttempt $attempt): string
     {
         $trackScores = [
             'tech' => 0,
             'engineering' => 0,
+            'science' => 0,
             'business' => 0,
-            'health_social' => 0,
-            'creative_analytical' => 0,
+            'creative' => 0,
+            'health' => 0,
+            'social' => 0,
         ];
 
         $coreAnswers = QuizAnswer::with(['quizOption', 'quizQuestion'])
@@ -347,64 +409,24 @@ class QuizController extends Controller
             ->get();
 
         foreach ($coreAnswers as $answer) {
-            $questionOrder = $answer->quizQuestion->order_index;
             $optionOrder = $answer->quizOption->order_index;
 
-            if ($questionOrder === 1) {
-                if ($optionOrder === 1) {
-                    $trackScores['tech'] += 2;
-                    $trackScores['engineering'] += 2;
-                    $trackScores['creative_analytical'] += 2;
-                } elseif ($optionOrder === 2) {
-                    $trackScores['business'] += 3;
-                } elseif ($optionOrder === 3) {
-                    $trackScores['creative_analytical'] += 3;
-                } elseif ($optionOrder === 4) {
-                    $trackScores['health_social'] += 3;
-                }
-            }
-
-            if ($questionOrder === 2) {
-                if ($optionOrder === 1) {
-                    $trackScores['creative_analytical'] += 3;
-                    $trackScores['engineering'] += 2;
-                    $trackScores['tech'] += 1;
-                } elseif ($optionOrder === 2) {
-                    $trackScores['tech'] += 3;
-                } elseif ($optionOrder === 3) {
-                    $trackScores['business'] += 3;
-                } elseif ($optionOrder === 4) {
-                    $trackScores['health_social'] += 3;
-                }
-            }
-
-            if ($questionOrder === 3) {
-                if ($optionOrder === 1) {
-                    $trackScores['tech'] += 2;
-                    $trackScores['engineering'] += 2;
-                } elseif ($optionOrder === 2) {
-                    $trackScores['business'] += 3;
-                } elseif ($optionOrder === 3) {
-                    $trackScores['creative_analytical'] += 3;
-                } elseif ($optionOrder === 4) {
-                    $trackScores['health_social'] += 3;
-                }
-            }
-
-            if ($questionOrder === 4) {
-                if ($optionOrder === 1) {
-                    $trackScores['tech'] += 2;
-                    $trackScores['engineering'] += 2;
-                } elseif ($optionOrder === 2) {
-                    $trackScores['business'] += 3;
-                } elseif ($optionOrder === 3) {
-                    $trackScores['creative_analytical'] += 3;
-                } elseif ($optionOrder === 4) {
-                    $trackScores['health_social'] += 3;
-                }
+            if ($optionOrder === 1) {
+                $trackScores['tech'] += 2;
+                $trackScores['engineering'] += 2;
+                $trackScores['science'] += 2;
+            } elseif ($optionOrder === 2) {
+                $trackScores['business'] += 3;
+            } elseif ($optionOrder === 3) {
+                $trackScores['creative'] += 3;
+            } elseif ($optionOrder === 4) {
+                $trackScores['health'] += 2;
+                $trackScores['social'] += 2;
             }
         }
+
         arsort($trackScores);
+
         return array_key_first($trackScores);
     }
 

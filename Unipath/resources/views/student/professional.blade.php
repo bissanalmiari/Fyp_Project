@@ -25,7 +25,11 @@
         <div class="profile-image-box">
     <div class="avatar-circle">
          @if($student->image)
-                <img src="{{ asset('storage/' . $student->image) }}" alt="Profile Image" class="avatar-preview">
+                <img 
+    id="preview-image"
+    src="{{ $student->image ? asset('storage/' . $student->image) : '' }}" 
+    class="avatar-preview"
+>
                 @else
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                     <circle cx="12" cy="8" r="4"/>
@@ -44,7 +48,7 @@
             </svg>
             Upload
         </label>
-        <input type="file" id="av1" style="display:none" name="image">
+        <input type="file" id="av1" style="display:none" name="image" onchange="previewImage(event)">
     </div>
 </div>
 

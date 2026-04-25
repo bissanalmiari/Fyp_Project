@@ -103,14 +103,14 @@
     <div class="min-h-screen bg-[#F6F4FE] px-6 py-10 fade-in">
         <div class="mx-auto max-w-6xl">
 
-            <div class="mb-8 fade-left">
+            <div class="mb-8 fade-left" style="transform: translateY(-30PX)">
                 <a href="{{ url()->previous() }}"
                    class="inline-flex items-center gap-2 text-sm font-medium text-[#4A3F8F] transition hover:underline hover:opacity-80">
                     ← Back
                 </a>
             </div>
 
-            <div class="grid items-center gap-10 rounded-[32px] bg-white/70 p-8 shadow-[0_16px_50px_rgba(127,100,206,0.10)] backdrop-blur md:grid-cols-2">
+            <div class="grid items-center gap-10 rounded-[32px] bg-white/70 p-8 shadow-[0_16px_50px_rgba(127,100,206,0.10)] backdrop-blur md:grid-cols-2" style="transform: translateY(-30PX)">
                 
                 <div class="fade-left delay-1">
                     <p class="text-sm font-semibold uppercase tracking-wide text-[#7F64CE]">

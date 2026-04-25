@@ -31,13 +31,31 @@
 
     @yield('style')
 </head>
+<button id="menuToggle" class="md:hidden p-4 text-title fixed top-2 left-2 z-50 bg-white rounded-lg shadow">
+    <!-- 3 lines icon -->
+    <div class="space-y-1">
+        <div class="w-6 h-0.5 bg-title"></div>
+        <div class="w-6 h-0.5 bg-title"></div>
+        <div class="w-6 h-0.5 bg-title"></div>
+    </div>
+</button>
+<div id="overlay" class="fixed inset-0 bg-black/40 hidden md:hidden z-40"></div>
+
 
 <body class="bg-bg text-textMain font-sans">
 
 <div class="flex min-h-screen">
 
     <!-- ───── Sidebar ───── -->
-    <aside class="w-[238px] bg-white border-r border-borderC flex flex-col sticky top-0 h-screen shadow-md">
+   <aside id="sidebar"
+class=" w-[238px] bg-white border-r border-borderC flex flex-col
+fixed md:sticky top-0 left-0 h-screen shadow-md
+-translate-x-full md:translate-x-0
+transition-transform duration-300 z-50">
+
+<button id="closeSidebar" class="md:hidden absolute top-4 right-4 text-title text-2xl">
+    &times;
+</button>
 
         <!-- Logo -->
         <div class="px-6 py-6 border-b border-borderC">
@@ -246,6 +264,7 @@
 
 </div>
 @yield('script')
+<script src="{{ asset('js/admin.js') }}"></script>
 
 </body>
 

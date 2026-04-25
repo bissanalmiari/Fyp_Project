@@ -32,14 +32,24 @@ class QuizOptionMajorScoreSeeder extends Seeder
             'Economics',
 
             'Nursing',
-            'Psychology',
-            'Education',
-            'Biology',
+            'Dentistry',
+            'Pharmacy',
+            'Medical Laboratory Sciences',
 
             'Graphic Design',
-            'Mathematics',
-            'Architecture',
             'Multimedia Design',
+            'Interior Design',
+            'Architecture',
+
+            'Mathematics',
+            'Physics',
+            'Chemistry',
+            'Biology',
+
+            'Psychology',
+            'Social Sciences',
+            'Sociology',
+            'Education',
         ])->get()->keyBy('name');
 
         $getQuestion = function (string $trackKey, int $questionOrder) use ($quiz) {
@@ -127,7 +137,6 @@ class QuizOptionMajorScoreSeeder extends Seeder
 
         $assignScores('tech', 4, 1, [
             'Computer Science' => 3,
-            'Mathematics' => 1,
         ]);
         $assignScores('tech', 4, 2, [
             'Cybersecurity' => 3,
@@ -148,7 +157,6 @@ class QuizOptionMajorScoreSeeder extends Seeder
         ]);
         $assignScores('tech', 5, 3, [
             'Data Science' => 3,
-            'Mathematics' => 1,
         ]);
         $assignScores('tech', 5, 4, [
             'Software Engineering' => 3,
@@ -342,180 +350,320 @@ class QuizOptionMajorScoreSeeder extends Seeder
         ]);
 
         
-
-        
-        $assignScores('health_social', 1, 1, [
-            'Nursing' => 3,
-            'Biology' => 1,
-        ]);
-        $assignScores('health_social', 1, 2, [
-            'Psychology' => 3,
-            'Education' => 1,
-        ]);
-        $assignScores('health_social', 1, 3, [
-            'Education' => 3,
-            'Psychology' => 1,
-        ]);
-        $assignScores('health_social', 1, 4, [
-            'Biology' => 3,
-            'Nursing' => 1,
-        ]);
-
-        
-        $assignScores('health_social', 2, 1, [
+        $assignScores('health', 1, 1, [
             'Nursing' => 3,
         ]);
-        $assignScores('health_social', 2, 2, [
-            'Psychology' => 3,
+        $assignScores('health', 1, 2, [
+            'Dentistry' => 3,
         ]);
-        $assignScores('health_social', 2, 3, [
-            'Education' => 3,
+        $assignScores('health', 1, 3, [
+            'Pharmacy' => 3,
         ]);
-        $assignScores('health_social', 2, 4, [
-            'Biology' => 3,
+        $assignScores('health', 1, 4, [
+            'Medical Laboratory Sciences' => 3,
         ]);
 
-        
-        $assignScores('health_social', 3, 1, [
+        $assignScores('health', 2, 1, [
             'Nursing' => 3,
         ]);
-        $assignScores('health_social', 3, 2, [
-            'Psychology' => 3,
+        $assignScores('health', 2, 2, [
+            'Dentistry' => 3,
         ]);
-        $assignScores('health_social', 3, 3, [
-            'Education' => 3,
+        $assignScores('health', 2, 3, [
+            'Pharmacy' => 3,
         ]);
-        $assignScores('health_social', 3, 4, [
-            'Biology' => 3,
+        $assignScores('health', 2, 4, [
+            'Medical Laboratory Sciences' => 3,
         ]);
 
-        
-        $assignScores('health_social', 4, 1, [
+        $assignScores('health', 3, 1, [
             'Nursing' => 3,
         ]);
-        $assignScores('health_social', 4, 2, [
-            'Psychology' => 3,
+        $assignScores('health', 3, 2, [
+            'Dentistry' => 3,
         ]);
-        $assignScores('health_social', 4, 3, [
-            'Education' => 3,
+        $assignScores('health', 3, 3, [
+            'Pharmacy' => 3,
         ]);
-        $assignScores('health_social', 4, 4, [
-            'Biology' => 3,
+        $assignScores('health', 3, 4, [
+            'Medical Laboratory Sciences' => 3,
         ]);
 
-        
-        $assignScores('health_social', 5, 1, [
+        $assignScores('health', 4, 1, [
             'Nursing' => 3,
         ]);
-        $assignScores('health_social', 5, 2, [
-            'Psychology' => 3,
+        $assignScores('health', 4, 2, [
+            'Dentistry' => 3,
         ]);
-        $assignScores('health_social', 5, 3, [
-            'Education' => 3,
+        $assignScores('health', 4, 3, [
+            'Pharmacy' => 3,
         ]);
-        $assignScores('health_social', 5, 4, [
-            'Biology' => 3,
+        $assignScores('health', 4, 4, [
+            'Medical Laboratory Sciences' => 3,
         ]);
 
-        
-        $assignScores('health_social', 6, 1, [
+        $assignScores('health', 5, 1, [
             'Nursing' => 3,
         ]);
-        $assignScores('health_social', 6, 2, [
-            'Psychology' => 3,
+        $assignScores('health', 5, 2, [
+            'Dentistry' => 3,
         ]);
-        $assignScores('health_social', 6, 3, [
-            'Education' => 3,
+        $assignScores('health', 5, 3, [
+            'Pharmacy' => 3,
         ]);
-        $assignScores('health_social', 6, 4, [
-            'Biology' => 3,
+        $assignScores('health', 5, 4, [
+            'Medical Laboratory Sciences' => 3,
         ]);
 
-        
+        $assignScores('health', 6, 1, [
+            'Nursing' => 3,
+        ]);
+        $assignScores('health', 6, 2, [
+            'Dentistry' => 3,
+        ]);
+        $assignScores('health', 6, 3, [
+            'Pharmacy' => 3,
+        ]);
+        $assignScores('health', 6, 4, [
+            'Medical Laboratory Sciences' => 3,
+        ]);
 
-        
-        $assignScores('creative_analytical', 1, 1, [
+        $assignScores('creative', 1, 1, [
             'Graphic Design' => 3,
             'Multimedia Design' => 1,
         ]);
-        $assignScores('creative_analytical', 1, 2, [
-            'Mathematics' => 3,
-        ]);
-        $assignScores('creative_analytical', 1, 3, [
-            'Architecture' => 3,
-            'Graphic Design' => 1,
-        ]);
-        $assignScores('creative_analytical', 1, 4, [
+        $assignScores('creative', 1, 2, [
             'Multimedia Design' => 3,
             'Graphic Design' => 1,
         ]);
-
-        $assignScores('creative_analytical', 2, 1, [
-            'Graphic Design' => 3,
+        $assignScores('creative', 1, 3, [
+            'Interior Design' => 3,
+            'Architecture' => 1,
         ]);
-        $assignScores('creative_analytical', 2, 2, [
-            'Mathematics' => 3,
-        ]);
-        $assignScores('creative_analytical', 2, 3, [
+        $assignScores('creative', 1, 4, [
             'Architecture' => 3,
-        ]);
-        $assignScores('creative_analytical', 2, 4, [
-            'Multimedia Design' => 3,
+            'Interior Design' => 1,
         ]);
 
-        $assignScores('creative_analytical', 3, 1, [
+        $assignScores('creative', 2, 1, [
             'Graphic Design' => 3,
-            'Multimedia Design' => 1,
         ]);
-        $assignScores('creative_analytical', 3, 2, [
-            'Mathematics' => 3,
-        ]);
-        $assignScores('creative_analytical', 3, 3, [
-            'Architecture' => 3,
-        ]);
-        $assignScores('creative_analytical', 3, 4, [
+        $assignScores('creative', 2, 2, [
             'Multimedia Design' => 3,
-            'Graphic Design' => 1,
+        ]);
+        $assignScores('creative', 2, 3, [
+            'Interior Design' => 3,
+        ]);
+        $assignScores('creative', 2, 4, [
+            'Architecture' => 3,
         ]);
 
-        $assignScores('creative_analytical', 4, 1, [
+        $assignScores('creative', 3, 1, [
             'Graphic Design' => 3,
         ]);
-        $assignScores('creative_analytical', 4, 2, [
-            'Mathematics' => 3,
-        ]);
-        $assignScores('creative_analytical', 4, 3, [
-            'Architecture' => 3,
-            'Mathematics' => 1,
-        ]);
-        $assignScores('creative_analytical', 4, 4, [
+        $assignScores('creative', 3, 2, [
             'Multimedia Design' => 3,
+        ]);
+        $assignScores('creative', 3, 3, [
+            'Interior Design' => 3,
+        ]);
+        $assignScores('creative', 3, 4, [
+            'Architecture' => 3,
         ]);
 
-        $assignScores('creative_analytical', 5, 1, [
+        $assignScores('creative', 4, 1, [
             'Graphic Design' => 3,
         ]);
-        $assignScores('creative_analytical', 5, 2, [
-            'Mathematics' => 3,
-        ]);
-        $assignScores('creative_analytical', 5, 3, [
-            'Architecture' => 3,
-        ]);
-        $assignScores('creative_analytical', 5, 4, [
+        $assignScores('creative', 4, 2, [
             'Multimedia Design' => 3,
+        ]);
+        $assignScores('creative', 4, 3, [
+            'Interior Design' => 3,
+        ]);
+        $assignScores('creative', 4, 4, [
+            'Architecture' => 3,
         ]);
 
-        $assignScores('creative_analytical', 6, 1, [
+        $assignScores('creative', 5, 1, [
             'Graphic Design' => 3,
         ]);
-        $assignScores('creative_analytical', 6, 2, [
-            'Mathematics' => 3,
+        $assignScores('creative', 5, 2, [
+            'Multimedia Design' => 3,
         ]);
-        $assignScores('creative_analytical', 6, 3, [
+        $assignScores('creative', 5, 3, [
+            'Interior Design' => 3,
+        ]);
+        $assignScores('creative', 5, 4, [
             'Architecture' => 3,
         ]);
-        $assignScores('creative_analytical', 6, 4, [
+
+        $assignScores('creative', 6, 1, [
+            'Graphic Design' => 3,
+        ]);
+        $assignScores('creative', 6, 2, [
             'Multimedia Design' => 3,
+        ]);
+        $assignScores('creative', 6, 3, [
+            'Interior Design' => 3,
+        ]);
+        $assignScores('creative', 6, 4, [
+            'Architecture' => 3,
+        ]);
+
+        $assignScores('science', 1, 1, [
+            'Mathematics' => 3,
+        ]);
+        $assignScores('science', 1, 2, [
+            'Physics' => 3,
+        ]);
+        $assignScores('science', 1, 3, [
+            'Chemistry' => 3,
+        ]);
+        $assignScores('science', 1, 4, [
+            'Biology' => 3,
+        ]);
+
+        $assignScores('science', 2, 1, [
+            'Mathematics' => 3,
+        ]);
+        $assignScores('science', 2, 2, [
+            'Physics' => 3,
+        ]);
+        $assignScores('science', 2, 3, [
+            'Chemistry' => 3,
+        ]);
+        $assignScores('science', 2, 4, [
+            'Biology' => 3,
+        ]);
+
+        $assignScores('science', 3, 1, [
+            'Mathematics' => 3,
+        ]);
+        $assignScores('science', 3, 2, [
+            'Physics' => 3,
+        ]);
+        $assignScores('science', 3, 3, [
+            'Chemistry' => 3,
+        ]);
+        $assignScores('science', 3, 4, [
+            'Biology' => 3,
+        ]);
+
+        $assignScores('science', 4, 1, [
+            'Mathematics' => 3,
+        ]);
+        $assignScores('science', 4, 2, [
+            'Physics' => 3,
+        ]);
+        $assignScores('science', 4, 3, [
+            'Chemistry' => 3,
+        ]);
+        $assignScores('science', 4, 4, [
+            'Biology' => 3,
+        ]);
+
+        $assignScores('science', 5, 1, [
+            'Mathematics' => 3,
+        ]);
+        $assignScores('science', 5, 2, [
+            'Physics' => 3,
+        ]);
+        $assignScores('science', 5, 3, [
+            'Chemistry' => 3,
+        ]);
+        $assignScores('science', 5, 4, [
+            'Biology' => 3,
+        ]);
+
+        $assignScores('science', 6, 1, [
+            'Mathematics' => 3,
+        ]);
+        $assignScores('science', 6, 2, [
+            'Physics' => 3,
+        ]);
+        $assignScores('science', 6, 3, [
+            'Chemistry' => 3,
+        ]);
+        $assignScores('science', 6, 4, [
+            'Biology' => 3,
+        ]);
+
+        $assignScores('social', 1, 1, [
+            'Psychology' => 3,
+        ]);
+        $assignScores('social', 1, 2, [
+            'Sociology' => 3,
+        ]);
+        $assignScores('social', 1, 3, [
+            'Social Sciences' => 3,
+        ]);
+        $assignScores('social', 1, 4, [
+            'Education' => 3,
+        ]);
+
+        $assignScores('social', 2, 1, [
+            'Psychology' => 3,
+        ]);
+        $assignScores('social', 2, 2, [
+            'Sociology' => 3,
+        ]);
+        $assignScores('social', 2, 3, [
+            'Social Sciences' => 3,
+        ]);
+        $assignScores('social', 2, 4, [
+            'Education' => 3,
+        ]);
+
+        $assignScores('social', 3, 1, [
+            'Psychology' => 3,
+        ]);
+        $assignScores('social', 3, 2, [
+            'Sociology' => 3,
+        ]);
+        $assignScores('social', 3, 3, [
+            'Social Sciences' => 3,
+        ]);
+        $assignScores('social', 3, 4, [
+            'Education' => 3,
+        ]);
+
+        $assignScores('social', 4, 1, [
+            'Psychology' => 3,
+        ]);
+        $assignScores('social', 4, 2, [
+            'Sociology' => 3,
+        ]);
+        $assignScores('social', 4, 3, [
+            'Social Sciences' => 3,
+        ]);
+        $assignScores('social', 4, 4, [
+            'Education' => 3,
+        ]);
+
+        $assignScores('social', 5, 1, [
+            'Psychology' => 3,
+        ]);
+        $assignScores('social', 5, 2, [
+            'Sociology' => 3,
+        ]);
+        $assignScores('social', 5, 3, [
+            'Social Sciences' => 3,
+        ]);
+        $assignScores('social', 5, 4, [
+            'Education' => 3,
+        ]);
+
+        $assignScores('social', 6, 1, [
+            'Psychology' => 3,
+        ]);
+        $assignScores('social', 6, 2, [
+            'Sociology' => 3,
+        ]);
+        $assignScores('social', 6, 3, [
+            'Social Sciences' => 3,
+        ]);
+        $assignScores('social', 6, 4, [
+            'Education' => 3,
         ]);
     }
 }

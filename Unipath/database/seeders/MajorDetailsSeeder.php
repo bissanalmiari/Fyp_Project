@@ -169,6 +169,70 @@ class MajorDetailsSeeder extends Seeder
                 'what_you_study' => 'Students often study operations research, systems optimization, production systems, statistics, and process improvement.',
                 'career_paths' => 'This major can lead to careers in operations management, logistics, supply chain, process engineering, and system optimization roles.',
             ],
+
+            'Dentistry' => [
+                'slug' => 'dentistry',
+                'details_image' => 'Dentist2.png',
+                'short_description' => 'Dentistry focuses on oral health, dental care, and diagnosing problems related to teeth and gums.',
+                'what_you_study' => 'Students often study anatomy, oral biology, dental materials, diagnosis, and clinical dental practice.',
+                'career_paths' => 'This major can lead to careers in dental clinics, hospitals, oral health centers, and private dental practice.',
+            ],
+
+            'Pharmacy' => [
+                'slug' => 'pharmacy',
+                'details_image' => 'Pharmacy2.png',
+                'short_description' => 'Pharmacy focuses on medicines, drug safety, and helping patients use treatments correctly.',
+                'what_you_study' => 'Students often study pharmacology, chemistry, drug interactions, medical treatments, and patient counseling.',
+                'career_paths' => 'This major can lead to careers in pharmacies, hospitals, pharmaceutical companies, and healthcare support roles.',
+            ],
+
+            'Medical Laboratory Sciences' => [
+                'slug' => 'medical-laboratory-sciences',
+                'details_image' => 'Medlab2.png',
+                'short_description' => 'Medical Laboratory Sciences focuses on lab testing, medical analysis, and supporting diagnosis through science.',
+                'what_you_study' => 'Students often study microbiology, hematology, clinical chemistry, lab techniques, and diagnostic testing.',
+                'career_paths' => 'This major can lead to careers in medical labs, hospitals, diagnostic centers, and healthcare research.',
+            ],
+
+            'Interior Design' => [
+                'slug' => 'interior-design',
+                'details_image' => 'Interior2.png',
+                'short_description' => 'Interior Design focuses on planning and designing indoor spaces that are functional and visually appealing.',
+                'what_you_study' => 'Students often study space planning, materials, lighting, furniture design, color theory, and design software.',
+                'career_paths' => 'This major can lead to careers in interior design firms, architecture offices, furniture design, and space planning.',
+            ],
+
+            'Physics' => [
+                'slug' => 'physics',
+                'details_image' => 'Physics2.png',
+                'short_description' => 'Physics focuses on understanding matter, energy, motion, forces, and how the universe works.',
+                'what_you_study' => 'Students often study mechanics, electricity, waves, thermodynamics, quantum physics, and experimental methods.',
+                'career_paths' => 'This major can lead to careers in research, education, engineering support, data analysis, and laboratory work.',
+            ],
+
+            'Chemistry' => [
+                'slug' => 'chemistry',
+                'details_image' => 'Chemistry2.png',
+                'short_description' => 'Chemistry focuses on substances, reactions, materials, and how matter changes.',
+                'what_you_study' => 'Students often study organic chemistry, analytical chemistry, physical chemistry, lab methods, and chemical reactions.',
+                'career_paths' => 'This major can lead to careers in laboratories, pharmaceuticals, environmental testing, research, and quality control.',
+            ],
+
+            'Social Sciences' => [
+                'slug' => 'social-sciences',
+                'details_image' => 'Social2.png',
+                'short_description' => 'Social Sciences focuses on society, human relationships, culture, and social behavior.',
+                'what_you_study' => 'Students often study social research, politics, culture, human behavior, communication, and social institutions.',
+                'career_paths' => 'This major can lead to careers in research, social work support, NGOs, public service, education, and community development.',
+            ],
+
+            'Sociology' => [
+                'slug' => 'sociology',
+                'details_image' => 'Sociology2.png',
+                'short_description' => 'Sociology focuses on how people live in groups, how societies work, and how social issues develop.',
+                'what_you_study' => 'Students often study social behavior, inequality, culture, family, communities, research methods, and social change.',
+                'career_paths' => 'This major can lead to careers in research, community work, social services, education, NGOs, and public policy support.',
+            ],
         ];
 
         foreach ($majorDetails as $majorName => $details) {

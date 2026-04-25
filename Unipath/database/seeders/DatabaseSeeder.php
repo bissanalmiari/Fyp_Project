@@ -42,5 +42,7 @@ class DatabaseSeeder extends Seeder
             ProgramCsvSeeder::class,
 
         ]);
+
+        $this->call(SuccessStorySeeder::class);
     }
 }

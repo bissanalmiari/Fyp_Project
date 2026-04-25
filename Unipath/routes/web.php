@@ -32,11 +32,11 @@ Route::middleware(['auth'])->group(function() {
     Route::get('student/recommendations', [StudentController::class, 'recommendations'])->name('student.recommendations');
     Route::post('student/recommendations/generate', [StudentController::class, 'generateRecommendations'])->name('student.recommendations.generate');
 });
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\HomeController;
 
-Route::get('/career', [CareerController::class, 'index'])->name('career');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/careers', [CareerController::class, 'index'])->name('career');
 Route::post('/match-career', [CareerController::class, 'match'])->name('match-career');
 Route::get('/recommendations', [PublicRecommendationController::class, 'index'])->name('public.recommendations');
 Route::post('/recommendations/generate', [PublicRecommendationController::class, 'generate'])->name('public.recommendations.generate');
