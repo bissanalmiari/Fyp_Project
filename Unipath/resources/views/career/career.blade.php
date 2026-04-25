@@ -189,86 +189,10 @@
 
 
 
-<script src="{{asset('js/career.js')}}"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-$(document).ready(function () {
-
-   
-    // LOAD CAREERS WITH AJAX
-   
-    function loadCareers() {
-        $.ajax({
-            url: "/career",
-            method: "GET",
-            data: {
-                search: $('#search').val(),
-                category: $('#category').val()
-            },
-            success: function (response) {
-                $('#careers-table').html(response);
-                  expanded = false; 
-                  handleShowMore();
-            },
-            error: function (xhr) {
-                console.error("Error loading careers:", xhr.responseText);
-            }
-        });
-    }
-
-  
-    $('#search').on('keyup', function () {
-        loadCareers();
-    });
-
-    $('#category').on('change', function () {
-        loadCareers();
-    });
-
-    let expanded = false;
-    function handleShowMore() {
-        const cards = document.querySelectorAll('.career-card');
-        const btn = document.getElementById('toggleBtn');
-
-        if (!btn) return;
-
-        function updateView() {
-            cards.forEach((card, index) => {
-                if (!expanded && index >= 12) {
-                    card.style.display = "none";
-                } else {
-                    card.style.display = "";
-                }
-            });
-
-            btn.textContent = expanded ? "Show Less" : "Show More";
-        }
-
-        // Hide button if less than 20
-        if (cards.length <= 20) {
-            btn.style.display = "none";
-            return;
-        } else {
-            btn.style.display = "block";
-        }
-
-         btn.onclick = null;
-
-        const newBtn = document.getElementById('toggleBtn');
-
-        newBtn.addEventListener('click', function () {
-            expanded = !expanded;
-            updateView();
-        });
-
-        updateView(); 
-    }
+<script src="{{asset('js/career.js')}}"></script>
 
 
-    handleShowMore();
-
-});
-</script>
 </x-app-layout>
 
