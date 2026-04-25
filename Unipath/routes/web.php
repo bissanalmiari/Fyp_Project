@@ -32,7 +32,7 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/career', [CareerController::class, 'index'])->name('career');
+Route::get('/careers', [CareerController::class, 'index'])->name('career');
 Route::post('/match-career', [CareerController::class, 'match'])->name('match-career');
 
 Route::get('admin/users', [AdminController::class, 'users'])->name('Admin.users');
