@@ -37,17 +37,17 @@
         }
 
         @keyframes floatSoft {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+        }
 
-.animate-float {
-    animation: floatSoft 3s ease-in-out infinite;
-}
+        .animate-float {
+            animation: floatSoft 3s ease-in-out infinite;
+        }
     </style>
 
     @php
