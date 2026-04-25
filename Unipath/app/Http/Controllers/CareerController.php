@@ -20,9 +20,11 @@ class CareerController extends Controller{
             $query->where('category_id', $request->category);
         })
         ->when($request->search, function ($query) use ($request) {
-            $query->where('title', 'like', '%' . $request->search . '%');
-        })
-        ->get();
+    $search = strtolower($request->search);
+
+    $query->whereRaw('LOWER(title) LIKE ?', ['%' . $search . '%']);
+})
+->get();
 
     $inDemandCareers = Career::where('in_demand', 1)
         ->inRandomOrder()

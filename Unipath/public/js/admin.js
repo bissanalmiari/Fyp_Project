@@ -2,7 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let timeout = null;
 
-    //  FETCH FUNCTION
+    // ==============================
+    // FETCH FUNCTION (GLOBAL)
+    // ==============================
     function fetchData(config, url = null) {
 
         let endpoint = url ? new URL(url) : new URL(window.location.href);
@@ -10,13 +12,17 @@ document.addEventListener("DOMContentLoaded", function () {
         // SEARCH
         if (config.searchId) {
             const searchEl = document.getElementById(config.searchId);
-            if (searchEl && !url) {
+            if (searchEl) {
                 endpoint.searchParams.set('search', searchEl.value);
-                endpoint.searchParams.delete('page');
+
+                // reset page only on typing (not pagination)
+                if (!url) {
+                    endpoint.searchParams.delete('page');
+                }
             }
         }
 
-        
+        // CATEGORY
         if (config.categoryId) {
             const categoryEl = document.getElementById(config.categoryId);
             if (categoryEl && !url) {
@@ -26,33 +32,59 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         fetch(endpoint.toString(), {
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         })
         .then(res => res.json())
         .then(data => {
 
-            if (config.gridId && data.html) {
-                document.getElementById(config.gridId).innerHTML = data.html;
+            // ==============================
+            // GRID UPDATE
+            // ==============================
+            if (config.gridId && data.html !== undefined) {
+                const grid = document.getElementById(config.gridId);
+                if (grid) {
+                    grid.innerHTML = data.html;
+                }
             }
 
-           if (config.paginationId) {
-    document.getElementById(config.paginationId).innerHTML = data.pagination || '';
-}
-
-            if (config.countId && data.count !== undefined) {
-                document.getElementById(config.countId).innerText = data.count;
+            // ==============================
+            // PAGINATION UPDATE
+            // ==============================
+            if (config.paginationId) {
+                const pagination = document.getElementById(config.paginationId);
+                if (pagination && data.pagination !== undefined) {
+                    pagination.innerHTML = data.pagination;
+                }
             }
 
-            if (config.rangeId && data.from !== undefined) {
-                document.getElementById(config.rangeId).innerText =
-                    `${data.from ?? 0}–${data.to ?? 0}`;
+            // ==============================
+            // COUNT UPDATE
+            // ==============================
+            if (config.countId) {
+                const count = document.getElementById(config.countId);
+                if (count && data.count !== undefined) {
+                    count.innerText = data.count;
+                }
             }
-        });
+
+            // ==============================
+            // RANGE UPDATE
+            // ==============================
+            if (config.rangeId) {
+                const range = document.getElementById(config.rangeId);
+                if (range && data.from !== undefined) {
+                    range.innerText = `${data.from ?? 0}–${data.to ?? 0}`;
+                }
+            }
+        })
+        .catch(err => console.error("AJAX Error:", err));
     }
 
- 
-    //  CAREERS PAGE
-   
+    // ==============================
+    // CAREERS PAGE
+    // ==============================
     if (document.getElementById('careers-grid')) {
 
         const careersConfig = {
@@ -64,7 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
             categoryId: 'category'
         };
 
-        // SEARCH
         const searchInput = document.getElementById('search');
         if (searchInput) {
             searchInput.addEventListener('input', function () {
@@ -73,7 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        // CATEGORY
         const categorySelect = document.getElementById('category');
         if (categorySelect) {
             categorySelect.addEventListener('change', function () {
@@ -81,7 +111,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        // PAGINATION
         document.addEventListener('click', function (e) {
             const link = e.target.closest('#pagination-wrapper a');
             if (!link) return;
@@ -91,9 +120,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    
-    //  USERS PAGE
-   
+    // ==============================
+    // USERS PAGE
+    // ==============================
     if (document.getElementById('users-grid')) {
 
         const usersConfig = {
@@ -102,7 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
             searchId: 'searchInput'
         };
 
-        // SEARCH
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.addEventListener('input', function () {
@@ -111,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        // PAGINATION
         document.addEventListener('click', function (e) {
             const link = e.target.closest('#pagination-wrapper a');
             if (!link) return;
@@ -121,22 +148,22 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-});
-document.addEventListener("DOMContentLoaded", function () {
-
+    // ==============================
+    // SIDEBAR TOGGLE
+    // ==============================
     const openBtn = document.getElementById("menuToggle");
     const closeBtn = document.getElementById("closeSidebar");
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("overlay");
 
     function openSidebar() {
-        sidebar.classList.remove("-translate-x-full");
-        overlay.classList.remove("hidden");
+        sidebar?.classList.remove("-translate-x-full");
+        overlay?.classList.remove("hidden");
     }
 
     function closeSidebar() {
-        sidebar.classList.add("-translate-x-full");
-        overlay.classList.add("hidden");
+        sidebar?.classList.add("-translate-x-full");
+        overlay?.classList.add("hidden");
     }
 
     openBtn?.addEventListener("click", openSidebar);
