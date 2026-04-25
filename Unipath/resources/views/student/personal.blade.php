@@ -22,13 +22,13 @@
 
         <!-- Profile Picture -->
         <div class="profile-image-box">
-    <div class="avatar-circle">
-         @if($student->image)
-                <img 
-    id="preview-image"
-    src="{{ $student->image ? asset('storage/' . $student->image) : '' }}" 
-    class="avatar-preview"
->
+                    <div class="avatar-circle">
+                        @if($student->image)
+                                <img 
+                    id="preview-image"
+                    src="{{ $student->image ? asset('storage/' . $student->image) : '' }}" 
+                    class="avatar-preview"
+                >
                 @else
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                     <circle cx="12" cy="8" r="4"/>
