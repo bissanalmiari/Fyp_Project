@@ -2,25 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SuccessStorySubmission;
+use App\Models\SuccessStory;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
-class SuccessStorySubmissionController extends Controller
-{
+class SuccessStoryController extends Controller{
     public function store(Request $request)
     {
+        abort_unless(auth()->check(), 403);
+
+        $student = Student::where('user_id', auth()->id())->firstOrFail();
+
         $validated = $request->validate([
-            'full_name'  => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:255'],
             'story' => ['required', 'string'],
+            'profile_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
-        $validated['status'] = 'pending';
+        if ($request->hasFile('profile_image')) {
+            $path = $request->file('profile_image')->store('success-stories', 'public');
+            $profileImage = 'storage/' . $path;
+        } else {
+            $profileImage = 'images/guest.png';
+        }
 
-        SuccessStorySubmission::create($validated);
+        SuccessStory::create([
+            'student_id' => $student->id,
+            'full_name' => auth()->user()->name,
+            'email' => auth()->user()->email,
+            'phone' => $validated['phone'] ?? null,
+            'story_text' => $validated['story'],
+            'profile_image' => $profileImage,
+            'status' => 'pending',
+        ]);
 
-        return back()->with('success', 'Your success story has been submitted successfully.');
+        return back()->with('success', 'Your success story has been submitted successfully and is waiting for approval.');
     }
 
     public function index(Request $request)
@@ -28,7 +44,7 @@ class SuccessStorySubmissionController extends Controller
         $search = $request->search;
         $status = $request->status;
 
-        $stories = SuccessStorySubmission::query()
+        $stories = SuccessStory::query()
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('full_name', 'ILIKE', "%{$search}%")
@@ -56,7 +72,8 @@ class SuccessStorySubmissionController extends Controller
 
     public function approve($id)
     {
-        $story = SuccessStorySubmission::findOrFail($id);
+        $story = SuccessStory::findOrFail($id);
+
         $story->update([
             'status' => 'approved',
         ]);
@@ -66,7 +83,8 @@ class SuccessStorySubmissionController extends Controller
 
     public function disapprove($id)
     {
-        $story = SuccessStorySubmission::findOrFail($id);
+        $story = SuccessStory::findOrFail($id);
+
         $story->update([
             'status' => 'disapproved',
         ]);
@@ -76,7 +94,7 @@ class SuccessStorySubmissionController extends Controller
 
     public function destroy($id)
     {
-        $story = SuccessStorySubmission::findOrFail($id);
+        $story = SuccessStory::findOrFail($id);
         $story->delete();
 
         return back()->with('success', 'Success story deleted successfully.');

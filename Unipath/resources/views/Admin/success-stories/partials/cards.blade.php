@@ -35,7 +35,7 @@
 
         <div class="mb-5">
             <p class="text-sm text-textMain leading-7 break-words">
-                {{ $story->story }}
+                {{ $story->story_text }}
             </p>
         </div>
 

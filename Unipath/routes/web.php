@@ -7,7 +7,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactMessageController;
-use App\Http\Controllers\SuccessStorySubmissionController;
+use App\Http\Controllers\SuccessStoryController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\PublicRecommendationController;
 
@@ -64,15 +64,15 @@ Route::get('/admin/messages', [ContactMessageController::class, 'index'])->name(
 
 Route::delete('/admin/messages/{id}', [ContactMessageController::class, 'destroy'])->name('admin.messages.destroy');
 
-Route::post('/success-stories/send', [SuccessStorySubmissionController::class, 'store'])->name('success-stories.send');
+Route::post('/success-stories/send', [SuccessStoryController::class, 'store'])->name('success-stories.send');
 
-Route::get('/admin/success-stories', [SuccessStorySubmissionController::class, 'index'])->name('admin.success-stories.index');
+Route::get('/admin/success-stories', [SuccessStoryController::class, 'index'])->name('admin.success-stories.index');
 
-Route::patch('/admin/success-stories/{id}/approve', [SuccessStorySubmissionController::class, 'approve'])->name('admin.success-stories.approve');
+Route::patch('/admin/success-stories/{id}/approve', [SuccessStoryController::class, 'approve'])->name('admin.success-stories.approve');
 
-Route::patch('/admin/success-stories/{id}/disapprove', [SuccessStorySubmissionController::class, 'disapprove'])->name('admin.success-stories.disapprove');
+Route::patch('/admin/success-stories/{id}/disapprove', [SuccessStoryController::class, 'disapprove'])->name('admin.success-stories.disapprove');
 
-Route::delete('/admin/success-stories/{id}', [SuccessStorySubmissionController::class, 'destroy'])->name('admin.success-stories.destroy');
+Route::delete('/admin/success-stories/{id}', [SuccessStoryController::class, 'destroy'])->name('admin.success-stories.destroy');
 
 
 Route::get('/dashboard', function () {
