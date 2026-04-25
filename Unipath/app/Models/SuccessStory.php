@@ -16,6 +16,6 @@ class SuccessStory extends Model
 
    public function student()
 {
-    return $this->belongsTo(StudentProfile::class, 'student_id');
+    return $this->belongsTo(Student::class, 'student_id');
 }
 }
