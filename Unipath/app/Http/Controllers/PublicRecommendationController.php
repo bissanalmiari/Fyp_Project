@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\FeedbackRecommendation;
-use App\Models\Program;
 use App\Models\Student;
 use App\Services\ProgramRecommendationService;
 use Illuminate\Http\Request;
@@ -24,19 +23,19 @@ class PublicRecommendationController extends Controller
 
         $student = $this->student();
 
-        if (Program::doesntExist()) {
-            return redirect()
-                ->route('public.recommendations')
-                ->with('success', 'Program data is not loaded yet. Please run the database seeders before generating recommendations.');
-        }
-
         if (! $recommendationService->canGenerate($student)) {
             return redirect()
                 ->route('public.recommendations')
                 ->with('success', 'Your recommendation is already up to date for your current dashboard information.');
         }
 
-        $recommendationService->generate($student);
+        $recommendations = $recommendationService->generate($student);
+
+        if ($recommendations->isEmpty()) {
+            return redirect()
+                ->route('public.recommendations')
+                ->with('success', 'No programs matched your saved dashboard preferences. Try widening your country, study mode, course intensity, budget, or interests, then generate again.');
+        }
 
         return redirect()
             ->route('public.recommendations')
@@ -108,21 +107,7 @@ class PublicRecommendationController extends Controller
 
     private function visibleRecommendations(Student $student, ProgramRecommendationService $recommendationService)
     {
-        $current = $recommendationService->latestRecommendations($student);
-
-        if ($current->isNotEmpty()) {
-            return $current;
-        }
-
-        $latestHash = $student->recommendations()
-            ->latest()
-            ->value('preference_hash');
-
-        if (! $latestHash) {
-            return collect();
-        }
-
-        return $recommendationService->latestRecommendations($student, $latestHash);
+        return $recommendationService->latestRecommendations($student);
     }
 
     private function student(): Student

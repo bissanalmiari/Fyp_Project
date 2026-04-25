@@ -64,18 +64,25 @@
                         $details = json_decode($recommendation->explanation ?? '{}', true) ?: [];
                         $program = $recommendation->program;
                         $reasons = $details['details'] ?? [];
+                        $displayName = $recommendation->program_name ?: ($program->name ?? 'Program unavailable');
+                        $displayUniversity = $recommendation->university_name ?: ($program?->university?->name ?? ($details['university'] ?? 'University unavailable'));
+                        $displayCountry = $recommendation->country ?: ($program?->university?->country ?? ($details['country'] ?? 'Country not set'));
+                        $displayLevel = $recommendation->program_level ?: ($program->level ?? 'Level not set');
+                        $displayMode = $recommendation->study_mode ?: ($program->study_mode ?? 'Study mode not set');
+                        $displayUrl = $recommendation->program_url ?: $program?->url;
+                        $displayUrl = filter_var($displayUrl, FILTER_VALIDATE_URL) ? $displayUrl : null;
                     @endphp
 
                     <article class="recommendation-card rank-{{ $recommendation->rank }}">
                         <span class="recommendation-rank">#{{ $recommendation->rank }}</span>
-                        <h3>{{ $program->name ?? 'Program unavailable' }}</h3>
+                        <h3>{{ $displayName }}</h3>
                         <p class="recommendation-university">
-                            {{ $program?->university?->name ?? ($details['university'] ?? 'University unavailable') }}
+                            {{ $displayUniversity }}
                         </p>
                         <div class="recommendation-meta">
-                            <span>{{ $program->level ?? 'Level not set' }}</span>
-                            <span>{{ $program->study_mode ?? 'Study mode not set' }}</span>
-                            <span>{{ $program?->university?->country ?? ($details['country'] ?? 'Country not set') }}</span>
+                            <span>{{ $displayLevel }}</span>
+                            <span>{{ $displayMode }}</span>
+                            <span>{{ $displayCountry }}</span>
                         </div>
                         <div class="match-score">
                             <div style="width: {{ min(100, max(0, $recommendation->score)) }}%"></div>
@@ -96,8 +103,8 @@
                                 @endif
                             </div>
                         @endif
-                        @if($program?->url)
-                            <a class="btn-show" href="{{ $program->url }}" target="_blank" rel="noopener">Show Program</a>
+                        @if($displayUrl)
+                            <a class="btn-show" href="{{ $displayUrl }}" target="_blank" rel="noopener">Show Program</a>
                         @endif
                     </article>
                 @endforeach
@@ -114,12 +121,13 @@
                     @php
                         $details = json_decode($recommendation->explanation ?? '{}', true) ?: [];
                         $reasons = $details['details'] ?? [];
+                        $displayName = $recommendation->program_name ?: ($recommendation->program->name ?? 'Program unavailable');
                     @endphp
 
                     <article class="fit-card">
                         <div>
                             <span class="fit-rank">#{{ $recommendation->rank }}</span>
-                            <h3>{{ $recommendation->program->name ?? 'Program unavailable' }}</h3>
+                            <h3>{{ $displayName }}</h3>
                             @if(! empty($details['summary']))
                                 <p>{{ $details['summary'] }}</p>
                             @endif
@@ -173,16 +181,19 @@
                                 @php
                                     $historyDetails = json_decode($historyRecommendation->explanation ?? '{}', true) ?: [];
                                     $historyProgram = $historyRecommendation->program;
+                                    $historyName = $historyRecommendation->program_name ?: ($historyProgram->name ?? 'Program unavailable');
+                                    $historyUniversity = $historyRecommendation->university_name ?: ($historyProgram?->university?->name ?? ($historyDetails['university'] ?? 'University unavailable'));
+                                    $historyCountry = $historyRecommendation->country ?: ($historyProgram?->university?->country ?? ($historyDetails['country'] ?? 'Country not set'));
                                 @endphp
 
                                 <div class="history-program-row">
                                     <strong>#{{ $historyRecommendation->rank }}</strong>
                                     <div>
-                                        <h4>{{ $historyProgram->name ?? 'Program unavailable' }}</h4>
+                                        <h4>{{ $historyName }}</h4>
                                         <p>
-                                            {{ $historyProgram?->university?->name ?? ($historyDetails['university'] ?? 'University unavailable') }}
+                                            {{ $historyUniversity }}
                                             &middot;
-                                            {{ $historyProgram?->university?->country ?? ($historyDetails['country'] ?? 'Country not set') }}
+                                            {{ $historyCountry }}
                                         </p>
                                     </div>
                                     <span>{{ min(100, max(0, $historyRecommendation->score)) }}%</span>

@@ -157,24 +157,32 @@
                         $details = json_decode($recommendation->explanation ?? '{}', true) ?: [];
                         $program = $recommendation->program;
                         $score = min(100, max(0, $recommendation->score));
+                        $displayName = $recommendation->program_name ?: ($program->name ?? 'Program unavailable');
+                        $displayUniversity = $recommendation->university_name ?: ($program?->university?->name ?? ($details['university'] ?? 'University unavailable'));
+                        $displayCountry = $recommendation->country ?: ($program?->university?->country ?? ($details['country'] ?? 'Country unavailable'));
+                        $displayLevel = $recommendation->program_level ?: ($program->level ?? 'Level not set');
+                        $displayMode = $recommendation->study_mode ?: ($program->study_mode ?? 'Mode not set');
+                        $displayIntensity = $recommendation->course_intensity ?: ($program->course_intensity ?? 'Intensity not set');
+                        $displayUrl = $recommendation->program_url ?: $program?->url;
+                        $displayUrl = filter_var($displayUrl, FILTER_VALIDATE_URL) ? $displayUrl : null;
                     @endphp
                     <article class="rec-program-card">
                         <div class="rec-program-topline">
                             <span>#{{ $recommendation->rank }}</span>
                             <small>{{ $score }}% match</small>
                         </div>
-                        <h3>{{ $program->name ?? 'Program unavailable' }}</h3>
-                        <p>{{ $program?->university?->name ?? ($details['university'] ?? 'University unavailable') }} - {{ $program?->university?->country ?? ($details['country'] ?? 'Country unavailable') }}</p>
+                        <h3>{{ $displayName }}</h3>
+                        <p>{{ $displayUniversity }} - {{ $displayCountry }}</p>
                         <div class="rec-program-tags">
-                            <small>{{ $program->level ?? 'Level not set' }}</small>
-                            <small>{{ $program->study_mode ?? 'Mode not set' }}</small>
-                            <small>{{ $program->course_intensity ?? 'Intensity not set' }}</small>
+                            <small>{{ $displayLevel }}</small>
+                            <small>{{ $displayMode }}</small>
+                            <small>{{ $displayIntensity }}</small>
                         </div>
                         <div class="rec-card-meter">
                             <span style="width: {{ $score }}%"></span>
                         </div>
-                        @if($program?->url)
-                            <a href="{{ $program->url }}" target="_blank" rel="noopener">Show Program</a>
+                        @if($displayUrl)
+                            <a href="{{ $displayUrl }}" target="_blank" rel="noopener">Show Program</a>
                         @endif
                     </article>
                 @endforeach
@@ -215,9 +223,10 @@
                     @php
                         $details = json_decode($recommendation->explanation ?? '{}', true) ?: [];
                         $reasons = $details['details'] ?? [];
+                        $displayName = $recommendation->program_name ?: ($recommendation->program->name ?? 'Program unavailable');
                     @endphp
                     <article>
-                        <h3>{{ $recommendation->program->name ?? 'Program unavailable' }}</h3>
+                        <h3>{{ $displayName }}</h3>
                         @if(! empty($details['summary']))
                             <p>{{ $details['summary'] }}</p>
                         @endif

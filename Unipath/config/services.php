@@ -46,4 +46,9 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
+    'recommender' => [
+        'api_url' => env('RECOMMENDER_API_URL'),
+        'python' => env('RECOMMENDER_PYTHON', 'C:\\Python314\\python.exe'),
+    ],
+
 ];

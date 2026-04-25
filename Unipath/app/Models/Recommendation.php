@@ -12,6 +12,13 @@ class Recommendation extends Model
     protected $fillable = [
        'student_id',
         'program_id',
+        'program_name',
+        'university_name',
+        'country',
+        'program_level',
+        'study_mode',
+        'course_intensity',
+        'program_url',
         'score',
         'rank', 
         'explanation',

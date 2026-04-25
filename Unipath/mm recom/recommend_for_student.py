@@ -6,6 +6,25 @@ from data_preprocessing import load_and_clean_data
 from recommender import recommend_top3
 
 
+def get_program_field(program_row, field_name):
+    if program_row is None:
+        return ""
+
+    try:
+        value = program_row.get(field_name, "")
+    except Exception:
+        return ""
+
+    if value is None:
+        return ""
+
+    text = str(value).strip()
+    if text.lower() in {"nan", "none", "null", "<na>"}:
+        return ""
+
+    return text
+
+
 def main():
     if len(sys.argv) < 2:
         raise SystemExit("Usage: python recommend_for_student.py <student-json-path>")
@@ -34,11 +53,17 @@ def main():
         if not isinstance(explanation, list):
             explanation = [str(explanation)]
 
+        program_row = item.get("_program_row")
+
         cleaned.append({
             "rank": index,
             "program_name": item.get("program_name", ""),
             "university": item.get("university", ""),
             "country": item.get("country", ""),
+            "program_level": get_program_field(program_row, "Study Level"),
+            "study_mode": get_program_field(program_row, "Study Mode"),
+            "course_intensity": get_program_field(program_row, "Course Intensity"),
+            "program_url": get_program_field(program_row, "Program URL"),
             "score": item.get("score", 0),
             "summary": item.get("summary", ""),
             "explanation": explanation,
