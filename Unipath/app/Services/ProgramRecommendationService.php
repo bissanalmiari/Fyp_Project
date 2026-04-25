@@ -358,7 +358,14 @@ class ProgramRecommendationService
         }
 
         try {
-            $response = Http::timeout(120)->post(rtrim($apiUrl, '/') . '/recommend', [
+            $request = Http::timeout(120);
+            $apiKey = trim((string) config('services.recommender.api_key'));
+
+            if ($apiKey !== '') {
+                $request = $request->withHeaders(['X-API-Key' => $apiKey]);
+            }
+
+            $response = $request->post(rtrim($apiUrl, '/') . '/recommend', [
                 'student' => $this->studentPayload($student, $options),
                 'favorites_csv' => $this->favoritesCsv($student),
                 'feedback_csv' => $this->feedbackCsv($student),

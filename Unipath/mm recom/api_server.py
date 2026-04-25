@@ -8,6 +8,18 @@ from recommend_for_student import get_program_field
 from recommender import recommend_top3
 
 
+def expected_api_key():
+    return os.environ.get("RECOMMENDER_API_KEY", "").strip()
+
+
+def authorized(headers):
+    api_key = expected_api_key()
+    if not api_key:
+        return True
+
+    return headers.get("X-API-Key", "").strip() == api_key
+
+
 def build_recommendations(payload):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     student = payload.get("student", {})
@@ -80,6 +92,10 @@ class RecommendationHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         if self.path.rstrip("/") != "/recommend":
             self.send_json(404, {"error": "not found"})
+            return
+
+        if not authorized(self.headers):
+            self.send_json(401, {"error": "unauthorized"})
             return
 
         try:
