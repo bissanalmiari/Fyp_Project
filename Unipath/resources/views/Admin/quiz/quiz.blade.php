@@ -15,9 +15,12 @@
     $trackLabels = [
         'core' => 'Core Questions',
         'tech' => 'Technology Track',
+        'engineering' => 'Engineering Track',
         'business' => 'Business Track',
-        'health_social' => 'Health & Social Track',
-        'creative_analytical' => 'Creative & Analytical Track',
+        'health' => 'Health Track',
+        'creative' => 'Creative Track',
+        'science' => 'Science Track',
+        'social' => 'Social Track',
     ];
 @endphp
 

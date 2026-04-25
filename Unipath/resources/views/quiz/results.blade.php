@@ -38,8 +38,10 @@
     </style>
 
     @php
-        $descriptionMap = [
+       $descriptionMap = [
             'Mathematics' => 'A strong match for analytical thinking, patterns, and problem-solving.',
+            'Physics' => 'A strong match for understanding forces, systems, and how the physical world works.',
+            'Chemistry' => 'A strong match for experiments, reactions, and understanding materials and substances.',
 
             'Computer Science' => 'A strong fit for logical thinking, problem-solving, and programming.',
             'Software Engineering' => 'A strong fit for designing, building, and maintaining software systems.',
@@ -54,6 +56,7 @@
             'Graphic Design' => 'A strong fit for creativity, visual communication, and design thinking.',
             'Architecture' => 'A strong fit for creative planning, spatial design, and structured thinking.',
             'Multimedia Design' => 'A strong fit for digital creativity, visual storytelling, and interactive media.',
+            'Interior Design' => 'A strong fit for designing spaces, aesthetics, and functional environments.',
 
             'Business Administration' => 'A strong fit for leadership, planning, and decision-making.',
             'Marketing' => 'A strong fit for communication, promotion, and understanding audiences.',
@@ -61,8 +64,15 @@
             'Economics' => 'A strong fit for analyzing systems, trends, and how markets work.',
 
             'Psychology' => 'A strong fit for understanding people, behavior, and mental processes.',
-            'Nursing' => 'A strong fit for care, empathy, and helping others.',
+            'Social Sciences' => 'A strong fit for understanding society, culture, and human interactions.',
+            'Sociology' => 'A strong fit for studying communities, social behavior, and societal structures.',
             'Education' => 'A strong fit for communication, teaching, and supporting learning.',
+
+            'Nursing' => 'A strong fit for care, empathy, and helping others.',
+            'Dentistry' => 'A strong fit for precision, healthcare, and improving patient wellbeing.',
+            'Pharmacy' => 'A strong fit for medicine, accuracy, and supporting treatment decisions.',
+            'Medical Laboratory Sciences' => 'A strong fit for lab work, analysis, and medical testing.',
+
             'Biology' => 'A strong fit for science, living systems, and understanding the natural world.',
         ];
 
