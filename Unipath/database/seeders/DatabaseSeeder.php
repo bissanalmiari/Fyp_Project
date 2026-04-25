@@ -40,5 +40,7 @@ class DatabaseSeeder extends Seeder
 SubCategorySeeder::class,
 
         ]);
+
+        $this->call(SuccessStorySeeder::class);
     }
 }

@@ -10,31 +10,41 @@ class QuizMajorSeeder extends Seeder
     public function run(): void
     {
         $majors = [
-        'Computer Science',
-        'Data Science',
-        'Cybersecurity',
-        'Software Engineering',
+            'Computer Science',
+            'Data Science',
+            'Cybersecurity',
+            'Software Engineering',
 
-        'Computer Engineering',
-        'Mechanical Engineering',
-        'Electrical Engineering',
-        'Industrial Engineering',
+            'Computer Engineering',
+            'Mechanical Engineering',
+            'Electrical Engineering',
+            'Industrial Engineering',
 
-        'Business Administration',
-        'Marketing',
-        'Finance',
-        'Economics',
+            'Business Administration',
+            'Marketing',
+            'Finance',
+            'Economics',
 
-        'Nursing',
-        'Psychology',
-        'Education',
-        'Biology',
+            'Nursing',
+            'Dentistry',
+            'Pharmacy',
+            'Medical Laboratory Sciences',
 
-        'Graphic Design',
-        'Mathematics',
-        'Architecture',
-        'Multimedia Design',
-    ];
+            'Graphic Design',
+            'Multimedia Design',
+            'Interior Design',
+            'Architecture',
+
+            'Mathematics',
+            'Physics',
+            'Chemistry',
+            'Biology',
+
+            'Psychology',
+            'Social Sciences',
+            'Sociology',
+            'Education',
+        ];
 
     $trendyMajors = [
         'Computer Science',

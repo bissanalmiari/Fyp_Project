@@ -75,10 +75,10 @@
             </div>
         </section>
 
-        <section id="features" class="relative -mt-20 pt-2 pb-8 md:pt-2 md:pb-10">
+        <section id="features" class="relative py-10 sm:py-14 lg:py-18">
             <img  src="{{ asset('images/Shape2.png') }}" class="pointer-events-none absolute right-0 top-10 z-0 w-[800px] translate-x-[300px] opacity-35" alt="" >
 
-            <div class="mt-72 relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto max-w-3xl text-center fade-scroll" data-delay="0s">
                     <!-- 
                     <p class="inline-flex items-center justify-center text-xs font-semibold uppercase tracking-[0.25em] text-[#C498F2]"> Core Features</p>-->
@@ -221,7 +221,7 @@
             </div>
         </section>
 
-        <section id="why-unipath" class="relative overflow-hidden py-16 md:py-20">
+        <section id="why-unipath" class="relative overflow-hidden py-10 sm:py-14 lg:py-18">
             <img
                 src="{{ asset('images/Shape3.png') }}"
                 class="pointer-events-none absolute right-[-250px] top-[80px] z-0 w-[750px] opacity-25"
@@ -319,7 +319,7 @@
         </div>
         </section>
         
-        <section id="how-it-works" class="py-12 md:py-16 -mt-12">
+        <section id="how-it-works" class="py-10 sm:py-14 lg:py-18">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
 
                 <div class="mx-auto max-w-2xl text-center fade-scroll" data-delay="0s">
@@ -430,7 +430,7 @@
             </div>
         </section>
 
-        <section class="bg-[#F8F5FF] py-20">
+        <section class="bg-[#F8F5FF] py-10 sm:py-14 lg:py-18">
             <div class="mx-auto max-w-6xl px-6">
                 
                 <div class="mx-auto max-w-2xl text-center">

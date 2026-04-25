@@ -28,9 +28,9 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('student/quiz-history', [StudentController::class, 'quizHistory'])->name('student.quiz-history');
 });
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\HomeController;
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/career', [CareerController::class, 'index'])->name('career');
 Route::post('/match-career', [CareerController::class, 'match'])->name('match-career');

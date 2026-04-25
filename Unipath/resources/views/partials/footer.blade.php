@@ -1,4 +1,4 @@
-<footer class="bg-white border-t border-gray-200 mt-20">
+<footer class="bg-white border-t border-gray-200">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -15,7 +15,8 @@
                     <li><a href="{{ url('/about') }}" class="hover:text-[#7F64CE] transition">About Us</a></li>
                     <li><a href="{{ url('/contact') }}" class="hover:text-[#7F64CE] transition">Contact Us</a></li>
                     <li><a href="{{ url('/programs') }}" class="hover:text-[#7F64CE] transition">Programs</a></li>
-                    <li><a href="{{ url('/profile') }}" class="hover:text-[#7F64CE] transition">Profile</a></li>
+                    <li><a href="{{ url('student/personal') }}" class="hover:text-[#7F64CE] transition">Profile</a>
+                    </li>
                 </ul>
             </div>
 
@@ -36,12 +37,12 @@
 
             <!-- Logo + Description -->
             <div>
-                <div class="flex justify-center md:justify-start items-center">
+                <div class="flex justify-center items-center mr-2">
                     <img src="{{ asset('images/logo.png') }}" alt="UniPath Logo" class="h-10 w-10 mr-2">
                     <span class="text-2xl font-extrabold text-[#7F64CE]">UniPath</span>
                 </div>
 
-                <p class="mt-4 text-sm text-gray-500 text-center md:text-left font-[Poppins]">
+                <p class="mt-4 text-sm text-gray-500 text-center font-[Poppins]">
                     Helping students discover the right university programs with smart tools and personalized guidance.
                 </p>
             </div>

@@ -1,0 +1,38 @@
+html {
+    scroll-behavior: smooth;
+}
+
+@keyframes slowSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Apply both animations */
+.bubble-rotate {
+  animation: slowSpin 25s linear infinite;
+  will-change: transform, filter;
+}
+
+#arrow {
+  transform: rotate(180deg);
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating {
+  animation: float 4s ease-in-out infinite;
+}
