@@ -242,7 +242,7 @@
 
             <div class="fade-scroll mt-10 rounded-[28px] bg-[#F6F4FE] p-6 sm:p-8 md:p-10 border border-[#C3BFFA]/50 shadow-[0_4px_20px_rgba(127,100,206,0.08)]" data-delay="0.15s">
                 @auth
-                <form action="{{ route('success-stories.send') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+                <form action="{{ route('success-stories.send') }}" method="POST" class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
                     @csrf
                     <div class="space-y-6">
                         <div>
@@ -282,24 +282,6 @@
                                 placeholder="Enter your phone number"
                                 class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-[#7F64CE] placeholder:text-[#8E97AE] outline-none transition duration-300 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
                             >
-                        </div>
-
-                        <div>
-                            <label for="profile_image" class="mb-3 block text-[15px] font-semibold text-[#7F64CE]">
-                                Profile Picture <span class="text-sm font-normal text-gray-400">(Optional)</span>
-                            </label>
-
-                            <input
-                                type="file"
-                                id="profile_image"
-                                name="profile_image"
-                                accept="image/*"
-                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-[#7F64CE] file:mr-4 file:rounded-full file:border-0 file:bg-[#C498F2] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-[#7F64CE]"
-                            >
-
-                            <p class="mt-2 text-xs text-gray-500">
-                                If no image is uploaded, a default guest image will be used.
-                            </p>
                         </div>
                     </div>
 

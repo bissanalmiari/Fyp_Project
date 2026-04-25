@@ -6,7 +6,9 @@ use App\Models\SuccessStory;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
-class SuccessStoryController extends Controller{
+class SuccessStoryController extends Controller
+{
+
     public function store(Request $request)
     {
         abort_unless(auth()->check(), 403);
@@ -16,15 +18,9 @@ class SuccessStoryController extends Controller{
         $validated = $request->validate([
             'phone' => ['nullable', 'string', 'max:255'],
             'story' => ['required', 'string'],
-            'profile_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
-        if ($request->hasFile('profile_image')) {
-            $path = $request->file('profile_image')->store('success-stories', 'public');
-            $profileImage = 'storage/' . $path;
-        } else {
-            $profileImage = 'images/guest.png';
-        }
+        $profileImage = $student->image ? 'storage/' . $student->image : 'images/guest.png';
 
         SuccessStory::create([
             'student_id' => $student->id,

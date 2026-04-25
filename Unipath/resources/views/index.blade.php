@@ -339,11 +339,15 @@
                                         <div class="relative">
                                             <div class="absolute inset-0 rounded-full bg-[#C498F2]/30 blur-md scale-110"></div>
 
-                                           <img 
-    src="{{ asset($story->profile_image ?? 'images/guest.png') }}" 
-    alt="{{ $story->full_name ?? 'Student' }}"
-    class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-white shadow-md"
-/>
+                                            @php
+                                                $studentImage = $story->student->image ?? null;
+                                            @endphp
+
+                                            <img 
+                                                src="{{ $studentImage ? asset('storage/' . $studentImage) : asset('images/success-icon.png') }}"
+                                                alt="Student"
+                                                class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-white shadow-md"
+                                            />
                                         </div>
 
                                         <div>
@@ -352,13 +356,13 @@
                                             </p>
 
                                             <h3 class="text-xl sm:text-2xl font-bold text-[#7F64CE] font-[Poppins] leading-tight">
-                                                {{ $story->full_name ?? $story->student->user->name ?? 'Student' }}
+                                                {{ $story->student->user->name ?? 'Student' }}
                                             </h3>
                                         </div>
                                     </div>
 
                                     <p class="relative text-sm sm:text-base lg:text-lg text-gray-700 leading-7 sm:leading-8 font-[Poppins] min-h-[170px] sm:min-h-[160px]">
-                                       “{{ $story->story_text }}”
+                                        “{{ $story->story_text }}”
                                     </p>
 
                                 </div>
