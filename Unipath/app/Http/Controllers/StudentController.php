@@ -94,50 +94,53 @@ class StudentController extends Controller
     }
 
     // Save academic info
-    public function academicStore(Request $request)
-    {
-        $user = Auth::user();
+   public function academicStore(Request $request)
+{
+    $student = Student::firstOrCreate(
+        ['user_id' => Auth::id()],
+        [
+            'name' => Auth::user()->name,
+            'email' => Auth::user()->email,
+        ]
+    );
 
-        $student = Student::firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
-        );
+    $request->validate([
+        'academic_level' => 'required|string',
+        'major' => 'nullable|string|max:255',
+        'gpa' => 'nullable|numeric',
+        'ielts' => 'nullable|numeric',
+        'toefl' => 'nullable|numeric',
+        'sat' => 'nullable|numeric',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+    ]);
 
-        $request->validate([
-            'academic_level' => 'required|string',
-            'major' => 'nullable|string|max:255',
-            'gpa' => 'nullable|numeric',
-            'ielts' => 'nullable|numeric',
-            'toefl' => 'nullable|numeric',
-            'sat' => 'nullable|numeric',
-             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
-        ]);
+    // Save normal fields
+    $student->academic_level = $request->academic_level;
+    $student->major = $request->major;
+    $student->gpa = $request->gpa;
+    $student->ielts = $request->ielts;
+    $student->toefl = $request->toefl;
+    $student->sat = $request->sat;
 
-        $student->academic_level = $request->academic_level;
-        $student->major = $request->major;
-        $student->gpa = $request->gpa;
-        $student->ielts = $request->ielts;
-        $student->toefl = $request->toefl;
-        $student->sat = $request->sat;
+    // Save image ONLY if exists
+    if ($request->hasFile('image')) {
 
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-        // Delete old image if exists
         if ($student->image) {
             Storage::disk('public')->delete($student->image);
         }
 
-        // Store new image
         $path = $request->file('image')->store('students', 'public');
-        $student->image = $path;
+
+        // IMPORTANT: only assign if successful
+        if ($path) {
+            $student->image = $path;
+        }
     }
 
-        $student->save();
+    $student->save();
 
-        return redirect()->back()->with('success', 'Academic information updated successfully.');
-    }
+    return redirect()->back()->with('success', 'Academic information updated successfully.');
+}
 
     // Show preferences form
     public function preferences()

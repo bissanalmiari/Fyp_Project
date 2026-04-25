@@ -114,8 +114,10 @@ class AdminController extends Controller
     public function deleteCareer($id)
     {
         $career = Career::findOrFail($id);
+        if ($career->image) {
+        Storage::disk('public')->delete($career->image);
+    }
         $career->delete();
-
         return redirect()->route('Admin.careers')->with('success', 'Career deleted successfully.');
     }
 

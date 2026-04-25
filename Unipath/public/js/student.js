@@ -1,6 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    
     /* ───── POPUP ───── */
     const popup = document.getElementById('success-popup');
     const closeBtn = document.getElementById('close-popup');
@@ -95,5 +96,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
       });
     });
+
+    
+});
+function previewImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('preview-image');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+document.addEventListener("DOMContentLoaded", function () {
+
+    const openBtn = document.getElementById("menuToggle");
+    const closeBtn = document.getElementById("closeSidebar");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+
+    function openSidebar() {
+        sidebar.classList.remove("-translate-x-full");
+        overlay.classList.remove("hidden");
+    }
+
+    function closeSidebar() {
+        sidebar.classList.add("-translate-x-full");
+        overlay.classList.add("hidden");
+    }
+
+    openBtn?.addEventListener("click", openSidebar);
+    closeBtn?.addEventListener("click", closeSidebar);
+    overlay?.addEventListener("click", closeSidebar);
 
 });
