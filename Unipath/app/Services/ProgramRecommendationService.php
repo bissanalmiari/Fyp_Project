@@ -14,14 +14,20 @@ use Symfony\Component\Process\Process;
 class ProgramRecommendationService
 {
     public const COOLDOWN_DAYS = 3;
+    private const PROFILE_VERSION = 2;
 
     public function preferenceHash(Student $student): string
     {
         $student->loadMissing('categories', 'subcategories');
 
         $payload = [
+            'profile_version' => self::PROFILE_VERSION,
             'major' => $student->major,
             'academic_level' => $student->academic_level,
+            'gpa' => $student->gpa,
+            'ielts' => $student->ielts,
+            'toefl' => $student->toefl,
+            'sat' => $student->sat,
             'preferred_location' => $student->preferred_location,
             'preferred_study_mode' => $student->preferred_study_mode,
             'preferred_course_intensity' => $student->preferred_course_intensity,
@@ -117,7 +123,7 @@ class ProgramRecommendationService
             $items = $this->runPythonRecommender($student, $attempt);
             $savedCount = $this->storeRecommendations($student, $items, $hash, (bool) $attempt['filter_major']);
 
-            if ($savedCount > 0) {
+            if ($this->latestRecommendations($student, $hash)->count() >= 3) {
                 break;
             }
         }
@@ -178,12 +184,20 @@ class ProgramRecommendationService
     private function storeRecommendations(Student $student, array $items, string $hash, bool $filterMajor): int
     {
         $savedCount = 0;
-        $rank = 1;
+        $existingProgramIds = Recommendation::where('student_id', $student->id)
+            ->where('preference_hash', $hash)
+            ->pluck('program_id')
+            ->all();
+        $rank = count($existingProgramIds) + 1;
 
         foreach ($items as $item) {
             $program = $this->findProgram($item);
 
             if (! $program) {
+                continue;
+            }
+
+            if (in_array($program->id, $existingProgramIds, true)) {
                 continue;
             }
 
@@ -206,9 +220,10 @@ class ProgramRecommendationService
             ]);
 
             $savedCount++;
+            $existingProgramIds[] = $program->id;
             $rank++;
 
-            if ($savedCount === 3) {
+            if ($rank > 3) {
                 break;
             }
         }
@@ -301,13 +316,14 @@ class ProgramRecommendationService
         [$budgetMin, $budgetMax] = $this->budgetRange($student->budget);
         $majorProfile = $this->majorProfile($student->major);
         $useMajorProfile = $options['use_major_profile'] ?? true;
-        $broadCategories = collect($useMajorProfile ? $majorProfile['broad'] : [])
-            ->merge($student->categories->pluck('name'))
+        $hasMajorProfile = $useMajorProfile
+            && (! empty($majorProfile['broad']) || ! empty($majorProfile['detailed']));
+
+        $broadCategories = collect($hasMajorProfile ? $majorProfile['broad'] : $student->categories->pluck('name'))
             ->filter()
             ->unique()
             ->implode(';');
-        $detailedCategories = collect($useMajorProfile ? $majorProfile['detailed'] : [])
-            ->merge($student->subcategories->pluck('name'))
+        $detailedCategories = collect($hasMajorProfile ? $majorProfile['detailed'] : $student->subcategories->pluck('name'))
             ->filter()
             ->unique()
             ->implode(';');
@@ -414,6 +430,7 @@ class ProgramRecommendationService
         $student->loadMissing('categories', 'subcategories');
         $selectedBroad = $student->categories->pluck('name')->all();
         $selectedDetailed = $student->subcategories->pluck('name')->all();
+        $hasMajorProfile = ! empty($majorProfile['broad']) || ! empty($majorProfile['detailed']);
 
         if (
             empty($majorProfile['broad'])
@@ -428,13 +445,11 @@ class ProgramRecommendationService
         $programBroad = Str::lower((string) optional($program->category)->name);
         $programDetailed = Str::lower((string) optional($program->subcategories)->name);
 
-        $allowedBroad = collect($majorProfile['broad'])
-            ->merge($selectedBroad)
+        $allowedBroad = collect($hasMajorProfile ? $majorProfile['broad'] : $selectedBroad)
             ->map(fn ($item) => Str::lower(trim((string) $item)))
             ->filter()
             ->all();
-        $allowedDetailed = collect($majorProfile['detailed'])
-            ->merge($selectedDetailed)
+        $allowedDetailed = collect($hasMajorProfile ? $majorProfile['detailed'] : $selectedDetailed)
             ->map(fn ($item) => Str::lower(trim((string) $item)))
             ->filter()
             ->all();
@@ -447,12 +462,13 @@ class ProgramRecommendationService
     {
         $student->loadMissing('categories', 'subcategories');
         $majorProfile = $this->majorProfile($student->major);
-        $studentBroad = collect($majorProfile['broad'])->merge($student->categories->pluck('name'))
+        $hasMajorProfile = ! empty($majorProfile['broad']) || ! empty($majorProfile['detailed']);
+        $studentBroad = collect($hasMajorProfile ? $majorProfile['broad'] : $student->categories->pluck('name'))
             ->map(fn ($item) => Str::lower(trim((string) $item)))
             ->filter()
             ->unique()
             ->values();
-        $studentDetailed = collect($majorProfile['detailed'])->merge($student->subcategories->pluck('name'))
+        $studentDetailed = collect($hasMajorProfile ? $majorProfile['detailed'] : $student->subcategories->pluck('name'))
             ->map(fn ($item) => Str::lower(trim((string) $item)))
             ->filter()
             ->unique()

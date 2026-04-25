@@ -1,24 +1,9 @@
-@extends('layout')
-
-@section('style')
+@push('styles')
 <link rel="stylesheet" href="{{ asset('css/public-recommendations.css') }}">
-@endsection
+@endpush
 
-@section('content')
+<x-app-layout>
 <main class="rec-public-page">
-    <nav class="rec-public-nav">
-        <a href="{{ url('/') }}" class="brand">Unipath</a>
-        <div>
-            <a href="{{ url('/') }}">Home</a>
-            <a href="{{ route('career') }}">Careers</a>
-            @auth
-                <a href="{{ route('student.recommendations') }}">Student Portal</a>
-            @else
-                <a href="{{ route('login') }}">Sign In</a>
-            @endauth
-        </div>
-    </nav>
-
     @if(session('success'))
         <div class="rec-public-alert">{{ session('success') }}</div>
     @endif
@@ -321,4 +306,4 @@
         </div>
     </section>
 </main>
-@endsection
+</x-app-layout>

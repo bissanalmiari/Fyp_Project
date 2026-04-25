@@ -30,34 +30,6 @@ body {
     padding-bottom: 56px;
 }
 
-.rec-public-nav {
-    align-items: center;
-    background: rgba(255, 255, 255, 0.92);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    padding: 18px 7vw;
-    position: sticky;
-    top: 0;
-    z-index: 5;
-}
-
-.rec-public-nav a {
-    color: var(--title);
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-}
-
-.rec-public-nav .brand {
-    font-size: 18px;
-}
-
-.rec-public-nav div {
-    display: flex;
-    gap: 18px;
-}
-
 .rec-public-alert {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -641,16 +613,6 @@ body {
 }
 
 @media (max-width: 640px) {
-    .rec-public-nav {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .rec-public-nav div {
-        flex-wrap: wrap;
-    }
-
     .rec-hero-copy h1 {
         font-size: 28px;
     }
