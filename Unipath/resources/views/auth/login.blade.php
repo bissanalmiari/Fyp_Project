@@ -11,14 +11,19 @@
     </style>
 </head>
 
-<body class="bg-[#7F64CE] min-h-screen flex items-center justify-center px-4 py-8 font-[Poppins]">
+<body class="min-h-screen flex items-center justify-center px-4 py-8 font-[Poppins]"
+      style="background: linear-gradient(180deg, #F8F7FC 0%, #F1EFFA 100%);">    
     <div class="w-full rounded-[30px] overflow-hidden shadow-2xl bg-[#F6F4FE]" style="max-width: 1000px;">
         <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[700px]">
 
             <div class="relative flex items-center justify-center px-8 py-12 lg:px-16 bg-[#F6F4FE] overflow-hidden">
 
-                <div class="absolute top-0 left-0 w-[80%] h-full bg-gradient-to-r from-[#C498F2]/20 to-transparent rounded-r-full hidden md:block"style="border-radius: 100% 0 0 100% / 50% 0 0 50%;"></div>
-
+                <div class="absolute top-0 left-0 w-[75%] h-full hidden md:block"
+                    style="
+                        background: radial-gradient(circle at left center, rgba(196,152,242,0.12) 0%, transparent 70%);
+                        border-radius: 100% 0 0 100% / 50% 0 0 50%;
+                    ">
+                </div>
                 <div class="w-full max-w-md relative z-10 animate-fadeIn">
                     <div class="mb-10 text-left" style="min-height: 120px;">
                         <img src="{{ asset('images/unipath-logo.png') }}" alt="Unipath Logo" style="width: 180px; display: block; transform: translate(40px, -30px);">
@@ -40,7 +45,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('login') }}" id="loginForm" class="space-y-4">
+                    <form method="POST" action="{{ route('login') }}" id="loginForm" class="space-y-4"style="transform: translateY(-20PX)">
                         @csrf
                         <div>
                             <label 
@@ -59,7 +64,7 @@
                                 autofocus
                                 autocomplete="username"
                                 style="width: 85%; display: block; margin: 0 auto;"
-                                class="rounded-2xl border @error('email') border-red-400 @else border-gray-200 @enderror bg-white px-5 py-3 text-gray-700 shadow-sm focus:border-[#C498F2]  focus:ring-2 focus:ring-[#C498F2]/40 focus:ring-offset-0 focus:outline-none transition"
+                                class="rounded-2xl border @error('email') border-red-400 @else border-gray-200 @enderror bg-white px-5 py-3 text-gray-700 shadow-sm focus:border-[#C498F2]  focus:ring-2 focus:ring-[#C498F2]/25 focus:ring-offset-0 focus:outline-none transition"
                             >
                             @error('email')
                                 <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
@@ -107,7 +112,7 @@
                             @enderror
                         </div>
 
-                       <button type="submit" id="submitBtn" style="width: 85%; display: block; margin: 0 auto; transform: translateY(15px);" class="rounded-2xl bg-[#C498F2] py-3 text-white font-semibold shadow-md transition hover:bg-[#b988ea] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                       <button type="submit" id="submitBtn" style="width: 85%; display: block; margin: 0 auto; transform: translateY(15px);" class="rounded-2xl bg-[#C498F2] py-3 text-white font-semibold shadow-md transition hover:bg-[#b988ea] disabled:opacity-70 cursor-pointer flex items-center justify-center gap-2">
                             <span>Log In</span>
                         </button>
                     </form>
@@ -123,7 +128,7 @@
                                 <div style="width: 85%; border-top: 1px solid #D1D5DB;"></div>
                             </div>
                             <div class="relative flex justify-center text-sm">
-                                <span class="bg-[#F6F4FE] px-4 text-gray-500">
+                                <span class="bg-[#FBFAFF] px-4 text-gray-500">
                                     Or continue with
                                 </span>
                             </div>
