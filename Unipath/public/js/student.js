@@ -139,8 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
         overlay.classList.add("hidden");
     }
 
-    openBtn?.addEventListener("click", openSidebar);
-    closeBtn?.addEventListener("click", closeSidebar);
-    overlay?.addEventListener("click", closeSidebar);
-
+    openBtn.addEventListener("click", openSidebar);
+    closeBtn.addEventListener("click", closeSidebar);
+    overlay.addEventListener("click", closeSidebar);
 });
