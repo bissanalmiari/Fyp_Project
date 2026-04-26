@@ -36,7 +36,6 @@ class ProgramRecommendationService
             'budget' => $student->budget,
             'categories' => $student->categories->pluck('name')->sort()->values()->all(),
             'subcategories' => $student->subcategories->pluck('name')->sort()->values()->all(),
-            'favorites' => $student->favorites()->pluck('programs.id')->sort()->values()->all(),
         ];
 
         return hash('sha256', json_encode($payload));

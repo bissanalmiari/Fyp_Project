@@ -48,7 +48,7 @@
                         Recommend Best Programs
                     </button>
                     @if(! $canGenerate && $nextAvailableAt)
-                        <small class="cooldown-note">Available again {{ $nextAvailableAt->diffForHumans() }}</small>
+                        <small class="cooldown-note">Cooldown active. Available again {{ $nextAvailableAt->diffForHumans() }}</small>
                     @endif
                 </form>
 

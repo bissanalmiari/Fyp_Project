@@ -871,7 +871,16 @@ def apply_hybrid_scores(
             item["university"],
             known_positive_keys,
         ) else 0.0
-        final_score += known_positive_boost
+        favorite_similarity_boost = 0.0
+        if favorite_profile and favorite_profile.get("favorite_records"):
+            favorite_similarity_boost += 0.08 * int(feature_rows[idx].get("feature_favorite_broad_overlap", 0))
+            favorite_similarity_boost += 0.10 * int(feature_rows[idx].get("feature_favorite_detailed_overlap", 0))
+            favorite_similarity_boost += min(
+                0.12,
+                0.04 * int(feature_rows[idx].get("feature_favorite_token_overlap", 0)),
+            )
+
+        final_score += known_positive_boost + favorite_similarity_boost
 
         cleaned_item = {
             "student_id": item["student_id"],
@@ -890,6 +899,7 @@ def apply_hybrid_scores(
             "rule_weight": round(rule_weight, 4),
             "interaction_count": interaction_count,
             "known_positive_boost": round(known_positive_boost, 4),
+            "favorite_similarity_boost": round(favorite_similarity_boost, 4),
             "_program_row": item["_program_row"],  # keep full row for debugging/display
         }
         final_ranked.append(cleaned_item)

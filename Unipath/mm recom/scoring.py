@@ -489,6 +489,43 @@ def favorite_similarity_reason(program_row, favorite_profile):
     return None
 
 
+def favorite_preference_adjustment(program_row, favorite_profile):
+    if not favorite_profile:
+        return 0.0, []
+
+    favorite_records = favorite_profile.get("favorite_records", [])
+    favorite_categories = favorite_profile.get("categories", set())
+    favorite_detailed_categories = favorite_profile.get("detailed_categories", set())
+    favorite_name_tokens = favorite_profile.get("name_tokens", set())
+
+    if not favorite_records:
+        return 0.0, []
+
+    program_category = normalize_category(
+        program_row.get("broad_category", program_row.get("Program Category", ""))
+    )
+    program_detailed = normalize_detailed_category(program_row.get("detailed_category", ""))
+    program_tokens = tokenize_program_name(program_row.get("Program Name", ""))
+
+    score_delta = 0.0
+    reasons = []
+
+    if program_category and program_category in favorite_categories:
+        score_delta += 1.2
+        reasons.append("Matches the field of programs you liked")
+
+    if program_detailed and program_detailed in favorite_detailed_categories:
+        score_delta += 1.4
+        reasons.append("Matches the specialization of programs you liked")
+
+    token_overlap = len(program_tokens & favorite_name_tokens)
+    if token_overlap > 0:
+        score_delta += min(1.5, 0.5 * token_overlap)
+        reasons.append("Similar to your liked programs")
+
+    return score_delta, reasons
+
+
 def feedback_preference_adjustment(program_row, feedback_profile):
     if not feedback_profile:
         return 0.0, []
@@ -1009,9 +1046,9 @@ def score_program(student_prefs, program_row, favorite_profile=None, feedback_pr
 
     score += 0.5 * ranking_boost(program_row)
 
-    liked_reason = favorite_similarity_reason(program_row, favorite_profile)
-    if liked_reason:
-        reasons.append(liked_reason)
+    favorite_delta, favorite_reasons = favorite_preference_adjustment(program_row, favorite_profile)
+    score += favorite_delta
+    reasons.extend(favorite_reasons)
 
     feedback_delta, feedback_reasons = feedback_preference_adjustment(program_row, feedback_profile)
     score += feedback_delta
