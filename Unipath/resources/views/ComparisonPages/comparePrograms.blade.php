@@ -31,22 +31,30 @@
         </section>
 
         <section id="comparison-section" class="mx-auto max-w-7xl px-6 py-14 lg:px-12">
-            <div class="mb-10 rounded-3xl border border-[#7F64CE]/15 bg-white p-6 shadow-sm">
-                <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                    <div>
-                        <h2 class="text-4xl font-bold text-[#7F64CE]">About This Comparison Tool</h2>
-                        <p class="mt-3 max-w-3xl text-[#5B527D]">
-                            Compare two programs based on academic fit, tuition compatibility, personal preferences, and relevance to the student’s selected categories, sub categories, and major.
-                        </p>
+            <div class="about-comparison-panel">
+                <div class="about-comparison-header">
+                    <div class="about-comparison-copy">
+                        <div class="about-comparison-icon" aria-hidden="true">CT</div>
+                        <div>
+                            <span class="about-comparison-label">Smart comparison</span>
+                            <h2>About This Comparison Tool</h2>
+                        </div>
                     </div>
 
-                    <button
-                        type="button"
-                        id="about-toggle-btn"
-                        class="rounded-2xl border border-[#7F64CE] bg-white px-6 py-3 font-semibold text-[#7F64CE] transition hover:bg-[#C498F2] hover:text-white"
-                    >
-                        See More
-                    </button>
+                    <div class="about-comparison-actions">
+                        <p>
+                            Compare two programs based on academic fit, tuition compatibility, personal preferences, and relevance to the student’s selected categories, sub categories, and major.
+                        </p>
+
+                        <button
+                            type="button"
+                            id="about-toggle-btn"
+                            class="about-comparison-btn"
+                        >
+                            See More
+                            <span aria-hidden="true">+</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div id="about-content" class="mt-6 hidden">

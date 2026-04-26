@@ -18,6 +18,22 @@
     <h1 class="page-title">Preferences</h1>
     <p class="page-subtitle">Set your study preferences and budget expectations</p>
 
+    @php
+        $selectedCountries = old('preferred_location', $student->preferenceValues('preferred_location'));
+        $selectedModes = old('preferred_study_mode', $student->preferenceValues('preferred_study_mode'));
+        $selectedIntensities = old('preferred_course_intensity', $student->preferenceValues('preferred_course_intensity'));
+        $countries = ['Lebanon', 'Spain', 'Germany', 'Italy', 'France', 'USA'];
+        $studyModes = [
+            'on-campus' => 'On Campus',
+            'online' => 'Online',
+            'hybrid' => 'Hybrid',
+        ];
+        $courseIntensities = [
+            'full-time' => 'Full Time',
+            'part-time' => 'Part Time',
+        ];
+    @endphp
+
     <form action="{{ route('student.preferences.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
  <!-- Profile Picture -->
@@ -69,35 +85,60 @@
                 
 
                 <div class="form-group">
-                    <label>Preferred Country</label>
-                    <select name="preferred_location" class="input-select">
-                        <option value="" >Select a country</option>
-                        <option value="Lebanon" {{ old('preferred_location', $student->preferred_location) == 'Lebanon' ? 'selected' : '' }}>Lebanon</option>
-                        <option value="Spain" {{ old('preferred_location', $student->preferred_location) == 'Spain' ? 'selected' : '' }}>Spain</option>
-                        <option value="Germany" {{ old('preferred_location', $student->preferred_location) == 'Germany' ? 'selected' : '' }}>Germany</option>
-                        <option value="Italy" {{ old('preferred_location', $student->preferred_location) == 'Italy' ? 'selected' : '' }}>Italy</option>
-                        <option value="France" {{ old('preferred_location', $student->preferred_location) == 'France' ? 'selected' : '' }}>France</option>
-                        <option value="USA" {{ old('preferred_location', $student->preferred_location) == 'USA' ? 'selected' : '' }}>USA</option>
+                    <label>Preferred Countries</label>
+                    <select class="input-select preference-picker" data-name="preferred_location[]" data-target="preferred-countries">
+                        <option value="">Select a country</option>
+                        @foreach($countries as $country)
+                            <option value="{{ $country }}">{{ $country }}</option>
+                        @endforeach
                     </select>
+                    <div id="preferred-countries" class="preference-token-list">
+                        @foreach($selectedCountries as $country)
+                            <span class="preference-token" data-value="{{ $country }}">
+                                {{ $country }}
+                                <button type="button" aria-label="Remove {{ $country }}">&times;</button>
+                                <input type="hidden" name="preferred_location[]" value="{{ $country }}">
+                            </span>
+                        @endforeach
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Preferred Study Mode</label>
-                    <select name="preferred_study_mode" class="input-select">
+                    <label>Preferred Study Modes</label>
+                    <select class="input-select preference-picker" data-name="preferred_study_mode[]" data-target="preferred-study-modes">
                         <option value="">Select study mode</option>
-                        <option value="on-campus" {{ old('preferred_study_mode', $student->preferred_study_mode) == 'on-campus' ? 'selected' : '' }}>On Campus</option>
-                        <option value="online" {{ old('preferred_study_mode', $student->preferred_study_mode) == 'online' ? 'selected' : '' }}>Online</option>
-                        <option value="hybrid" {{ old('preferred_study_mode', $student->preferred_study_mode) == 'hybrid' ? 'selected' : '' }}>Hybrid</option>
+                        @foreach($studyModes as $value => $label)
+                            <option value="{{ $value }}">{{ $label }}</option>
+                        @endforeach
                     </select>
+                    <div id="preferred-study-modes" class="preference-token-list">
+                        @foreach($selectedModes as $mode)
+                            <span class="preference-token" data-value="{{ $mode }}">
+                                {{ $studyModes[$mode] ?? $mode }}
+                                <button type="button" aria-label="Remove {{ $studyModes[$mode] ?? $mode }}">&times;</button>
+                                <input type="hidden" name="preferred_study_mode[]" value="{{ $mode }}">
+                            </span>
+                        @endforeach
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Preferred Course Intensity</label>
-                    <select name="preferred_course_intensity" class="input-select">
-                        <option value="" >Select course intensity</option>
-                        <option value="full-time" {{ old('preferred_course_intensity', $student->preferred_course_intensity) == 'full-time' ? 'selected' : '' }}>Full Time</option>
-                        <option value="part-time" {{ old('preferred_course_intensity', $student->preferred_course_intensity) == 'part-time' ? 'selected' : '' }}>Part Time</option>
+                    <label>Preferred Course Intensities</label>
+                    <select class="input-select preference-picker" data-name="preferred_course_intensity[]" data-target="preferred-course-intensities">
+                        <option value="">Select course intensity</option>
+                        @foreach($courseIntensities as $value => $label)
+                            <option value="{{ $value }}">{{ $label }}</option>
+                        @endforeach
                     </select>
+                    <div id="preferred-course-intensities" class="preference-token-list">
+                        @foreach($selectedIntensities as $intensity)
+                            <span class="preference-token" data-value="{{ $intensity }}">
+                                {{ $courseIntensities[$intensity] ?? $intensity }}
+                                <button type="button" aria-label="Remove {{ $courseIntensities[$intensity] ?? $intensity }}">&times;</button>
+                                <input type="hidden" name="preferred_course_intensity[]" value="{{ $intensity }}">
+                            </span>
+                        @endforeach
+                    </div>
                 </div>
 
             </div>

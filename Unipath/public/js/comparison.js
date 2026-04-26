@@ -212,7 +212,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (aboutToggleBtn && aboutContent) {
         aboutToggleBtn.addEventListener('click', function () {
             aboutContent.classList.toggle('hidden');
-            aboutToggleBtn.textContent = aboutContent.classList.contains('hidden') ? 'See More' : 'See Less';
+            const isHidden = aboutContent.classList.contains('hidden');
+            aboutToggleBtn.innerHTML = `${isHidden ? 'See More' : 'See Less'} <span aria-hidden="true">${isHidden ? '+' : '-'}</span>`;
         });
     }
 

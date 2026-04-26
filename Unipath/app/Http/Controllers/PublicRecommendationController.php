@@ -121,7 +121,9 @@ class PublicRecommendationController extends Controller
         $checks = [
             'Academic level' => filled($student->academic_level),
             'Major' => filled($student->major),
-            'Preferences' => filled($student->preferred_location) || filled($student->preferred_study_mode) || filled($student->preferred_course_intensity),
+            'Preferences' => ! empty($student->preferenceValues('preferred_location'))
+                || ! empty($student->preferenceValues('preferred_study_mode'))
+                || ! empty($student->preferenceValues('preferred_course_intensity')),
             'Budget' => filled($student->budget),
             'Interests' => $student->categories->isNotEmpty(),
             'Skills' => $student->subcategories->isNotEmpty(),
@@ -151,7 +153,9 @@ class PublicRecommendationController extends Controller
             ],
             [
                 'label' => 'Preferences',
-                'value' => ($student->preferred_location ?: 'Any country') . ' / ' . ($student->preferred_study_mode ?: 'Any mode') . ' / ' . ($student->preferred_course_intensity ?: 'Any intensity'),
+                'value' => $student->preferenceDisplay('preferred_location', 'Any country')
+                    . ' / ' . $student->preferenceDisplay('preferred_study_mode', 'Any mode')
+                    . ' / ' . $student->preferenceDisplay('preferred_course_intensity', 'Any intensity'),
             ],
             [
                 'label' => 'Interests',

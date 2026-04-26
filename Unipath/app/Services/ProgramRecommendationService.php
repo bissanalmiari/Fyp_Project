@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 class ProgramRecommendationService
 {
     public const COOLDOWN_DAYS = 3;
-    private const PROFILE_VERSION = 8;
+    private const PROFILE_VERSION = 9;
 
     public function preferenceHash(Student $student): string
     {
@@ -30,9 +30,9 @@ class ProgramRecommendationService
             'ielts' => $student->ielts,
             'toefl' => $student->toefl,
             'sat' => $student->sat,
-            'preferred_location' => $student->preferred_location,
-            'preferred_study_mode' => $student->preferred_study_mode,
-            'preferred_course_intensity' => $student->preferred_course_intensity,
+            'preferred_location' => $student->preferenceValues('preferred_location'),
+            'preferred_study_mode' => $student->preferenceValues('preferred_study_mode'),
+            'preferred_course_intensity' => $student->preferenceValues('preferred_course_intensity'),
             'budget' => $student->budget,
             'categories' => $student->categories->pluck('name')->sort()->values()->all(),
             'subcategories' => $student->subcategories->pluck('name')->sort()->values()->all(),
@@ -252,28 +252,38 @@ class ProgramRecommendationService
 
     private function matchesSavedPreferences(array $item, Student $student, array $attempt): bool
     {
-        $preferredCountry = $this->normalizeCountry($student->preferred_location);
+        $preferredCountries = $this->normalizedPreferenceValues($student, 'preferred_location', 'normalizeCountry');
         $country = $this->normalizeCountry($item['country'] ?? '');
 
-        if ($preferredCountry !== '' && $country !== $preferredCountry) {
+        if (! empty($preferredCountries) && ! in_array($country, $preferredCountries, true)) {
             return false;
         }
 
-        $preferredMode = $this->normalizeMode($student->preferred_study_mode);
+        $preferredModes = $this->normalizedPreferenceValues($student, 'preferred_study_mode', 'normalizeMode');
         $studyMode = $this->normalizeMode($item['study_mode'] ?? '');
 
-        if (($attempt['require_mode_match'] ?? true) && $preferredMode !== '' && $studyMode !== $preferredMode) {
+        if (($attempt['require_mode_match'] ?? true) && ! empty($preferredModes) && ! in_array($studyMode, $preferredModes, true)) {
             return false;
         }
 
-        $preferredIntensity = $this->normalizeIntensity($student->preferred_course_intensity);
+        $preferredIntensities = $this->normalizedPreferenceValues($student, 'preferred_course_intensity', 'normalizeIntensity');
         $intensity = $this->normalizeIntensity($item['course_intensity'] ?? '');
 
-        if (($attempt['require_intensity_match'] ?? true) && $preferredIntensity !== '' && $intensity !== $preferredIntensity) {
+        if (($attempt['require_intensity_match'] ?? true) && ! empty($preferredIntensities) && ! in_array($intensity, $preferredIntensities, true)) {
             return false;
         }
 
         return true;
+    }
+
+    private function normalizedPreferenceValues(Student $student, string $field, string $normalizer): array
+    {
+        return collect($student->preferenceValues($field))
+            ->map(fn ($value) => $this->{$normalizer}($value))
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
     }
 
     private function normalizeCountry(?string $value): string
@@ -512,9 +522,9 @@ class ProgramRecommendationService
             'ielts' => $student->ielts,
             'toefl' => $student->toefl,
             'sat' => $student->sat,
-            'preferred_location' => ($options['relax_location'] ?? false) ? '' : $student->preferred_location,
-            'study_mode' => ($options['relax_mode'] ?? false) ? '' : $student->preferred_study_mode,
-            'intensity' => ($options['relax_intensity'] ?? false) ? '' : $student->preferred_course_intensity,
+            'preferred_location' => ($options['relax_location'] ?? false) ? '' : implode(';', $this->normalizedPreferenceValues($student, 'preferred_location', 'normalizeCountry')),
+            'study_mode' => ($options['relax_mode'] ?? false) ? '' : implode(';', $this->normalizedPreferenceValues($student, 'preferred_study_mode', 'normalizeMode')),
+            'intensity' => ($options['relax_intensity'] ?? false) ? '' : implode(';', $this->normalizedPreferenceValues($student, 'preferred_course_intensity', 'normalizeIntensity')),
             'budget_min' => $budgetMin,
             'budget_max' => $budgetMax,
             'broad_categories_interest' => $broadCategories,
@@ -692,12 +702,12 @@ class ProgramRecommendationService
         $reasons = [];
         $programBroad = Str::lower((string) optional($program->category)->name);
         $programDetailed = Str::lower((string) optional($program->subcategories)->name);
-        $country = Str::lower((string) optional($program->university)->country);
-        $preferredCountry = Str::lower((string) $student->preferred_location);
+        $country = $this->normalizeCountry(optional($program->university)->country);
+        $preferredCountries = $this->normalizedPreferenceValues($student, 'preferred_location', 'normalizeCountry');
         $studyMode = $this->normalizeMode($program->study_mode);
-        $preferredMode = $this->normalizeMode($student->preferred_study_mode);
+        $preferredModes = $this->normalizedPreferenceValues($student, 'preferred_study_mode', 'normalizeMode');
         $intensity = $this->normalizeIntensity($program->course_intensity);
-        $preferredIntensity = $this->normalizeIntensity($student->preferred_course_intensity);
+        $preferredIntensities = $this->normalizedPreferenceValues($student, 'preferred_course_intensity', 'normalizeIntensity');
         $tuition = $this->bestTuitionForStudent($program, $student);
 
         if ($studentDetailed->contains($programDetailed)) {
@@ -710,17 +720,17 @@ class ProgramRecommendationService
             $reasons[] = 'Matches your academic interest area';
         }
 
-        if ($preferredCountry !== '' && $country === $preferredCountry) {
+        if (! empty($preferredCountries) && in_array($country, $preferredCountries, true)) {
             $points += 15;
             $reasons[] = 'Matches your preferred country';
         }
 
-        if ($preferredMode !== '' && $studyMode === $preferredMode) {
+        if (! empty($preferredModes) && in_array($studyMode, $preferredModes, true)) {
             $points += 8;
             $reasons[] = 'Matches your preferred study mode';
         }
 
-        if ($preferredIntensity !== '' && $intensity === $preferredIntensity) {
+        if (! empty($preferredIntensities) && in_array($intensity, $preferredIntensities, true)) {
             $points += 8;
             $reasons[] = 'Matches your preferred course intensity';
         }

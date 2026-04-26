@@ -562,25 +562,25 @@ class ProgramComparisonService
     protected function getBudgetBounds(?string $budgetRange): array
     {
         return match ($budgetRange) {
-            '0-1000' => ['min' => 0, 'max' => 1000],
-            '1000-4000' => ['min' => 1000, 'max' => 4000],
-            '4000-8000' => ['min' => 4000, 'max' => 8000],
-            '8000+' => ['min' => 8000, 'max' => null],
+            '0-1000', '0_1000' => ['min' => 0, 'max' => 1000],
+            '1000-4000', '1000_4000' => ['min' => 1000, 'max' => 4000],
+            '4000-8000', '4000_8000' => ['min' => 4000, 'max' => 8000],
+            '8000+', '8000_plus' => ['min' => 8000, 'max' => null],
             default => ['min' => null, 'max' => null],
         };
     }
 
     protected function scoreLocation(Student $student, Program $program): array
     {
-        $preferred = $this->normalizeText($student->preferred_location);
+        $preferredLocations = $this->normalizedPreferenceValues($student, 'preferred_location');
         $country = $this->normalizeText($program->university?->country);
         $city = $this->normalizeText($program->university?->city);
 
-        if (!$preferred) {
+        if (empty($preferredLocations)) {
             return ['points' => 0, 'note' => 'No preferred location'];
         }
 
-        $match = $preferred === $country || $preferred === $city;
+        $match = in_array($country, $preferredLocations, true) || in_array($city, $preferredLocations, true);
 
         return [
             'points' => $match ? 10 : 0,
@@ -590,18 +590,18 @@ class ProgramComparisonService
 
     protected function scoreStudyMode(Student $student, Program $program): array
     {
-        $preferred = $this->normalizeText($student->preferred_study_mode);
+        $preferredModes = $this->normalizedPreferenceValues($student, 'preferred_study_mode');
         $mode = $this->normalizeText($program->study_mode);
 
-        if (!$preferred || !$mode) {
+        if (empty($preferredModes) || !$mode) {
             return ['points' => 0, 'note' => 'Missing study mode data'];
         }
 
-        if ($preferred === $mode) {
+        if (in_array($mode, $preferredModes, true)) {
             return ['points' => 10, 'note' => 'Study mode matches'];
         }
 
-        if ($preferred === 'hybrid' || $mode === 'hybrid') {
+        if (in_array('hybrid', $preferredModes, true) || $mode === 'hybrid') {
             return ['points' => 5, 'note' => 'Hybrid gives partial match'];
         }
 
@@ -610,16 +610,18 @@ class ProgramComparisonService
 
     protected function scoreCourseIntensity(Student $student, Program $program): array
     {
-        $preferred = $this->normalizeText($student->preferred_course_intensity);
+        $preferredIntensities = $this->normalizedPreferenceValues($student, 'preferred_course_intensity');
         $intensity = $this->normalizeText($program->course_intensity);
 
-        if (!$preferred || !$intensity) {
+        if (empty($preferredIntensities) || !$intensity) {
             return ['points' => 0, 'note' => 'Missing course intensity data'];
         }
 
+        $match = in_array($intensity, $preferredIntensities, true);
+
         return [
-            'points' => $preferred === $intensity ? 5 : 0,
-            'note' => $preferred === $intensity ? 'Course intensity matches' : 'Course intensity does not match',
+            'points' => $match ? 5 : 0,
+            'note' => $match ? 'Course intensity matches' : 'Course intensity does not match',
         ];
     }
 
@@ -860,6 +862,16 @@ class ProgramComparisonService
         $value = preg_replace('/\s+/', ' ', $value);
 
         return trim($value);
+    }
+
+    protected function normalizedPreferenceValues(Student $student, string $field): array
+    {
+        return collect($student->preferenceValues($field))
+            ->map(fn ($value) => $this->normalizeText($value))
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
     }
 
     protected function normalizeStudentGpa($studentGpa): ?float
