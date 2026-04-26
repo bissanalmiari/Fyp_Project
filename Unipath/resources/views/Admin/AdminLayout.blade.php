@@ -75,9 +75,9 @@ transition-transform duration-300 z-50">
 
             <!-- Statistics -->
             <li>
-                <a href="#"
+                <a href="{{ route('admin.statistics') }}"
                    class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm transition
-                   {{ request()->is('admin/statistics') ? 'bg-purple-100 text-title font-semibold' : 'text-muted hover:bg-bg hover:text-title' }}">
+                   {{ request()->routeIs('admin.statistics')  ? 'bg-purple-100 text-title font-semibold' : 'text-muted hover:bg-bg hover:text-title' }}">
                     
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                         <path d="M3 3v18h18"/>

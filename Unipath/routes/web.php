@@ -159,4 +159,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('google.redirect');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
 
+use App\Http\Controllers\Admin\StatisticsController;
+
+Route::get('/admin/statistics', [StatisticsController::class, 'index'])
+    ->name('admin.statistics');
+
+
 require __DIR__.'/auth.php';

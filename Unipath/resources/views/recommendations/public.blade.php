@@ -72,11 +72,19 @@
         <img src="{{ asset('images/Shape2.png') }}" class="rec-hero-shape rec-hero-shape-right" alt="">
 
         <div class="rec-hero-copy">
-            <span class="rec-kicker">Recommendation System</span>
-            <h1>
-                Personalized Program
-                <span>Recommendations</span>
-            </h1>
+            <div class="relative inline-block text-center mb-6">
+                        <!-- Main Title -->
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
+                            Personalized
+                        </h1>
+                        <!-- Overlay Text -->
+                        <span class="absolute left-1/2 -translate-x-1/2 
+                      top-9 sm:top-15 lg:top-16
+                      text-4xl lg:text-6xl 
+                      text-[#7F64CE] font-[blanche] whitespace-nowrap">
+                            program recommendations
+                        </span>
+                    </div>
             <p>
                 Unipath recommends programs by reading the academic profile, preferences, interests, skills, favorite programs, feedback, GPA, and test scores saved in the student dashboard.
             </p>
