@@ -122,7 +122,8 @@ class StudentController extends Controller
 
     $student->save();
 
-    return redirect()->back()->with('success', 'Academic information updated successfully.');
+    return redirect()->route('student.academic')
+    ->with('success', 'Academic information updated successfully.');
 }
 
     // Show preferences form
