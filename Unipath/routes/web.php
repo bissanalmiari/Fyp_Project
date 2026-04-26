@@ -79,6 +79,10 @@ Route::patch('/admin/success-stories/{id}/disapprove', [SuccessStoryController::
 
 Route::delete('/admin/success-stories/{id}', [SuccessStoryController::class, 'destroy'])->name('admin.success-stories.destroy');
 
+Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+
+Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+
  Route::prefix('admin')->name('Admin.')->group(function () {
     // Universities Admin
     Route::get('/universities', [AdminController::class, 'universities'])->name('universities');

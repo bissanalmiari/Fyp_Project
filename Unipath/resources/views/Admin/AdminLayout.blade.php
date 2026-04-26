@@ -92,7 +92,7 @@ transition-transform duration-300 z-50">
 
             <!-- Personal Info -->
             <li>
-                <a href="#"
+                <a href="{{ route('admin.profile') }}"
                    class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-muted hover:bg-bg hover:text-title transition">
                     
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">

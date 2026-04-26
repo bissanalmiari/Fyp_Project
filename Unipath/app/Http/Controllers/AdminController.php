@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Student;
 use App\Models\User;
 use App\Models\Career;
@@ -14,6 +15,7 @@ use App\Models\Program;
 use App\Models\Progrem_Requirement;
 use App\Models\SubCategory;
 use App\Models\University;
+
 
 class AdminController extends Controller
 {
@@ -564,6 +566,35 @@ class AdminController extends Controller
         $program->delete();
 
         return redirect()->route('Admin.programs')->with('success', 'Program deleted successfully.');
+    }
+    
+    public function profile()
+    {
+        $admin = auth()->user();
+
+        return view('Admin.profile.index', compact('admin'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $admin = auth()->user();
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $admin->id],
+            'password' => ['nullable', 'confirmed', 'min:8'],
+        ]);
+
+        $admin->name = $validated['name'];
+        $admin->email = $validated['email'];
+
+        if (!empty($validated['password'])) {
+            $admin->password = Hash::make($validated['password']);
+        }
+
+        $admin->save();
+
+        return back()->with('success', 'Profile updated successfully.');
     }
 }
 
