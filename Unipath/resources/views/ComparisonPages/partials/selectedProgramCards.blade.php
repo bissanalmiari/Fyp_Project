@@ -4,134 +4,135 @@
 @endphp
 
 @if($selectedProgramA || $selectedProgramB)
-    <div class="mt-12">
-        <div class="mb-6 h-[1px] w-full bg-[#7F64CE]/20"></div>
-        <h3 class="mb-8 text-3xl font-bold text-[#7F64CE]">Selected Programs</h3>
+    <div class="selected-programs mt-12">
+        <div class="section-divider"></div>
+        <div class="selected-programs-header">
+            <span class="section-kicker">Chosen programs</span>
+            <h3>Selected Programs</h3>
+        </div>
 
-        <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <div class="selected-program-grid">
             <div class="space-y-3">
                 {{-- Program A --}}
                 @if($selectedProgramA)
-                    <div class="rounded-2xl bg-[#C3BFFA] p-4 shadow-md">
-                        <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#7F64CE]/70">
-                            Program A
-                        </p>
+                    <div class="selected-program-card selected-program-card-a">
+                        <div class="selected-program-card-glow" aria-hidden="true"></div>
+                        <p class="selected-program-badge">Program A</p>
 
-                        <div class="mb-4 flex items-start justify-between gap-3">
+                        <div class="selected-program-top">
                             <div>
                                 <a href="{{ $selectedProgramA->url ?: '#' }}" target="_blank"
-                                   class="flex items-center gap-2 text-xl font-bold text-[#7F64CE] hover:underline">
+                                   class="selected-program-title">
                                     <span>{{ $selectedProgramA->name }}</span>
-                                    <span class="inline-flex items-center justify-center">
+                                    <span>
                                         <img
                                             src="{{ asset('images/share_icon.png') }}"
                                             alt="Open program"
-                                            class="h-4 w-4 object-contain"
                                         >
                                     </span>
                                 </a>
 
-                                <p class="mt-1 text-sm text-[#5B527D]">
+                                <p class="selected-program-university">
                                     {{ $selectedProgramA->university->name ?? 'N/A' }}
                                 </p>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Category</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                        <div class="selected-program-info-grid">
+                            <div class="selected-program-info">
+                                <p>Category</p>
+                                <strong>
                                     {{ optional($selectedProgramA->category)->name ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Sub Category</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Sub Category</p>
+                                <strong>
                                     {{ optional($selectedProgramA->subcategory)->name ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Location</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Location</p>
+                                <strong>
                                     {{ $selectedProgramA->university->city ?? 'N/A' }}, {{ $selectedProgramA->university->country ?? 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Level</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Level</p>
+                                <strong>
                                     {{ $selectedProgramA->level ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Study Mode</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Study Mode</p>
+                                <strong>
                                     {{ $selectedProgramA->study_mode ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Course Intensity</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Course Intensity</p>
+                                <strong>
                                     {{ $selectedProgramA->course_intensity ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Duration</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Duration</p>
+                                <strong>
                                     {{ $selectedProgramA->duration ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3 sm:col-span-2">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Languages</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info selected-program-info-wide">
+                                <p>Languages</p>
+                                <strong>
                                     {{ $selectedProgramA->languages->pluck('name')->join(', ') ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3 sm:col-span-2">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Tuition</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info selected-program-info-wide selected-program-tuition">
+                                <p>Tuition</p>
+                                <strong>
                                     {{ $selectedProgramATuition ?? 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
                         </div>
 
-                        <div class="mt-4 rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-2 text-[11px] text-[#5B527D]">Requirements</p>
+                        <div class="selected-program-requirements">
+                            <p>Requirements</p>
 
-                            <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                            <div class="selected-program-requirement-grid">
                                 <div>
-                                    <p class="text-[11px] text-[#5B527D]">GPA</p>
-                                    <p class="text-sm font-semibold text-[#7F64CE]">
+                                    <span>GPA</span>
+                                    <strong>
                                         {{ optional($selectedProgramA->requirement)->minimum_gpa ?? 'N/A' }}
-                                    </p>
+                                    </strong>
                                 </div>
 
                                 <div>
-                                    <p class="text-[11px] text-[#5B527D]">SAT</p>
-                                    <p class="text-sm font-semibold text-[#7F64CE]">
+                                    <span>SAT</span>
+                                    <strong>
                                         {{ optional($selectedProgramA->requirement)->sat ?? 'N/A' }}
-                                    </p>
+                                    </strong>
                                 </div>
 
                                 <div>
-                                    <p class="text-[11px] text-[#5B527D]">IELTS</p>
-                                    <p class="text-sm font-semibold text-[#7F64CE]">
+                                    <span>IELTS</span>
+                                    <strong>
                                         {{ optional($selectedProgramA->requirement)->ielts ?? 'N/A' }}
-                                    </p>
+                                    </strong>
                                 </div>
 
                                 <div>
-                                    <p class="text-[11px] text-[#5B527D]">TOEFL</p>
-                                    <p class="text-sm font-semibold text-[#7F64CE]">
+                                    <span>TOEFL</span>
+                                    <strong>
                                         {{ optional($selectedProgramA->requirement)->toefl ?? 'N/A' }}
-                                    </p>
+                                    </strong>
                                 </div>
                             </div>
                         </div>
@@ -150,126 +151,124 @@
             <div class="space-y-3">
                 {{-- Program B --}}
                 @if($selectedProgramB)
-                    <div class="rounded-2xl bg-[#C3BFFA] p-4 shadow-md">
-                        <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#7F64CE]/70">
-                            Program B
-                        </p>
+                    <div class="selected-program-card selected-program-card-b">
+                        <div class="selected-program-card-glow" aria-hidden="true"></div>
+                        <p class="selected-program-badge">Program B</p>
 
-                        <div class="mb-4 flex items-start justify-between gap-3">
+                        <div class="selected-program-top">
                             <div>
                                 <a href="{{ $selectedProgramB->url ?: '#' }}" target="_blank"
-                                   class="flex items-center gap-2 text-xl font-bold text-[#7F64CE] hover:underline">
+                                   class="selected-program-title">
                                     <span>{{ $selectedProgramB->name }}</span>
-                                    <span class="inline-flex items-center justify-center">
+                                    <span>
                                         <img
                                             src="{{ asset('images/share_icon.png') }}"
                                             alt="Open program"
-                                            class="h-4 w-4 object-contain"
                                         >
                                     </span>
                                 </a>
 
-                                <p class="mt-1 text-sm text-[#5B527D]">
+                                <p class="selected-program-university">
                                     {{ $selectedProgramB->university->name ?? 'N/A' }}
                                 </p>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Category</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                        <div class="selected-program-info-grid">
+                            <div class="selected-program-info">
+                                <p>Category</p>
+                                <strong>
                                     {{ optional($selectedProgramB->category)->name ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Sub Category</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Sub Category</p>
+                                <strong>
                                     {{ optional($selectedProgramB->subcategory)->name ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Location</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Location</p>
+                                <strong>
                                     {{ $selectedProgramB->university->city ?? 'N/A' }}, {{ $selectedProgramB->university->country ?? 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Level</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Level</p>
+                                <strong>
                                     {{ $selectedProgramB->level ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Study Mode</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Study Mode</p>
+                                <strong>
                                     {{ $selectedProgramB->study_mode ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Course Intensity</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Course Intensity</p>
+                                <strong>
                                     {{ $selectedProgramB->course_intensity ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Duration</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info">
+                                <p>Duration</p>
+                                <strong>
                                     {{ $selectedProgramB->duration ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3 sm:col-span-2">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Languages</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info selected-program-info-wide">
+                                <p>Languages</p>
+                                <strong>
                                     {{ $selectedProgramB->languages->pluck('name')->join(', ') ?: 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
 
-                            <div class="rounded-xl bg-[#F6F4FE] p-3 sm:col-span-2">
-                                <p class="mb-1 text-[11px] text-[#5B527D]">Tuition</p>
-                                <p class="text-sm font-semibold text-[#7F64CE]">
+                            <div class="selected-program-info selected-program-info-wide selected-program-tuition">
+                                <p>Tuition</p>
+                                <strong>
                                     {{ $selectedProgramBTuition ?? 'N/A' }}
-                                </p>
+                                </strong>
                             </div>
                         </div>
 
-                        <div class="mt-4 rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-2 text-[11px] text-[#5B527D]">Requirements</p>
+                        <div class="selected-program-requirements">
+                            <p>Requirements</p>
 
-                            <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                            <div class="selected-program-requirement-grid">
                                 <div>
-                                    <p class="text-[11px] text-[#5B527D]">GPA</p>
-                                    <p class="text-sm font-semibold text-[#7F64CE]">
+                                    <span>GPA</span>
+                                    <strong>
                                         {{ optional($selectedProgramB->requirement)->minimum_gpa ?? 'N/A' }}
-                                    </p>
+                                    </strong>
                                 </div>
 
                                 <div>
-                                    <p class="text-[11px] text-[#5B527D]">SAT</p>
-                                    <p class="text-sm font-semibold text-[#7F64CE]">
+                                    <span>SAT</span>
+                                    <strong>
                                         {{ optional($selectedProgramB->requirement)->sat ?? 'N/A' }}
-                                    </p>
+                                    </strong>
                                 </div>
 
                                 <div>
-                                    <p class="text-[11px] text-[#5B527D]">IELTS</p>
-                                    <p class="text-sm font-semibold text-[#7F64CE]">
+                                    <span>IELTS</span>
+                                    <strong>
                                         {{ optional($selectedProgramB->requirement)->ielts ?? 'N/A' }}
-                                    </p>
+                                    </strong>
                                 </div>
 
                                 <div>
-                                    <p class="text-[11px] text-[#5B527D]">TOEFL</p>
-                                    <p class="text-sm font-semibold text-[#7F64CE]">
+                                    <span>TOEFL</span>
+                                    <strong>
                                         {{ optional($selectedProgramB->requirement)->toefl ?? 'N/A' }}
-                                    </p>
+                                    </strong>
                                 </div>
                             </div>
                         </div>
