@@ -232,6 +232,16 @@ $student->subcategories()->sync($subcategories);
         return view('student.favorite', compact('student', 'favorites'));
     }
 
+    public function removeFavorite($id)
+{
+    $student = Student::where('user_id', Auth::id())->first();
+
+    if ($student) {
+        $student->favorites()->detach($id);
+    }
+
+    return response()->json(['success' => true]);
+}
     // Show quiz history
     public function quizHistory()
     {

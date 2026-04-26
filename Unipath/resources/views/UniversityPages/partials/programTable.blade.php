@@ -8,14 +8,14 @@
     </div>
 </div>
 
-<div class="space-y-6">
+<div class="space-y-6" >
     @forelse($programs as $program)
         @php
             $isSaved = auth()->check() && $favoriteProgramIds->contains($program->id);
         @endphp
 
         <details class="group rounded-3xl bg-[#C3BFFA] p-6 shadow-md">
-            <summary class="flex cursor-pointer list-none items-start justify-between gap-4">
+            <summary class="flex cursor-pointer list-none items-start justify-between gap-4" id="program-{{ $program->id }}" data-name="{{ $program->name }}">
                 <div>
                     <h3 class="text-2xl font-bold text-[#7F64CE]">{{ $program->name }}</h3>
                 </div>

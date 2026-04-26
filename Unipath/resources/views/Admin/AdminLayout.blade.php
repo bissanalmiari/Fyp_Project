@@ -183,7 +183,7 @@ transition-transform duration-300 z-50">
             <!-- Success Stories -->
             <li>
                 <a href="{{ route('admin.success-stories.index') }}"
-                   class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-muted hover:bg-bg hover:text-title transition">
+                   class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-muted hover:bg-bg hover:text-title transition {{ request()->routeIs('admin.success-stories*') ? 'bg-purple-100 text-title font-semibold' : '' }}">
                     
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                         <path d="M21 15a4 4 0 0 1-4 4H7l-4 4V5a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>
@@ -196,7 +196,7 @@ transition-transform duration-300 z-50">
              <!-- Messages -->
             <li>
                 <a href="{{ route('admin.messages.index') }}"
-                class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-muted hover:bg-bg hover:text-title transition">
+                class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-muted hover:bg-bg hover:text-title transition {{ request()->routeIs('admin.messages*') ? 'bg-purple-100 text-title font-semibold' : '' }}">
                     
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 0 1-4.255-.949L3 20l1.188-3.566A7.49 7.49 0 0 1 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z"/>
