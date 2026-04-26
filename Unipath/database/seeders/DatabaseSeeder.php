@@ -15,7 +15,7 @@ use Database\Seeders\MajorDetailsSeeder;
 use Database\Seeders\QuizQuestionSeeder;
 use Database\Seeders\QuizOptionMajorScoreSeeder;
 use Database\Seeders\SubCategorySeeder;
-
+use Database\Seeders\StudentSeeder;
 
 
 class DatabaseSeeder extends Seeder
