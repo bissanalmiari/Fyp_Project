@@ -34,7 +34,7 @@
 <button id="menuToggle" class="md:hidden p-4 text-title fixed top-2 left-2 z-50 bg-white rounded-lg shadow">
     <!-- 3 lines icon -->
     <div class="space-y-1">
-        <div class="w-6 h-0.5 bg-title"></div>
+        <div class="w-6 h-0.5 bg-"></div>
         <div class="w-6 h-0.5 bg-title"></div>
         <div class="w-6 h-0.5 bg-title"></div>
     </div>

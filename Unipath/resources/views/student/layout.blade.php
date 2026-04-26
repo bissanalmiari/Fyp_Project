@@ -17,10 +17,10 @@
 
 <button id="menuToggle" class="md:hidden p-4 text-title fixed top-2 left-2 z-50 bg-white rounded-lg shadow">
     <!-- 3 lines icon -->
-    <div class="space-y-1">
-        <div class="w-6 h-0.5 bg-title"></div>
-        <div class="w-6 h-0.5 bg-title"></div>
-        <div class="w-6 h-0.5 bg-title"></div>
+    <div class="space-y-1 ">
+        <div class="w-6 h-0.5 " style="background-color: #7F64CE;"></div>
+        <div class="w-6 h-0.5 " style="background-color: #7F64CE;"></div>
+        <div class="w-6 h-0.5 " style="background-color: #7F64CE;"></div>
     </div>
 </button>
 <div id="overlay" class="fixed inset-0 bg-black/40 hidden md:hidden z-40"></div>
@@ -158,7 +158,7 @@
 
             <!-- Home -->
             <a href="{{ url('/') }}"
-               class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-muted hover:bg-bg hover:text-title transition">
+               class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-[#9b8fc0] hover:bg-[#F6F4FE] hover:text-[#7F64CE] transition">
                 
                 <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                     <path d="M3 12l9-9 9 9"/>
@@ -172,7 +172,7 @@
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit"
-                    class="flex items-center gap-3 w-full px-4 py-2 rounded-lg text-sm text-muted hover:bg-bg hover:text-title transition">
+                    class="flex items-center gap-3 w-full px-4 py-2 rounded-lg text-sm text-[#9b8fc0] hover:bg-[#F6F4FE] hover:text-[#7F64CE] transition">
                     
                     <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
