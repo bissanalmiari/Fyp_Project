@@ -17,6 +17,7 @@ use Database\Seeders\QuizOptionMajorScoreSeeder;
 use Database\Seeders\SubCategorySeeder;
 
 
+
 class DatabaseSeeder extends Seeder
 {
     public function run(): void

@@ -157,32 +157,88 @@
                         $details = json_decode($recommendation->explanation ?? '{}', true) ?: [];
                         $program = $recommendation->program;
                         $score = min(100, max(0, $recommendation->score));
+                        $displayName = $recommendation->program_name ?: ($program->name ?? 'Program unavailable');
+                        $displayUniversity = $recommendation->university_name ?: ($program?->university?->name ?? ($details['university'] ?? 'University unavailable'));
+                        $displayCountry = $recommendation->country ?: ($program?->university?->country ?? ($details['country'] ?? 'Country unavailable'));
+                        $displayLevel = $recommendation->program_level ?: ($program->level ?? 'Level not set');
+                        $displayMode = $recommendation->study_mode ?: ($program->study_mode ?? 'Mode not set');
+                        $displayIntensity = $recommendation->course_intensity ?: ($program->course_intensity ?? 'Intensity not set');
+                        $displayUrl = $recommendation->program_url ?: $program?->url;
+                        $displayUrl = filter_var($displayUrl, FILTER_VALIDATE_URL) ? $displayUrl : null;
+                        $feedback = $recommendation->feedbacks->first();
                     @endphp
                     <article class="rec-program-card">
                         <div class="rec-program-topline">
                             <span>#{{ $recommendation->rank }}</span>
                             <small>{{ $score }}% match</small>
                         </div>
-                        <h3>{{ $program->name ?? 'Program unavailable' }}</h3>
-                        <p>{{ $program?->university?->name ?? ($details['university'] ?? 'University unavailable') }} - {{ $program?->university?->country ?? ($details['country'] ?? 'Country unavailable') }}</p>
+                        <h3>{{ $displayName }}</h3>
+                        <p>{{ $displayUniversity }} - {{ $displayCountry }}</p>
                         <div class="rec-program-tags">
-                            <small>{{ $program->level ?? 'Level not set' }}</small>
-                            <small>{{ $program->study_mode ?? 'Mode not set' }}</small>
-                            <small>{{ $program->course_intensity ?? 'Intensity not set' }}</small>
+                            <small>{{ $displayLevel }}</small>
+                            <small>{{ $displayMode }}</small>
+                            <small>{{ $displayIntensity }}</small>
                         </div>
                         <div class="rec-card-meter">
                             <span style="width: {{ $score }}%"></span>
                         </div>
-                        @if($program?->url)
-                            <a href="{{ $program->url }}" target="_blank" rel="noopener">Show Program</a>
-                        @endif
+                        <form class="rec-program-feedback" action="{{ route('public.recommendations.feedback') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="recommendation_id" value="{{ $recommendation->id }}">
+                            <div class="rec-rating-block">
+                                <span>Rate this program</span>
+                                <div class="rec-rating-options">
+                                    @for($rating = 5; $rating >= 1; $rating--)
+                                        <label class="{{ $feedback && $rating <= (int) $feedback->rating ? 'active-rating' : '' }}">
+                                            <input
+                                                type="radio"
+                                                name="rating"
+                                                value="{{ $rating }}"
+                                                aria-label="{{ $rating }} {{ Str::plural('star', $rating) }}"
+                                                {{ (int) optional($feedback)->rating === $rating ? 'checked' : '' }}
+                                                {{ $feedback ? 'disabled' : '' }}
+                                                required
+                                            >
+                                            <span aria-hidden="true">&#9733;</span>
+                                            <small>{{ $rating }} star</small>
+                                        </label>
+                                    @endfor
+                                </div>
+                            </div>
+
+                            <div class="rec-program-actions">
+                                <button
+                                    class="{{ optional($feedback)->is_relevant === true ? 'active-feedback' : '' }}"
+                                    name="is_relevant"
+                                    value="1"
+                                    type="submit"
+                                    {{ $feedback ? 'disabled' : '' }}
+                                >
+                                    Relevant
+                                </button>
+                                <button
+                                    class="{{ optional($feedback)->is_relevant === false ? 'active-feedback' : '' }}"
+                                    name="is_relevant"
+                                    value="0"
+                                    type="submit"
+                                    {{ $feedback ? 'disabled' : '' }}
+                                >
+                                    Not Relevant
+                                </button>
+                            </div>
+                            @if($displayUrl)
+                                <div class="rec-program-link">
+                                    <a href="{{ $displayUrl }}" target="_blank" rel="noopener">Show Program</a>
+                                </div>
+                            @endif
+                        </form>
                     </article>
                 @endforeach
             </div>
         @endif
     </section>
 
-    <section class="rec-public-section">
+    <section id="recommendation-details" class="rec-public-section">
         <div class="rec-public-section-head">
             <span>Section 3</span>
             <h2>Explainability Panel</h2>
@@ -215,9 +271,10 @@
                     @php
                         $details = json_decode($recommendation->explanation ?? '{}', true) ?: [];
                         $reasons = $details['details'] ?? [];
+                        $displayName = $recommendation->program_name ?: ($recommendation->program->name ?? 'Program unavailable');
                     @endphp
                     <article>
-                        <h3>{{ $recommendation->program->name ?? 'Program unavailable' }}</h3>
+                        <h3>{{ $displayName }}</h3>
                         @if(! empty($details['summary']))
                             <p>{{ $details['summary'] }}</p>
                         @endif
@@ -234,76 +291,5 @@
         @endif
     </section>
 
-    <section class="rec-public-section">
-        <div class="rec-public-section-head">
-            <span>Section 4</span>
-            <h2>Overall Confidence Score</h2>
-            <p>The confidence score summarizes how strongly the current recommendation set matches the saved dashboard profile.</p>
-        </div>
-
-        <div class="rec-confidence-card">
-            <div class="rec-confidence-score">
-                <strong>{{ $confidence !== null ? $confidence . '%' : '--' }}</strong>
-                <span>{{ $confidenceLabel }}</span>
-                <div class="rec-confidence-ring" style="--score: {{ $confidence ?? 0 }}"></div>
-            </div>
-            <div class="rec-confidence-copy">
-                <h3>How confidence is interpreted</h3>
-                <p>
-                    @if($confidence !== null)
-                        This score is based on the average match score across the visible recommended programs.
-                    @else
-                        Guests can use this section to understand the confidence scale. Sign in and generate a recommendation to see a real score from your saved profile.
-                    @endif
-                </p>
-                <div class="rec-confidence-scale">
-                    <i style="width: {{ $confidence ?? 0 }}%"></i>
-                    <span>Low</span>
-                    <span>Medium</span>
-                    <span>High</span>
-                </div>
-                @guest
-                    <div class="rec-confidence-notes">
-                        <p><strong>Low:</strong> few saved signals match the available programs.</p>
-                        <p><strong>Medium:</strong> some important academic and preference signals match.</p>
-                        <p><strong>High:</strong> major, interests, skills, preferences, and requirements align strongly.</p>
-                    </div>
-                @endguest
-            </div>
-        </div>
-    </section>
-
-    <section class="rec-public-section">
-        <div class="rec-public-section-head">
-            <span>Section 5</span>
-            <h2>Recommendation Rate</h2>
-            <p>Signed-in students can rate the recommendation quality as low, medium, or high. This feedback can improve future recommendations.</p>
-        </div>
-
-        <div class="rec-rate-card">
-            <div>
-                <strong>{{ $feedbackRate ? ucfirst($feedbackRate) : 'Not rated yet' }}</strong>
-                <span>Current feedback rate</span>
-                <div class="rec-rate-indicator rate-{{ $feedbackRate ?: 'none' }}">
-                    <i></i><i></i><i></i>
-                </div>
-            </div>
-
-            @if($recommendations->isNotEmpty())
-                <form action="{{ route('public.recommendations.feedback') }}" method="POST">
-                    @csrf
-                    <button class="{{ $currentFeedbackRate === 'low' ? 'active-rate' : '' }}" name="rate" value="low" type="submit">Low</button>
-                    <button class="{{ $currentFeedbackRate === 'medium' ? 'active-rate' : '' }}" name="rate" value="medium" type="submit">Medium</button>
-                    <button class="{{ $currentFeedbackRate === 'high' ? 'active-rate' : '' }}" name="rate" value="high" type="submit">High</button>
-                </form>
-            @else
-                @guest
-                    <p>After signing in, students can rate a recommendation set as low, medium, or high. That rating becomes part of the personalization signal for future recommendations.</p>
-                @else
-                    <p>Generate recommendations first, then rate them.</p>
-                @endguest
-            @endif
-        </div>
-    </section>
 </main>
 </x-app-layout>

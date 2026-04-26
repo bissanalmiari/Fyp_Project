@@ -8,13 +8,15 @@ use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 
 class ProgramRecommendationService
 {
     public const COOLDOWN_DAYS = 3;
-    private const PROFILE_VERSION = 2;
+    private const PROFILE_VERSION = 8;
 
     public function preferenceHash(Student $student): string
     {
@@ -121,15 +123,11 @@ class ProgramRecommendationService
 
         foreach ($this->generationAttempts() as $attempt) {
             $items = $this->runPythonRecommender($student, $attempt);
-            $savedCount = $this->storeRecommendations($student, $items, $hash, (bool) $attempt['filter_major']);
+            $this->storeRecommendations($student, $items, $hash, $attempt);
 
             if ($this->latestRecommendations($student, $hash)->count() >= 3) {
                 break;
             }
-        }
-
-        if ($this->latestRecommendations($student, $hash)->isEmpty()) {
-            $this->storeDatabaseFallbackRecommendations($student, $hash);
         }
 
         return $this->latestRecommendations($student, $hash);
@@ -139,88 +137,105 @@ class ProgramRecommendationService
     {
         return [
             [
-                'filter_major' => true,
                 'use_major_profile' => true,
                 'relax_budget' => false,
                 'relax_location' => false,
                 'relax_mode' => false,
                 'relax_intensity' => false,
+                'require_mode_match' => true,
+                'require_intensity_match' => true,
             ],
             [
-                'filter_major' => true,
+                'use_major_profile' => true,
+                'relax_budget' => false,
+                'relax_location' => false,
+                'relax_mode' => false,
+                'relax_intensity' => true,
+                'require_mode_match' => true,
+                'require_intensity_match' => false,
+            ],
+            [
                 'use_major_profile' => true,
                 'relax_budget' => true,
                 'relax_location' => false,
                 'relax_mode' => false,
-                'relax_intensity' => false,
-            ],
-            [
-                'filter_major' => true,
-                'use_major_profile' => true,
-                'relax_budget' => true,
-                'relax_location' => true,
-                'relax_mode' => false,
-                'relax_intensity' => false,
-            ],
-            [
-                'filter_major' => true,
-                'use_major_profile' => true,
-                'relax_budget' => true,
-                'relax_location' => true,
-                'relax_mode' => true,
                 'relax_intensity' => true,
+                'require_mode_match' => true,
+                'require_intensity_match' => false,
             ],
             [
-                'filter_major' => false,
                 'use_major_profile' => false,
                 'relax_budget' => true,
-                'relax_location' => true,
-                'relax_mode' => true,
+                'relax_location' => false,
+                'relax_mode' => false,
                 'relax_intensity' => true,
+                'require_mode_match' => true,
+                'require_intensity_match' => false,
             ],
         ];
     }
 
-    private function storeRecommendations(Student $student, array $items, string $hash, bool $filterMajor): int
+    private function storeRecommendations(Student $student, array $items, string $hash, array $attempt): int
     {
         $savedCount = 0;
-        $existingProgramIds = Recommendation::where('student_id', $student->id)
+        $existingKeys = Recommendation::where('student_id', $student->id)
             ->where('preference_hash', $hash)
-            ->pluck('program_id')
+            ->get(['program_name', 'university_name'])
+            ->map(fn (Recommendation $recommendation) => $this->recommendationKey(
+                $recommendation->program_name,
+                $recommendation->university_name
+            ))
             ->all();
-        $rank = count($existingProgramIds) + 1;
+        $rank = count($existingKeys) + 1;
 
         foreach ($items as $item) {
+            $programName = trim((string) ($item['program_name'] ?? ''));
+            $universityName = trim((string) ($item['university'] ?? ''));
+
+            if ($programName === '') {
+                continue;
+            }
+
+            $key = $this->recommendationKey($programName, $universityName);
+
+            if (in_array($key, $existingKeys, true)) {
+                continue;
+            }
+
+            if (! $this->matchesSavedPreferences($item, $student, $attempt)) {
+                continue;
+            }
+
             $program = $this->findProgram($item);
-
-            if (! $program) {
-                continue;
-            }
-
-            if (in_array($program->id, $existingProgramIds, true)) {
-                continue;
-            }
-
-            if ($filterMajor && ! $this->matchesMajorProfile($program, $student)) {
-                continue;
-            }
 
             Recommendation::create([
                 'student_id' => $student->id,
-                'program_id' => $program->id,
+                'program_id' => $program?->id,
+                'program_name' => $programName,
+                'university_name' => $universityName,
+                'country' => $item['country'] ?? '',
+                'program_level' => $item['program_level'] ?? $program?->level,
+                'study_mode' => $item['study_mode'] ?? $program?->study_mode,
+                'course_intensity' => $item['course_intensity'] ?? $program?->course_intensity,
+                'program_url' => $item['program_url'] ?? $program?->url,
                 'score' => min(100, (int) round(((float) ($item['score'] ?? 0)) * 100)),
                 'rank' => $rank,
                 'explanation' => json_encode([
                     'summary' => $item['summary'] ?? '',
                     'details' => $item['explanation'] ?? [],
-                    'university' => $item['university'] ?? '',
+                    'program_name' => $programName,
+                    'university' => $universityName,
                     'country' => $item['country'] ?? '',
+                    'program_level' => $item['program_level'] ?? '',
+                    'study_mode' => $item['study_mode'] ?? '',
+                    'course_intensity' => $item['course_intensity'] ?? '',
+                    'program_url' => $item['program_url'] ?? '',
                 ]),
                 'preference_hash' => $hash,
             ]);
 
             $savedCount++;
-            $existingProgramIds[] = $program->id;
+            $existingKeys[] = $key;
             $rank++;
 
             if ($rank > 3) {
@@ -231,8 +246,55 @@ class ProgramRecommendationService
         return $savedCount;
     }
 
+    private function recommendationKey(?string $programName, ?string $universityName): string
+    {
+        return Str::lower(trim((string) $programName)) . '|' . Str::lower(trim((string) $universityName));
+    }
+
+    private function matchesSavedPreferences(array $item, Student $student, array $attempt): bool
+    {
+        $preferredCountry = $this->normalizeCountry($student->preferred_location);
+        $country = $this->normalizeCountry($item['country'] ?? '');
+
+        if ($preferredCountry !== '' && $country !== $preferredCountry) {
+            return false;
+        }
+
+        $preferredMode = $this->normalizeMode($student->preferred_study_mode);
+        $studyMode = $this->normalizeMode($item['study_mode'] ?? '');
+
+        if (($attempt['require_mode_match'] ?? true) && $preferredMode !== '' && $studyMode !== $preferredMode) {
+            return false;
+        }
+
+        $preferredIntensity = $this->normalizeIntensity($student->preferred_course_intensity);
+        $intensity = $this->normalizeIntensity($item['course_intensity'] ?? '');
+
+        if (($attempt['require_intensity_match'] ?? true) && $preferredIntensity !== '' && $intensity !== $preferredIntensity) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function normalizeCountry(?string $value): string
+    {
+        $value = Str::lower(trim((string) $value));
+
+        return match ($value) {
+            'usa', 'u.s.a.', 'u.s.a', 'us', 'united states of america' => 'united states',
+            default => $value,
+        };
+    }
+
     private function runPythonRecommender(Student $student, array $options = []): array
     {
+        $apiItems = $this->runApiRecommender($student, $options);
+
+        if ($apiItems !== null) {
+            return $apiItems;
+        }
+
         $payloadPath = storage_path('app/recommendation-student-' . $student->id . '-' . Str::random(8) . '.json');
         $favoritesPath = storage_path('app/recommendation-favorites-' . $student->id . '-' . Str::random(8) . '.csv');
         $feedbackPath = storage_path('app/recommendation-feedback-' . $student->id . '-' . Str::random(8) . '.csv');
@@ -241,19 +303,128 @@ class ProgramRecommendationService
         File::put($feedbackPath, $this->feedbackCsv($student));
 
         try {
-            $process = new Process(['python', 'recommend_for_student.py', $payloadPath, $favoritesPath, $feedbackPath], base_path('mm recom'));
-            $process->setTimeout(120);
-            $process->run();
-            $output = $process->getOutput();
+            foreach ($this->pythonExecutables() as $python) {
+                $process = new Process(
+                    [$python, 'recommend_for_student.py', $payloadPath, $favoritesPath, $feedbackPath],
+                    base_path('mm recom'),
+                    $this->pythonEnvironment()
+                );
+                $process->setTimeout(120);
+                $process->run();
+                $output = $process->getOutput();
+                $errorOutput = $process->getErrorOutput();
+
+                Log::debug('Python recommender attempt finished.', [
+                    'student_id' => $student->id,
+                    'python' => (string) $python,
+                    'exit_code' => $process->getExitCode(),
+                    'stdout_prefix' => Str::limit((string) $output, 300),
+                    'stderr_prefix' => Str::limit((string) $errorOutput, 300),
+                ]);
+
+                $decoded = json_decode((string) $output, true);
+
+                if (is_array($decoded)) {
+                    return $decoded;
+                }
+
+                if (! str_contains((string) $errorOutput, "No module named 'pandas'")) {
+                    break;
+                }
+            }
         } finally {
             File::delete($payloadPath);
             File::delete($favoritesPath);
             File::delete($feedbackPath);
         }
 
-        $decoded = json_decode((string) $output, true);
+        Log::warning('Python recommender returned no valid JSON.', [
+            'student_id' => $student->id,
+            'exit_code' => isset($process) ? $process->getExitCode() : null,
+            'python' => isset($python) ? (string) $python : null,
+            'stdout' => (string) ($output ?? ''),
+            'stderr' => (string) ($errorOutput ?? ''),
+        ]);
 
-        return is_array($decoded) ? $decoded : [];
+        return [];
+    }
+
+    private function runApiRecommender(Student $student, array $options = []): ?array
+    {
+        $apiUrl = trim((string) config('services.recommender.api_url'));
+
+        if ($apiUrl === '') {
+            return null;
+        }
+
+        try {
+            $request = Http::timeout(120);
+            $apiKey = trim((string) config('services.recommender.api_key'));
+
+            if ($apiKey !== '') {
+                $request = $request->withHeaders(['X-API-Key' => $apiKey]);
+            }
+
+            $response = $request->post(rtrim($apiUrl, '/') . '/recommend', [
+                'student' => $this->studentPayload($student, $options),
+                'favorites_csv' => $this->favoritesCsv($student),
+                'feedback_csv' => $this->feedbackCsv($student),
+            ]);
+        } catch (\Throwable $exception) {
+            Log::warning('Recommendation API request failed.', [
+                'student_id' => $student->id,
+                'api_url' => $apiUrl,
+                'error' => $exception->getMessage(),
+            ]);
+
+            return [];
+        }
+
+        if (! $response->successful()) {
+            Log::warning('Recommendation API returned an error.', [
+                'student_id' => $student->id,
+                'api_url' => $apiUrl,
+                'status' => $response->status(),
+                'body' => Str::limit($response->body(), 1000),
+            ]);
+
+            return [];
+        }
+
+        $items = $response->json();
+
+        return is_array($items) ? $items : [];
+    }
+
+    private function pythonExecutables(): array
+    {
+        $configuredPython = (string) config('services.recommender.python', 'C:\\Python314\\python.exe');
+
+        return collect([
+            $configuredPython !== 'python' ? $configuredPython : null,
+            'C:\\Python314\\python.exe',
+        ])
+            ->filter()
+            ->map(fn ($path) => (string) $path)
+            ->unique()
+            ->values()
+            ->all();
+    }
+
+    private function pythonEnvironment(): array
+    {
+        $userPythonPackages = 'C:\\Users\\user\\AppData\\Roaming\\Python\\Python314\\site-packages';
+        $pythonPath = trim((string) getenv('PYTHONPATH'));
+        $path = trim((string) getenv('PATH'));
+
+        return [
+            'USERPROFILE' => 'C:\\Users\\user',
+            'PYTHONUSERBASE' => 'C:\\Users\\user\\AppData\\Roaming\\Python',
+            'PYTHONPATH' => $pythonPath !== ''
+                ? $userPythonPackages . PATH_SEPARATOR . $pythonPath
+                : $userPythonPackages,
+            'PATH' => 'C:\\Python314' . PATH_SEPARATOR . 'C:\\Python314\\Scripts' . PATH_SEPARATOR . $path,
+        ];
     }
 
     private function favoritesCsv(Student $student): string
@@ -281,16 +452,17 @@ class ProgramRecommendationService
             ->get();
 
         foreach ($feedbacks as $feedback) {
-            $program = optional($feedback->recommendation)->program;
+            $recommendation = $feedback->recommendation;
+            $program = optional($recommendation)->program;
 
-            if (! $program) {
+            if (! $recommendation) {
                 continue;
             }
 
             $rows[] = $this->csvRow([
                 $student->id,
-                $program->name,
-                optional($program->university)->name,
+                $program?->name ?? $recommendation->program_name,
+                optional($program?->university)->name ?? $recommendation->university_name,
                 $feedback->rating,
                 $feedback->is_relevant ? 1 : 0,
             ]);

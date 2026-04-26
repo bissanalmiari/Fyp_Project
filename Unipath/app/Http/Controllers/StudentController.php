@@ -289,12 +289,6 @@ $student->subcategories()->sync($subcategories);
 
         $student = Student::firstOrCreate(['user_id' => $user->id]);
 
-        if (\App\Models\Program::doesntExist()) {
-            return redirect()
-                ->route('student.recommendations')
-                ->with('success', 'Program data is not loaded yet. Please run the database seeders before generating recommendations.');
-        }
-
         if (! $recommendationService->canGenerate($student)) {
             return redirect()
                 ->route('student.recommendations')
@@ -306,12 +300,12 @@ $student->subcategories()->sync($subcategories);
         if ($recommendations->isEmpty()) {
             return redirect()
                 ->route('student.recommendations')
-                ->with('success', 'No matching programs were found yet. Please complete your academic information, preferences, and interests, then try again.');
+                ->with('success', 'No programs matched your saved preferences. Try widening your country, study mode, course intensity, budget, or interests, then generate again.');
         }
 
         return redirect()
             ->route('student.recommendations')
-            ->with('success', 'Your top 3 matching programs are ready.');
+            ->with('success', 'Your matching programs are ready.');
     }
     
 }
