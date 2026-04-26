@@ -33,47 +33,57 @@
 
         <div id="body_part">
             <form action="{{ route('university.index') }}" method="GET" id="filter_form">
-                <div id="filter_section">
-                    <label>Filter by:</label>
+                <div class="filter-panel">
+                    <div id="filter_section">
+                        <div class="filter-heading">
+                            <span class="filter-heading-icon"></span>
+                            <div>
+                                <span class="filter-eyebrow">Refine results</span>
+                                <label>Filter by</label>
+                            </div>
+                        </div>
 
-                    <select name="rank" id="rank" class="select">
-                        <option value="">Rank</option>
-                        @foreach($ranks as $rank)
-                            <option value="{{ $rank }}" {{ $selectedRank == $rank ? 'selected' : '' }}>
-                                {{ $rank }}
-                            </option>
-                        @endforeach
-                    </select>
+                        <div class="filter-controls">
+                            <select name="rank" id="rank" class="select">
+                                <option value="">Rank</option>
+                                @foreach($ranks as $rank)
+                                    <option value="{{ $rank }}" {{ $selectedRank == $rank ? 'selected' : '' }}>
+                                        {{ $rank }}
+                                    </option>
+                                @endforeach
+                            </select>
 
-                    <select name="country" id="country" class="select">
-                        <option value="">Country</option>
-                        @foreach($countries as $country)
-                            <option value="{{ $country }}" {{ $selectedCountry == $country ? 'selected' : '' }}>
-                                {{ $country }}
-                            </option>
-                        @endforeach
-                    </select>
+                            <select name="country" id="country" class="select">
+                                <option value="">Country</option>
+                                @foreach($countries as $country)
+                                    <option value="{{ $country }}" {{ $selectedCountry == $country ? 'selected' : '' }}>
+                                        {{ $country }}
+                                    </option>
+                                @endforeach
+                            </select>
 
-                    <div id="city-select-container">
-                        @include('UniversityPages.partials.citySelect', [
-                            'specificCities' => $specificCities,
-                            'selectedCity' => $selectedCity,
-                            'selectedCountry' => $selectedCountry
-                        ])
+                            <div id="city-select-container">
+                                @include('UniversityPages.partials.citySelect', [
+                                    'specificCities' => $specificCities,
+                                    'selectedCity' => $selectedCity,
+                                    'selectedCountry' => $selectedCountry
+                                ])
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div id="search_container">
-                    <div class="search-box">
-                        <input
-                            type="text"
-                            id="search"
-                            name="search"
-                            placeholder="Search by University Name"
-                            value="{{ $search }}"
-                            class="search-box-input"
-                        >
-                        <span class="search-box-icon">⌕</span>
+                    <div id="search_container">
+                        <div class="search-box">
+                            <input
+                                type="text"
+                                id="search"
+                                name="search"
+                                placeholder="Search by University Name"
+                                value="{{ $search }}"
+                                class="search-box-input"
+                            >
+                            <span class="search-box-icon">⌕</span>
+                        </div>
                     </div>
                 </div>
             </form>

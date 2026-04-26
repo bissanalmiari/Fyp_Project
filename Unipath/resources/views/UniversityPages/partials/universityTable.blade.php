@@ -23,6 +23,10 @@
                 @else
                     <div class="image-placeholder">University Image</div>
                 @endif
+
+                <div class="university-rank-badge">
+                    Rank {{ $university->rank ?? 'N/A' }}
+                </div>
             </div>
 
             <div class="university-info-area">
@@ -38,8 +42,8 @@
                     <h3 class="university-name">{{ $university->name }}</h3>
 
                     <div class="university-meta">
-                        <p><span class="meta-icon">📍</span>{{ $university->city }}, {{ $university->country }}</p>
-                        <p><span class="meta-icon">🏆</span>University Rank: {{ $university->rank }}</p>
+                        <p><span class="meta-icon"></span>{{ $university->city }}, {{ $university->country }}</p>
+                        <p><span class="meta-icon"></span>University Rank: {{ $university->rank }}</p>
                     </div>
                 </div>
 
