@@ -18,7 +18,7 @@
                 <a href="{{ url('/') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Home</a>
                 <a href="{{ url('/about') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">About Us</a>
                 <a href="{{ url('/contact') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Contact Us</a>
-                <a href="{{ url('/programs') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Programs</a>
+                <a href="{{ url('/universities') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Universities</a>
 
                 <!-- Tools Dropdown -->
                 <div class="relative group">
@@ -39,7 +39,7 @@
                                 class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">Quiz</a>
                             <a href="{{ route('public.recommendations') }}"
                                 class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">Recommendation</a>
-                            <a href="{{ url('/comparison') }}"
+                            <a href="{{ url('/compare-programs') }}"
                                 class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">Comparison Tool</a>
                             <a href="{{ url('/careers') }}"
                                 class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">Careers</a>
@@ -79,7 +79,7 @@
                 <a href="{{ url('/') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Home</a>
                 <a href="{{ url('/about') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">About Us</a>
                 <a href="{{ url('/contact') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Contact Us</a>
-                <a href="{{ url('/programs') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Programs</a>
+                <a href="{{ url('/universities') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Universities</a>
 
                 <!-- Tools Dropdown Mobile -->
                 <div>
@@ -100,7 +100,7 @@
                             class="px-3 py-2 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] rounded-lg transition">Quiz</a>
                         <a href="{{ route('public.recommendations') }}"
                             class="px-3 py-2 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] rounded-lg transition">Recommendation</a>
-                        <a href="{{ url('/comparison') }}"
+                        <a href="{{ url('/compare-programs') }}"
                             class="px-3 py-2 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] rounded-lg transition">Comparison Tool</a>
                         <a href="{{ url('/careers') }}"
                             class="px-3 py-2 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] rounded-lg transition">Careers</a>

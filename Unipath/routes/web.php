@@ -29,6 +29,8 @@ Route::middleware(['auth'])->group(function() {
        Route::post('student/professional', [StudentController::class, 'professionalStore'])->name('student.professional.store');
 
     Route::get('student/favorite', [StudentController::class, 'favorite'])->name('student.favorite');
+    Route::delete('/favorites/{id}', [StudentController::class, 'removeFavorite'])
+    ->name('favorites.remove');
 
     Route::get('student/quiz-history', [StudentController::class, 'quizHistory'])->name('student.quiz-history');
 
@@ -99,7 +101,7 @@ Route::delete('/programs/{id}', [AdminController::class, 'deleteProgram'])->name
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('student.personal');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

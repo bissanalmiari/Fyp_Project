@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="{{ asset('css/student.css') }}">
 @endsection
 
+
+
+@section('content')
 @if(session('success'))
 <div id="success-popup" class="popup-overlay">
     <div class="popup-content">
@@ -12,7 +15,6 @@
 </div>
 @endif
 
-@section('content')
 <div class="profile-content">
     <h1 class="page-title">Personal Information</h1>
     <p class="page-subtitle">Keep your personal details up to date</p>

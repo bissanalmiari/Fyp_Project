@@ -41,16 +41,25 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleSubcategories();
 
     /* ───── HEART TOGGLE ───── */
-    window.toggleHeart = function(btn) {
-        const card = btn.closest('.program-card');
-        const liked = btn.classList.toggle('liked');
+    window.toggleHeart = function(btn, programId) {
 
-        if (!liked) {
-            card.remove();
+    fetch(`/favorites/${programId}`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            const card = btn.closest('.program-card');
+            card.remove();
+            updateCount();
+        }
+    })
+    .catch(err => console.error(err));
+};
 
-        updateCount();
-    };
 
     /* ───── SEARCH FILTER ───── */
     window.filterCards = function() {
@@ -130,8 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
         overlay.classList.add("hidden");
     }
 
-    openBtn?.addEventListener("click", openSidebar);
-    closeBtn?.addEventListener("click", closeSidebar);
-    overlay?.addEventListener("click", closeSidebar);
-
+    openBtn.addEventListener("click", openSidebar);
+    closeBtn.addEventListener("click", closeSidebar);
+    overlay.addEventListener("click", closeSidebar);
 });
