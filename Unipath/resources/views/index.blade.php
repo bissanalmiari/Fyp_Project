@@ -559,107 +559,43 @@
             <!-- Cards (FORCED 3 COLUMNS) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-                <!-- Card -->
-                <div
-                    class="bg-[#C3BFFA] rounded-[28px] p-6 sm:p-7 shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between text-white">
+                @forelse ($popularPrograms as $index => $program)
+                    <div
+                        class="bg-[#C3BFFA] rounded-[28px] p-6 sm:p-7 shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between text-white">
 
-                    <div>
-                        <div class="flex items-start justify-between mb-5">
-                            <div>
-                                <h3 class="text-xl sm:text-2xl font-bold font-[Poppins]">
-                                    Computer Science
-                                </h3>
-                                <p class="text-sm opacity-80 mt-1 font-[Poppins]">
-                                    Lebanese American University
-                                </p>
+                        <div>
+                            <div class="flex items-start justify-between mb-5">
+                                <div>
+                                    <h3 class="text-xl sm:text-2xl font-bold font-[Poppins]">
+                                        {{ $program->name }}
+                                    </h3>
+
+                                    <p class="text-sm opacity-80 mt-1 font-[Poppins]">
+                                        {{ $program->university->name ?? 'Unknown University' }}
+                                    </p>
+                                </div>
+
+                                <div class="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center font-bold text-lg">
+                                    {{ $index + 1 }}
+                                </div>
                             </div>
 
-                            <!-- Heart -->
-                            <button
-                                class="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center hover:bg-white/50 transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white"
-                                    class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                        d="M21 8.25c0-2.485-2.015-4.5-4.5-4.5-1.74 0-3.249.99-4 2.436A4.498 4.498 0 008.5 3.75C6.015 3.75 4 5.765 4 8.25c0 7.22 8 11.25 8 11.25s8-4.03 8-11.25z" />
-                                </svg>
-                            </button>
+                            <p class="text-sm sm:text-base leading-7 opacity-90 font-[Poppins]">
+                                Explore the {{ $program->name }} {{ $program->level }} program and build strong skills for your future career.
+                            </p>
+
                         </div>
 
-                        <p class="text-sm sm:text-base leading-7 opacity-90 font-[Poppins]">
-                            Explore the "prog name" "level" program and build strong skills for your future career.
-                        </p>
+                       <a href="{{ route('university.show', $program->university->id) }}#program-{{ $program->id }}"
+                            class="mt-6 inline-flex items-center font-semibold text-white text-sm hover:underline font-[Poppins]">
+                            View Program →
+                        </a>
                     </div>
-
-                    <a href="#"
-                        class="mt-6 inline-flex items-center font-semibold text-white text-sm hover:underline font-[Poppins]">
-                        View Program →
-                    </a>
-                </div>
-
-                <!-- Card -->
-                <div
-                    class="bg-[#C3BFFA] rounded-[28px] p-6 sm:p-7 shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between text-white">
-
-                    <div>
-                        <div class="flex items-start justify-between mb-5">
-                            <div>
-                                <h3 class="text-xl sm:text-2xl font-bold font-[Poppins]">
-                                    Business Administration
-                                </h3>
-                                <p class="text-sm opacity-80 mt-1 font-[Poppins]">
-                                    American University of Beirut
-                                </p>
-                            </div>
-
-                            <button
-                                class="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center hover:bg-white/50 transition">
-                                ❤️
-                            </button>
-                        </div>
-
-                        <p class="text-sm sm:text-base leading-7 opacity-90 font-[Poppins]">
-                            Explore the Business Administration bachelor program and build strong skills for your future
-                            career.
-                        </p>
-                    </div>
-
-                    <a href="#"
-                        class="mt-6 inline-flex items-center font-semibold text-white text-sm hover:underline font-[Poppins]">
-                        View Program →
-                    </a>
-                </div>
-
-                <!-- Card -->
-                <div
-                    class="bg-[#C3BFFA] rounded-[28px] p-6 sm:p-7 shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between text-white">
-
-                    <div>
-                        <div class="flex items-start justify-between mb-5">
-                            <div>
-                                <h3 class="text-xl sm:text-2xl font-bold font-[Poppins]">
-                                    Architecture
-                                </h3>
-                                <p class="text-sm opacity-80 mt-1 font-[Poppins]">
-                                    Beirut Arab University
-                                </p>
-                            </div>
-
-                            <button
-                                class="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center hover:bg-white/50 transition">
-                                ❤️
-                            </button>
-                        </div>
-
-                        <p class="text-sm sm:text-base leading-7 opacity-90 font-[Poppins]">
-                            Explore the "prog name" "level" program and build strong skills for your future career.
-                        </p>
-                    </div>
-
-                    <a href="#"
-                        class="mt-6 inline-flex items-center font-semibold text-white text-sm hover:underline font-[Poppins]">
-                        View Program →
-                    </a>
-                </div>
+                @empty
+                    <p class="text-center text-gray-500 col-span-3 font-[Poppins]">
+                        No popular programs yet.
+                    </p>
+                @endforelse
 
             </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SuccessStory;
+use App\Models\Program;
 
 class HomeController extends Controller
 {
@@ -12,6 +13,12 @@ class HomeController extends Controller
             ->latest()
             ->get();
 
-        return view('index', compact('stories'));
+        $popularPrograms = Program::with('university')
+            ->withCount('favorites')
+            ->orderByDesc('favorites_count')
+            ->take(3)
+            ->get();
+
+        return view('index', compact('stories', 'popularPrograms'));
     }
 }
