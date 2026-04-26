@@ -25,7 +25,7 @@
         </div>
         <div class="recommendation-snapshot">
             <span>{{ $student->major ?: 'Major not set' }}</span>
-            <small>{{ $student->preferred_location ?: 'Any country' }} &middot; {{ $student->preferred_study_mode ?: 'Any mode' }} &middot; {{ $student->budget ?: 'Any budget' }}</small>
+            <small>{{ $student->preferenceDisplay('preferred_location', 'Any country') }} &middot; {{ $student->preferenceDisplay('preferred_study_mode', 'Any mode') }} &middot; {{ $student->budget ?: 'Any budget' }}</small>
         </div>
     </section>
 

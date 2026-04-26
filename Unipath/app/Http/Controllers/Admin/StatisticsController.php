@@ -36,9 +36,14 @@ class StatisticsController extends Controller
                 ->groupBy('academic_level')
                 ->get(),
 
-            'preferredCountries' => Student::select('preferred_location', DB::raw('COUNT(*) as total'))
-                ->groupBy('preferred_location')
-                ->get(),
+            'preferredCountries' => Student::all()
+                ->flatMap(fn (Student $student) => $student->preferenceValues('preferred_location') ?: ['Not specified'])
+                ->countBy()
+                ->map(fn ($total, $preferredLocation) => (object) [
+                    'preferred_location' => $preferredLocation,
+                    'total' => $total,
+                ])
+                ->values(),
 
             'preferredCategories' => Category::select('categories.name', DB::raw('COUNT(*) as total'))
                 ->leftJoin('programs', 'categories.id', '=', 'programs.category_id')

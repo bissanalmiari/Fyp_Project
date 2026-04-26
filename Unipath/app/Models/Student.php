@@ -13,6 +13,7 @@ use App\Models\FeedbackRecommendation;
 use App\Models\SuccessStory;
 use App\Models\Skill;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Student extends Model
 {
@@ -96,5 +97,48 @@ class Student extends Model
     public function subcategories()
     {
         return $this->belongsToMany(SubCategory::class, 'student_subcategory', 'student_id', 'subcategory_id');
+    }
+
+    public function preferenceValues(string $field): array
+    {
+        $value = $this->{$field};
+
+        if (is_array($value)) {
+            return $this->cleanPreferenceValues($value);
+        }
+
+        if (! is_string($value) || trim($value) === '') {
+            return [];
+        }
+
+        $decoded = json_decode($value, true);
+
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+            return $this->cleanPreferenceValues(Arr::flatten($decoded));
+        }
+
+        return $this->cleanPreferenceValues(preg_split('/[;,|]+/', $value) ?: []);
+    }
+
+    public function preferenceList(string $field): string
+    {
+        return implode(';', $this->preferenceValues($field));
+    }
+
+    public function preferenceDisplay(string $field, string $emptyLabel = 'Any'): string
+    {
+        $values = $this->preferenceValues($field);
+
+        return empty($values) ? $emptyLabel : implode(', ', $values);
+    }
+
+    private function cleanPreferenceValues(array $values): array
+    {
+        return collect($values)
+            ->map(fn ($value) => trim((string) $value))
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
     }
 }

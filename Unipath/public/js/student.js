@@ -40,6 +40,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
     toggleSubcategories();
 
+    document.querySelectorAll('.preference-picker').forEach(select => {
+        const list = document.getElementById(select.dataset.target);
+        const inputName = select.dataset.name;
+
+        if (!list || !inputName) {
+            return;
+        }
+
+        function selectedValues() {
+            return Array.from(list.querySelectorAll('.preference-token'))
+                .map(token => token.dataset.value);
+        }
+
+        function refreshOptions() {
+            const selected = selectedValues();
+
+            Array.from(select.options).forEach(option => {
+                option.disabled = option.value !== '' && selected.includes(option.value);
+            });
+        }
+
+        function addToken(value, label) {
+            if (!value || selectedValues().includes(value)) {
+                return;
+            }
+
+            const token = document.createElement('span');
+            token.className = 'preference-token';
+            token.dataset.value = value;
+
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.innerHTML = '&times;';
+            removeButton.setAttribute('aria-label', `Remove ${label}`);
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = inputName;
+            input.value = value;
+
+            token.appendChild(document.createTextNode(label));
+            token.appendChild(removeButton);
+            token.appendChild(input);
+            list.appendChild(token);
+            refreshOptions();
+        }
+
+        select.addEventListener('change', () => {
+            const option = select.selectedOptions[0];
+
+            if (option && option.value) {
+                addToken(option.value, option.textContent.trim());
+            }
+
+            select.value = '';
+        });
+
+        list.addEventListener('click', event => {
+            const button = event.target.closest('.preference-token button');
+
+            if (!button) {
+                return;
+            }
+
+            button.closest('.preference-token')?.remove();
+            refreshOptions();
+        });
+
+        refreshOptions();
+    });
+
     /* ───── HEART TOGGLE ───── */
     window.toggleHeart = function(btn, programId) {
 

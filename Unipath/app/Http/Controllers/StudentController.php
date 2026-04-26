@@ -143,16 +143,19 @@ class StudentController extends Controller
         $student = Student::firstOrCreate(['user_id' => $user->id]);
 
         $request->validate([
-            'preferred_location' => 'nullable|string|max:255',
-            'preferred_study_mode' => 'nullable|string|max:255',
-            'preferred_course_intensity' => 'nullable|string|max:255',
+            'preferred_location' => 'nullable|array',
+            'preferred_location.*' => 'string|max:100',
+            'preferred_study_mode' => 'nullable|array',
+            'preferred_study_mode.*' => 'string|max:100',
+            'preferred_course_intensity' => 'nullable|array',
+            'preferred_course_intensity.*' => 'string|max:100',
             'budget' => 'nullable|string|max:255',
              'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
-        $student->preferred_location = $request->preferred_location;
-        $student->preferred_study_mode = $request->preferred_study_mode;
-        $student->preferred_course_intensity = $request->preferred_course_intensity;
+        $student->preferred_location = $this->preferenceJson($request->input('preferred_location', []));
+        $student->preferred_study_mode = $this->preferenceJson($request->input('preferred_study_mode', []));
+        $student->preferred_course_intensity = $this->preferenceJson($request->input('preferred_course_intensity', []));
         $student->budget = $request->budget;
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
@@ -169,6 +172,18 @@ class StudentController extends Controller
         $student->save();
 
         return redirect()->back()->with('success', 'Preferences information updated successfully.');
+    }
+
+    private function preferenceJson(array $values): ?string
+    {
+        $cleaned = collect($values)
+            ->map(fn ($value) => trim((string) $value))
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
+
+        return empty($cleaned) ? null : json_encode($cleaned);
     }
 
     public function professional()
