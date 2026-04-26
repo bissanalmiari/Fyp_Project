@@ -28,6 +28,8 @@ class StatisticsController extends Controller
             'totalStudents' => Student::count(),
             'totalUniversities' => University::count(),
             'totalPrograms' => Program::count(),
+            'totalCategories' => Category::count(),
+            'totalSubCategories' => DB::table('subcategories')->count(),
 
             // ========================
             // Student Insights
@@ -45,8 +47,10 @@ class StatisticsController extends Controller
                 ])
                 ->values(),
 
-            'preferredCategories' => Category::select('categories.name', DB::raw('COUNT(*) as total'))
-                ->leftJoin('programs', 'categories.id', '=', 'programs.category_id')
+            'preferredCategories' => DB::table('student_subcategory')
+                ->join('subcategories', 'student_subcategory.subcategory_id', '=', 'subcategories.id')
+                ->join('categories', 'subcategories.category_id', '=', 'categories.id')
+                ->select('categories.name', DB::raw('COUNT(*) as total'))
                 ->groupBy('categories.id', 'categories.name')
                 ->orderByDesc('total')
                 ->get(),
@@ -78,7 +82,7 @@ class StatisticsController extends Controller
             // ========================
             // Engagement
             // ========================
-            'totalFavorites' => DB::table('favorites')->count(), 
+            'totalFavorites' => DB::table('favorites')->count(),
             'totalMessages' => Message::count(),
             'totalSuccessStories' => SuccessStory::count(),
         ]);
