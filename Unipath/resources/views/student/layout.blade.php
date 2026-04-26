@@ -151,33 +151,26 @@
 
         </ul>
 
-        <!-- Bottom -->
-        <div class="p-4 border-t border-border-c space-y-2">
+        <div class="sidebar-bottom">
 
             <!-- Home -->
-            <a href="{{ url('/') }}"
-               class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-muted hover:bg-bg hover:text-title transition">
-                
-                <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <a href="{{ url('/') }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path d="M3 12l9-9 9 9"/>
                     <path d="M9 21V9h6v12"/>
                 </svg>
-
                 Home
             </a>
 
             <!-- Logout -->
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit"
-                    class="flex items-center gap-3 w-full px-4 py-2 rounded-lg text-sm text-muted hover:bg-bg hover:text-title transition">
-                    
-                    <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <button type="submit" class="logout-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                         <polyline points="16 17 21 12 16 7"/>
                         <line x1="21" y1="12" x2="9" y2="12"/>
                     </svg>
-
                     Logout
                 </button>
             </form>

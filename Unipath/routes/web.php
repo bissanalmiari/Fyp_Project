@@ -99,7 +99,7 @@ Route::delete('/programs/{id}', [AdminController::class, 'deleteProgram'])->name
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('student.personal');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
