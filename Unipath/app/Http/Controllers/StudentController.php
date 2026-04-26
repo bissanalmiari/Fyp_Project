@@ -227,7 +227,7 @@ $student->subcategories()->sync($subcategories);
         $user = Auth::user();
 
         $student = Student::firstOrCreate(['user_id' => $user->id]);
-        $favorites = $student->favorites()->with(['programs'])->get();
+        $favorites = $student->favorites()->get();
          
         return view('student.favorite', compact('student', 'favorites'));
     }

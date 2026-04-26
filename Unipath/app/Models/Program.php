@@ -63,7 +63,7 @@ class Program extends Model
        return $this->belongsTo(Progrem_Requirement::class, 'program_requirement_id');
     }
 
-    public function subcategories()
+    public function subcategory()
     {
        return $this->belongsTo(SubCategory::class, 'subcategory_id');
     }
