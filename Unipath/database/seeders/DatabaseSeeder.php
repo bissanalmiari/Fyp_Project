@@ -15,7 +15,6 @@ use Database\Seeders\MajorDetailsSeeder;
 use Database\Seeders\QuizQuestionSeeder;
 use Database\Seeders\QuizOptionMajorScoreSeeder;
 use Database\Seeders\SubCategorySeeder;
-use Database\Seeders\ProgramCsvSeeder;
 
 
 
@@ -39,7 +38,6 @@ class DatabaseSeeder extends Seeder
             MajorSeeder::class,
             CareerSeeder::class,
             SubCategorySeeder::class,
-            ProgramCsvSeeder::class,
 
         ]);
 

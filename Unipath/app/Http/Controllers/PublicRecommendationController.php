@@ -49,29 +49,34 @@ class PublicRecommendationController extends Controller
         }
 
         $validated = $request->validate([
-            'rate' => 'required|in:low,medium,high',
+            'recommendation_id' => 'required|integer',
+            'rating' => 'required|integer|min:1|max:5',
+            'is_relevant' => 'required|boolean',
         ]);
 
         $recommendations = $this->visibleRecommendations($this->student(), $recommendationService);
-        [$rating, $isRelevant] = match ($validated['rate']) {
-            'low' => [2, false],
-            'medium' => [3, true],
-            'high' => [5, true],
-        };
 
-        foreach ($recommendations as $recommendation) {
-            FeedbackRecommendation::updateOrCreate(
-                ['recommendation_id' => $recommendation->id],
-                [
-                    'rating' => $rating,
-                    'is_relevant' => $isRelevant,
-                ]
-            );
+        if (! $recommendations->contains('id', $validated['recommendation_id'])) {
+            abort(403);
         }
 
+        if (FeedbackRecommendation::where('recommendation_id', $validated['recommendation_id'])->exists()) {
+            return redirect()
+                ->to(route('public.recommendations') . '#recommendation-details')
+                ->with('success', 'Your feedback for this program is already saved.');
+        }
+
+        FeedbackRecommendation::updateOrCreate(
+            ['recommendation_id' => $validated['recommendation_id']],
+            [
+                'rating' => $validated['rating'],
+                'is_relevant' => $validated['is_relevant'],
+            ]
+        );
+
         return redirect()
-            ->route('public.recommendations')
-            ->with('success', 'Thank you. Your recommendation feedback was saved.');
+            ->to(route('public.recommendations') . '#recommendation-details')
+            ->with('success', 'Thank you. Your program feedback was saved.');
     }
 
     private function pageData(ProgramRecommendationService $recommendationService): array
@@ -80,19 +85,11 @@ class PublicRecommendationController extends Controller
         $recommendations = $student
             ? $this->visibleRecommendations($student, $recommendationService)
             : collect();
-        $confidence = $recommendations->isNotEmpty()
-            ? (int) round($recommendations->avg('score'))
-            : null;
         $nextAvailableAt = $student ? $recommendationService->nextAvailableAt($student) : null;
-        $feedbackRate = $this->feedbackRate($recommendations);
 
         return [
             'student' => $student,
             'recommendations' => $recommendations,
-            'confidence' => $confidence,
-            'confidenceLabel' => $this->confidenceLabel($confidence),
-            'feedbackRate' => $feedbackRate,
-            'currentFeedbackRate' => $feedbackRate,
             'profileReadiness' => $student ? $this->profileReadiness($student) : null,
             'lastGeneratedAt' => $recommendations->max('created_at'),
             'signalSummary' => $student ? $this->signalSummary($student) : $this->guestSignalSummary(),
@@ -107,7 +104,7 @@ class PublicRecommendationController extends Controller
 
     private function visibleRecommendations(Student $student, ProgramRecommendationService $recommendationService)
     {
-        return $recommendationService->latestRecommendations($student);
+        return $recommendationService->latestRecommendations($student)->load('feedbacks');
     }
 
     private function student(): Student
@@ -115,47 +112,6 @@ class PublicRecommendationController extends Controller
         $user = Auth::user();
 
         return Student::firstOrCreate(['user_id' => $user->id]);
-    }
-
-    private function confidenceLabel(?int $confidence): string
-    {
-        if ($confidence === null) {
-            return 'Available after sign in';
-        }
-
-        if ($confidence >= 75) {
-            return 'High confidence';
-        }
-
-        if ($confidence >= 50) {
-            return 'Medium confidence';
-        }
-
-        return 'Low confidence';
-    }
-
-    private function feedbackRate($recommendations): ?string
-    {
-        if ($recommendations->isEmpty()) {
-            return null;
-        }
-
-        $average = FeedbackRecommendation::whereIn('recommendation_id', $recommendations->pluck('id'))
-            ->avg('rating');
-
-        if ($average === null) {
-            return null;
-        }
-
-        if ($average >= 4) {
-            return 'high';
-        }
-
-        if ($average >= 3) {
-            return 'medium';
-        }
-
-        return 'low';
     }
 
     private function profileReadiness(Student $student): array

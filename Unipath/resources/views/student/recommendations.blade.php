@@ -38,18 +38,26 @@
                 </p>
             </div>
 
-            <form action="{{ route('student.recommendations.generate') }}" method="POST">
-                @csrf
-                <button type="submit" class="btn-recommend" {{ $canGenerate ? '' : 'disabled' }}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z"/>
-                    </svg>
-                    Recommend Best Programs
-                </button>
-                @if(! $canGenerate && $nextAvailableAt)
-                    <small class="cooldown-note">Available again {{ $nextAvailableAt->diffForHumans() }}</small>
+            <div class="recommendation-actions">
+                <form action="{{ route('student.recommendations.generate') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn-recommend" {{ $canGenerate ? '' : 'disabled' }}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z"/>
+                        </svg>
+                        Recommend Best Programs
+                    </button>
+                    @if(! $canGenerate && $nextAvailableAt)
+                        <small class="cooldown-note">Available again {{ $nextAvailableAt->diffForHumans() }}</small>
+                    @endif
+                </form>
+
+                @if($recommendations->isNotEmpty())
+                    <a class="btn-details" href="{{ route('public.recommendations') }}#recommendation-details">
+                        View Recommendation Details
+                    </a>
                 @endif
-            </form>
+            </div>
         </div>
 
         @if($recommendations->isEmpty())
@@ -63,7 +71,6 @@
                     @php
                         $details = json_decode($recommendation->explanation ?? '{}', true) ?: [];
                         $program = $recommendation->program;
-                        $reasons = $details['details'] ?? [];
                         $displayName = $recommendation->program_name ?: ($program->name ?? 'Program unavailable');
                         $displayUniversity = $recommendation->university_name ?: ($program?->university?->name ?? ($details['university'] ?? 'University unavailable'));
                         $displayCountry = $recommendation->country ?: ($program?->university?->country ?? ($details['country'] ?? 'Country not set'));
@@ -88,65 +95,19 @@
                             <div style="width: {{ min(100, max(0, $recommendation->score)) }}%"></div>
                         </div>
                         <strong>{{ min(100, max(0, $recommendation->score)) }}% match</strong>
-                        @if(! empty($details['summary']) || ! empty($reasons))
-                            <div class="recommendation-card-explanation">
-                                @if(! empty($details['summary']))
-                                    <p>{{ $details['summary'] }}</p>
-                                @endif
-
-                                @if(! empty($reasons))
-                                    <ul>
-                                        @foreach($reasons as $reason)
-                                            <li>{{ $reason }}</li>
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            </div>
-                        @endif
-                        @if($displayUrl)
-                            <a class="btn-show" href="{{ $displayUrl }}" target="_blank" rel="noopener">Show Program</a>
-                        @endif
+                        <div class="recommendation-card-actions">
+                            <a class="btn-details" href="{{ route('public.recommendations') }}#recommendation-details">
+                                View Details
+                            </a>
+                            @if($displayUrl)
+                                <a class="btn-show" href="{{ $displayUrl }}" target="_blank" rel="noopener">Show Program</a>
+                            @endif
+                        </div>
                     </article>
                 @endforeach
             </div>
         @endif
     </section>
-
-    @if($recommendations->isNotEmpty())
-        <section class="recommendation-section">
-            <h2>Why These Programs Fit You</h2>
-
-            <div class="fit-list">
-                @foreach($recommendations as $recommendation)
-                    @php
-                        $details = json_decode($recommendation->explanation ?? '{}', true) ?: [];
-                        $reasons = $details['details'] ?? [];
-                        $displayName = $recommendation->program_name ?: ($recommendation->program->name ?? 'Program unavailable');
-                    @endphp
-
-                    <article class="fit-card">
-                        <div>
-                            <span class="fit-rank">#{{ $recommendation->rank }}</span>
-                            <h3>{{ $displayName }}</h3>
-                            @if(! empty($details['summary']))
-                                <p>{{ $details['summary'] }}</p>
-                            @endif
-                        </div>
-
-                        @if(! empty($reasons))
-                            <ul>
-                                @foreach($reasons as $reason)
-                                    <li>{{ $reason }}</li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <p class="muted-reason">This program matched your saved profile and preference snapshot.</p>
-                        @endif
-                    </article>
-                @endforeach
-            </div>
-        </section>
-    @endif
 
     <section class="recommendation-section">
         <div class="recommendation-history-title">
@@ -199,9 +160,6 @@
                                     <span>{{ min(100, max(0, $historyRecommendation->score)) }}%</span>
                                 </div>
 
-                                @if(! empty($historyDetails['summary']))
-                                    <p class="history-program-explanation">{{ $historyDetails['summary'] }}</p>
-                                @endif
                             @endforeach
                         </div>
                     </article>

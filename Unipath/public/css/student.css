@@ -867,6 +867,13 @@ select[multiple].input-select {
     margin-bottom: 22px;
 }
 
+.recommendation-actions {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .btn-recommend {
     display: inline-flex;
     align-items: center;
@@ -901,6 +908,30 @@ select[multiple].input-select {
     opacity: 0.55;
     transform: none;
     box-shadow: none;
+}
+
+.btn-details {
+    align-items: center;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--title);
+    display: inline-flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    justify-content: center;
+    min-height: 40px;
+    padding: 10px 16px;
+    text-decoration: none;
+    transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.18s;
+}
+
+.btn-details:hover {
+    background: var(--title);
+    border-color: var(--title);
+    color: var(--white);
+    transform: translateY(-1px);
 }
 
 .cooldown-note {
@@ -1021,6 +1052,18 @@ select[multiple].input-select {
     color: var(--title);
     font-size: 12px;
     margin-bottom: 12px;
+}
+
+.recommendation-card-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.recommendation-card-actions .btn-details,
+.recommendation-card-actions .btn-show {
+    flex: 1 1 130px;
 }
 
 .recommendation-card-explanation {

@@ -14,6 +14,11 @@ class FeedbackRecommendation extends Model
         'is_relevant',
     ];
 
+    protected $casts = [
+        'rating' => 'integer',
+        'is_relevant' => 'boolean',
+    ];
+
     public function recommendation()
 {
     return $this->belongsTo(Recommendation::class, 'recommendation_id');

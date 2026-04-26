@@ -412,6 +412,137 @@ body {
     text-decoration: none;
 }
 
+.rec-program-feedback {
+    border-top: 1px solid var(--border);
+    display: grid;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 14px;
+}
+
+.rec-program-feedback > div > span {
+    color: var(--muted);
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.rec-rating-block {
+    text-align: center;
+}
+
+.rec-rating-options,
+.rec-program-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.rec-rating-options {
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.rec-rating-options label {
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: var(--border);
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 25px;
+    font-weight: 700;
+    height: 32px;
+    justify-content: center;
+    line-height: 1;
+    position: relative;
+    transition: color 0.16s, transform 0.16s;
+    width: 32px;
+}
+
+.rec-rating-options input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.rec-rating-options label:has(input:checked),
+.rec-rating-options label:has(input:checked) ~ label,
+.rec-rating-options label.active-rating {
+    color: #f3b444;
+}
+
+.rec-rating-options label:hover,
+.rec-rating-options label:hover ~ label {
+    color: #f3b444;
+    transform: translateY(-1px);
+}
+
+.rec-rating-options small {
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.rec-program-actions button,
+.rec-program-link a {
+    align-items: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--title);
+    cursor: pointer;
+    display: inline-flex;
+    flex: 1 1 120px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11.5px;
+    font-weight: 700;
+    justify-content: center;
+    margin-top: 0;
+    min-height: 38px;
+    padding: 9px 12px;
+    text-decoration: none;
+    transition: background 0.16s, border-color 0.16s, color 0.16s;
+}
+
+.rec-program-actions button:disabled {
+    cursor: not-allowed;
+    opacity: 0.72;
+}
+
+.rec-program-actions button:hover,
+.rec-program-link a:hover,
+.rec-program-actions button.active-feedback {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.rec-program-actions button:disabled:hover {
+    background: var(--panel);
+    border-color: var(--border);
+    color: var(--title);
+}
+
+.rec-program-actions button.active-feedback:disabled,
+.rec-program-actions button.active-feedback:disabled:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.rec-program-link {
+    display: flex;
+}
+
+.rec-program-link a {
+    flex: 1 1 100%;
+}
+
 .rec-explain-grid,
 .rec-explain-list {
     display: grid;
