@@ -35,19 +35,37 @@
     <div class="flex flex-wrap items-center gap-3">
         <span class="text-sm font-medium text-textMain">Filter by:</span>
 
-        <select id="university-country" class="rounded-lg border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
+        <select id="university-country" name="country"
+            class="rounded-lg border border-borderC bg-white px-2 py-2 text-sm text-textMain outline-none w-40">
             <option value="">Country</option>
             @foreach($countries as $country)
                 <option value="{{ $country }}">{{ $country }}</option>
             @endforeach
         </select>
 
-        <select id="university-city" class="rounded-lg border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
+        <select id="university-city" name="city"
+            class="rounded-lg border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none w-40">
             <option value="">City</option>
-            @foreach($cities as $city)
-                <option value="{{ $city }}">{{ $city }}</option>
-            @endforeach
         </select>
+
+        <script>
+        document.getElementById('university-country').addEventListener('change', function () {
+            let country = this.value;
+            let citySelect = document.getElementById('university-city');
+
+            citySelect.innerHTML = '<option value="">City</option>';
+
+            if (!country) return;
+
+            fetch(`/admin/cities/${encodeURIComponent(country)}`)
+                .then(response => response.json())
+                .then(cities => {
+                    cities.forEach(city => {
+                        citySelect.innerHTML += `<option value="${city}">${city}</option>`;
+                    });
+                });
+        });
+        </script>
 
         <select id="university-type" class="rounded-lg border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
             <option value="">Type</option>

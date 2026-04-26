@@ -8,7 +8,7 @@ use App\Models\Student;
 use App\Models\University;
 use App\Models\Program;
 use App\Models\Category;
-use App\Models\Message;
+use App\Models\ContactMessage;
 use App\Models\SuccessStory;
 use App\Models\QuizAttempt;
 use App\Models\QuizAttemptResults;
@@ -78,7 +78,7 @@ class StatisticsController extends Controller
             // Engagement
             // ========================
             'totalFavorites' => DB::table('favorites')->count(),
-            'totalMessages' => Message::count(),
+            'totalMessages' => ContactMessage::count(),
             'totalSuccessStories' => SuccessStory::count(),
         ]);
     }

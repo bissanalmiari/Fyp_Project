@@ -33,67 +33,75 @@
 </div>
 
 <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-    <div class="flex flex-wrap items-center gap-3">
-        <span class="text-sm font-medium text-textMain">Filter by:</span>
+<div class="flex items-center gap-3 mb-4">
+    <span class="text-sm font-medium text-textMain">Filter by:</span>
+</div>
 
-        <select id="program-university" class="rounded-lg border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
-            <option value="">University</option>
-            @foreach($universities as $university)
-                <option value="{{ $university->id }}" {{ request('university_id') == $university->id ? 'selected' : '' }}>
-                    {{ $university->name }}
-                </option>
-            @endforeach
-        </select>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
 
-        <select id="program-category" class="rounded-lg border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
-            <option value="">Category</option>
-            @foreach($categories as $category)
-                <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                    {{ $category->name }}
-                </option>
-            @endforeach
-        </select>
+    <select id="program-university"
+        class="w-full rounded-xl border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
+        <option value="">University</option>
+        @foreach($universities as $university)
+            <option value="{{ $university->id }}" {{ request('university_id') == $university->id ? 'selected' : '' }}>
+                {{ $university->name }}
+            </option>
+        @endforeach
+    </select>
 
-        <select id="program-subcategory" class="rounded-lg border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
-            <option value="">Sub Category</option>
-            @foreach($subcategories as $subcategory)
-                <option
-                    value="{{ $subcategory->id }}"
-                    data-category="{{ $subcategory->category_id }}"
-                    {{ request('subcategory_id') == $subcategory->id ? 'selected' : '' }}
-                >
-                    {{ $subcategory->name }}
-                </option>
-            @endforeach
-        </select>
+    <select id="program-category"
+        class="w-full rounded-xl border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
+        <option value="">Category</option>
+        @foreach($categories as $category)
+            <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                {{ $category->name }}
+            </option>
+        @endforeach
+    </select>
 
-        <select id="program-level" class="rounded-lg border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
-            <option value="">Level</option>
-            @foreach($levels as $level)
-                <option value="{{ $level }}" {{ request('level') == $level ? 'selected' : '' }}>
-                    {{ $level }}
-                </option>
-            @endforeach
-        </select>
+    <select id="program-subcategory"
+        class="w-full rounded-xl border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
+        <option value="">Sub Category</option>
+        @foreach($subcategories as $subcategory)
+            <option value="{{ $subcategory->id }}"
+                data-category="{{ $subcategory->category_id }}"
+                {{ request('subcategory_id') == $subcategory->id ? 'selected' : '' }}>
+                {{ $subcategory->name }}
+            </option>
+        @endforeach
+    </select>
 
-        <select id="program-study-mode" class="rounded-lg border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
-            <option value="">Study Mode</option>
-            @foreach($studyModes as $mode)
-                <option value="{{ $mode }}" {{ request('study_mode') == $mode ? 'selected' : '' }}>
-                    {{ $mode }}
-                </option>
-            @endforeach
-        </select>
+    <select id="program-level"
+        class="w-full rounded-xl border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
+        <option value="">Level</option>
+        @foreach($levels as $level)
+            <option value="{{ $level }}" {{ request('level') == $level ? 'selected' : '' }}>
+                {{ $level }}
+            </option>
+        @endforeach
+    </select>
 
-        <select id="program-course-intensity" class="rounded-lg border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
-            <option value="">Course Intensity</option>
-            @foreach($courseIntensities as $intensity)
-                <option value="{{ $intensity }}" {{ request('course_intensity') == $intensity ? 'selected' : '' }}>
-                    {{ $intensity }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+    <select id="program-study-mode"
+        class="w-full rounded-xl border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
+        <option value="">Study Mode</option>
+        @foreach($studyModes as $mode)
+            <option value="{{ $mode }}" {{ request('study_mode') == $mode ? 'selected' : '' }}>
+                {{ $mode }}
+            </option>
+        @endforeach
+    </select>
+
+    <select id="program-course-intensity"
+        class="w-full rounded-xl border border-borderC bg-white px-4 py-2 text-sm text-textMain outline-none">
+        <option value="">Course Intensity</option>
+        @foreach($courseIntensities as $intensity)
+            <option value="{{ $intensity }}" {{ request('course_intensity') == $intensity ? 'selected' : '' }}>
+                {{ $intensity }}
+            </option>
+        @endforeach
+    </select>
+
+</div>
 
     <a href="{{ route('Admin.programs.create') }}"
        class="inline-flex items-center justify-center rounded-lg bg-title px-5 py-3 text-sm font-semibold text-white hover:opacity-90">

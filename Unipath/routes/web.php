@@ -83,9 +83,11 @@ Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.p
 
 Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
 
- Route::prefix('admin')->name('Admin.')->group(function () {
+Route::prefix('admin')->name('Admin.')->group(function () {
     // Universities Admin
     Route::get('/universities', [AdminController::class, 'universities'])->name('universities');
+    Route::get('/cities/{country}', [AdminController::class, 'getCitiesByCountry'])->name('cities.byCountry');
+
     Route::get('/universities/create', [AdminController::class, 'createUniversity'])->name('universities.create');
     Route::post('/universities', [AdminController::class, 'storeUniversity'])->name('universities.store');
     Route::get('/universities/{id}', [AdminController::class, 'showUniversity'])->name('universities.show');
@@ -93,15 +95,14 @@ Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('
     Route::put('/universities/{id}', [AdminController::class, 'updateUniversity'])->name('universities.update');
     Route::delete('/universities/{id}', [AdminController::class, 'deleteUniversity'])->name('universities.delete');
 
-    //Programs  Admin
+    // Programs Admin
     Route::get('/programs', [AdminController::class, 'programs'])->name('programs');
-Route::get('/programs/create', [AdminController::class, 'createProgram'])->name('programs.create');
-Route::post('/programs', [AdminController::class, 'storeProgram'])->name('programs.store');
-Route::get('/programs/{id}', [AdminController::class, 'showProgram'])->name('programs.show');
-Route::get('/programs/{id}/edit', [AdminController::class, 'editProgram'])->name('programs.edit');
-Route::put('/programs/{id}', [AdminController::class, 'updateProgram'])->name('programs.update');
-Route::delete('/programs/{id}', [AdminController::class, 'deleteProgram'])->name('programs.delete');
-
+    Route::get('/programs/create', [AdminController::class, 'createProgram'])->name('programs.create');
+    Route::post('/programs', [AdminController::class, 'storeProgram'])->name('programs.store');
+    Route::get('/programs/{id}', [AdminController::class, 'showProgram'])->name('programs.show');
+    Route::get('/programs/{id}/edit', [AdminController::class, 'editProgram'])->name('programs.edit');
+    Route::put('/programs/{id}', [AdminController::class, 'updateProgram'])->name('programs.update');
+    Route::delete('/programs/{id}', [AdminController::class, 'deleteProgram'])->name('programs.delete');
 });
 
 Route::get('/dashboard', function () {

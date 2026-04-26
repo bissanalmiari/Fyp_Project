@@ -11,14 +11,19 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
-                <div class="rounded-xl bg-bg p-3">
+
+                <div class="rounded-xl bg-bg p-3 sm:col-span-2">
                     <p class="text-xs text-muted">Category</p>
-                    <p class="mt-1 font-semibold text-textMain">{{ optional($program->category)->name ?? 'N/A' }}</p>
+                    <p class="mt-1 font-semibold text-textMain">
+                        {{ optional($program->category)->name ?? 'N/A' }}
+                    </p>
                 </div>
 
-                <div class="rounded-xl bg-bg p-3">
+                <div class="rounded-xl bg-bg p-3 sm:col-span-2">
                     <p class="text-xs text-muted">Sub Category</p>
-                    <p class="mt-1 font-semibold text-textMain">{{ optional($program->subcategory)->name ?? 'N/A' }}</p>
+                    <p class="mt-1 font-semibold text-textMain">
+                        {{ optional($program->subcategory)->name ?? 'N/A' }}
+                    </p>
                 </div>
 
                 <div class="rounded-xl bg-bg p-3">

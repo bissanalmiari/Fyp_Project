@@ -596,5 +596,17 @@ class AdminController extends Controller
 
         return back()->with('success', 'Profile updated successfully.');
     }
+
+    public function getCitiesByCountry($country)
+    {
+        $cities = University::where('country', $country)
+            ->whereNotNull('city')
+            ->where('city', '!=', '')
+            ->distinct()
+            ->orderBy('city')
+            ->pluck('city');
+
+        return response()->json($cities);
+    }
 }
 

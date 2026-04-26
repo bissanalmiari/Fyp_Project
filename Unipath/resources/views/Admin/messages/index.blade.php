@@ -30,83 +30,71 @@
     of <span class="font-semibold text-title" id="messages-count-bottom">{{ $messages->total() }}</span>
 </p>
 
-<div class="overflow-hidden rounded-xl border border-borderC bg-white shadow-sm mb-8">
-    <div class="overflow-x-auto">
-        <table class="min-w-full">
-            <thead class="border-b border-borderC">
-                <tr class="text-left text-sm text-title">
-                    <th class="px-6 py-4">#</th>
-                    <th class="px-6 py-4">Full Name</th>
-                    <th class="px-6 py-4">Email</th>
-                    <th class="px-6 py-4">Phone</th>
-                    <th class="px-6 py-4">Message</th>
-                    <th class="px-6 py-4">Sent At</th>
-                </tr>
-            </thead>
+<div id="messages-table-body"
+     class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-8">
 
-            <tbody class="text-sm text-muted" id="messages-table-body">
-                @include('Admin.messages.partials.table_rows', ['messages' => $messages])
-            </tbody>
-        </table>
-    </div>
+    @include('Admin.messages.partials.table_rows', ['messages' => $messages])
+
 </div>
 
+{{-- PAGINATION --}}
 <div class="flex justify-center" id="messages-pagination-wrapper">
     @if($messages->hasPages())
         {{ $messages->links('pagination::simple-tailwind') }}
     @endif
 </div>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let messagesTimeout = null;
+document.addEventListener("DOMContentLoaded", function () {
+    let messagesTimeout = null;
 
-        function fetchMessages(url = null) {
-            const searchEl = document.getElementById('message-search');
-            if (!searchEl) return;
+    function fetchMessages(url = null) {
+        const searchEl = document.getElementById('message-search');
+        if (!searchEl) return;
 
-            const search = searchEl.value || '';
-            let endpoint = url ?? window.location.pathname;
+        const search = searchEl.value || '';
+        let endpoint = url ?? window.location.pathname;
 
-            const params = new URLSearchParams();
-            if (search) params.append('search', search);
+        const params = new URLSearchParams();
+        if (search) params.append('search', search);
 
-            fetch(`${endpoint}?${params.toString()}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                const tableBody = document.getElementById('messages-table-body');
-                const pagination = document.getElementById('messages-pagination-wrapper');
-                const countTop = document.getElementById('messages-count');
-                const countBottom = document.getElementById('messages-count-bottom');
-                const range = document.getElementById('messages-range');
-
-                if (tableBody) tableBody.innerHTML = data.html;
-                if (pagination) pagination.innerHTML = data.pagination;
-                if (countTop) countTop.innerText = data.count;
-                if (countBottom) countBottom.innerText = data.count;
-                if (range) range.innerText = `${data.from ?? 0}–${data.to ?? 0}`;
-            });
-        }
-
-        const messageSearchInput = document.getElementById('message-search');
-        if (messageSearchInput) {
-            messageSearchInput.addEventListener('input', function () {
-                clearTimeout(messagesTimeout);
-                messagesTimeout = setTimeout(fetchMessages, 300);
-            });
-        }
-
-        document.addEventListener('click', function (e) {
-            const link = e.target.closest('#messages-pagination-wrapper a');
-            if (link) {
-                e.preventDefault();
-                fetchMessages(link.href);
+        fetch(`${endpoint}?${params.toString()}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
             }
-        });
-    });
-</script>
-@endsection
+        })
+        .then(res => res.json())
+        .then(data => {
+            const tableBody = document.getElementById('messages-table-body');
+            const pagination = document.getElementById('messages-pagination-wrapper');
+            const countTop = document.getElementById('messages-count');
+            const countBottom = document.getElementById('messages-count-bottom');
+            const range = document.getElementById('messages-range');
 
+            if (tableBody) tableBody.innerHTML = data.html;
+            if (pagination) pagination.innerHTML = data.pagination;
+            if (countTop) countTop.innerText = data.count;
+            if (countBottom) countBottom.innerText = data.count;
+            if (range) range.innerText = `${data.from ?? 0}–${data.to ?? 0}`;
+        });
+    }
+
+    const messageSearchInput = document.getElementById('message-search');
+    if (messageSearchInput) {
+        messageSearchInput.addEventListener('input', function () {
+            clearTimeout(messagesTimeout);
+            messagesTimeout = setTimeout(fetchMessages, 300);
+        });
+    }
+
+    document.addEventListener('click', function (e) {
+        const link = e.target.closest('#messages-pagination-wrapper a');
+        if (link) {
+            e.preventDefault();
+            fetchMessages(link.href);
+        }
+    });
+});
+</script>
+
+@endsection
