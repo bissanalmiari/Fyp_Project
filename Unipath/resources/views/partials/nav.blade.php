@@ -6,9 +6,9 @@
 
             <!-- Logo -->
             <div class="flex items-center shrink-0">
-                <img src="{{ asset('images/logo.png') }}" alt="UniPath Logo" class="h-12 w-12 mr-2">
+                <img src="{{ asset('images/logo.png') }}" alt="UniPath Logo" class="h-12 w-10 mr-2">
                 <a href="{{ url('/') }}"
-                    class="text-2xl sm:text-3xl font-extrabold text-[#7F64CE] tracking-wide">
+                    class="text-2xl sm:text-3xl font-extrabold text-[7F64CE] tracking-wide">
                     UniPath
                 </a>
             </div>

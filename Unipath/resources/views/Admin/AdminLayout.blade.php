@@ -106,8 +106,9 @@ transition-transform duration-300 z-50">
 
             <!-- Universities -->
             <li>
-                <a href="#"
-                   class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-muted hover:bg-bg hover:text-title transition">
+                <a href="{{ route('Admin.universities') }}"
+   class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm transition
+   {{ request()->routeIs('Admin.universities*') ? 'bg-purple-100 text-title font-semibold' : 'text-muted hover:bg-bg hover:text-title' }}">
                     
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                         <path d="M22 10l-10-5-10 5 10 5 10-5z"/>
@@ -120,8 +121,9 @@ transition-transform duration-300 z-50">
 
             <!-- Programs -->
             <li>
-                <a href="#"
-                   class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-muted hover:bg-bg hover:text-title transition">
+                <a href="{{ route('Admin.programs') }}"
+   class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm transition
+   {{ request()->routeIs('Admin.programs*') ? 'bg-purple-100 text-title font-semibold' : 'text-muted hover:bg-bg hover:text-title' }}">
                     
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                         <rect x="3" y="4" width="18" height="16" rx="2"/>
