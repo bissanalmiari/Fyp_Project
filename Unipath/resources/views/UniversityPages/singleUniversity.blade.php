@@ -8,25 +8,53 @@
 
         <section class="hero">
             <div class="hero-content">
-                <div class="hero-img">
-                    <img src="{{ asset('images/program_graphic.png') }}" alt="Program Illustration">
-                </div>
-
                 <div class="hero-text">
-                    <span class="hero-label">OUR PLATFORM</span>
+                    <span class="hero-label">UNIVERSITY PROFILE</span>
                     <div class="hero-title">
-                        <h1>Browse Programs</h1>
-                        <p>Find Your Path</p>
+                        <h1>{{ $university->name }}</h1>
+                        <p>{{ $university->city ?? 'Explore' }}, {{ $university->country ?? 'Programs' }}</p>
                     </div>
 
                     <p class="hero-subtitle">
-                        Browse programs across universities and find the one that fits your interests, study preferences, and career goals.
+                        {{ $university->description ?: 'Explore this university profile, compare key details, and discover programs that match your academic path.' }}
                     </p>
 
+                    <div class="hero-info-grid">
+                        <div class="hero-info-card">
+                            <span>Rank</span>
+                            <strong>{{ $university->rank ?? 'N/A' }}</strong>
+                        </div>
+                        <div class="hero-info-card">
+                            <span>Type</span>
+                            <strong>{{ $university->type ?? 'N/A' }}</strong>
+                        </div>
+                        <div class="hero-info-card">
+                            <span>Location</span>
+                            <strong>{{ $university->city ?? 'N/A' }}</strong>
+                        </div>
+                    </div>
+
                     <div class="hero-btns">
-                        <a href="#programs-section" class="btn-primary">Get Started</a>
+                        @if($university->website_url)
+                            <a href="{{ $university->website_url }}" target="_blank" class="btn-primary">Visit Website</a>
+                        @endif
                         <a href="#programs-section" class="btn-secondary">View Programs</a>
                     </div>
+                </div>
+
+                <div class="hero-profile-card">
+                    <div class="hero-profile-image">
+                        <img
+                            src="{{ !empty($university->backup_image) ? asset($university->backup_image) : (!empty($university->image) ? asset($university->image) : asset('images/university_graphic.png')) }}"
+                            alt="{{ $university->name }}"
+                        >
+                    </div>
+
+                    @if($university->logo)
+                        <div class="hero-logo-card">
+                            <img src="{{ asset($university->logo) }}" alt="{{ $university->name }} logo">
+                        </div>
+                    @endif
                 </div>
             </div>
         </section>
