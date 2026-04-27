@@ -102,6 +102,7 @@
 .comparison-page .hero-title h1 {
   font-size: 60px;
   font-weight: 700;
+  
   color: var(--primary);
   line-height: 1.2;
 }

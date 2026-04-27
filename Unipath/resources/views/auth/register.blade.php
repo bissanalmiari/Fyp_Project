@@ -8,6 +8,17 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body { font-family: 'Poppins', sans-serif; }
+        input[type="password"]::-ms-reveal,
+    input[type="password"]::-ms-clear {
+        display: none;
+    }
+
+    input[type="password"]::-webkit-credentials-auto-fill-button,
+    input[type="password"]::-webkit-textfield-decoration-container {
+        display: none !important;
+        visibility: hidden;
+        pointer-events: none;
+    }
     </style>
 </head>
 
@@ -27,9 +38,22 @@
                 </div>
                 
                 <div class="w-full max-w-md relative z-10 animate-fadeIn">
+                    <div class="mb-4 flex items-center">
+                        <a href="{{ url('/') }}"
+                        class="flex items-center gap-2 text-sm text-gray-600 hover:text-[#7F64CE] transition">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+
+                            Back to Home
+                        </a>
+                    </div>
                     <div class="mb-10 text-left" style="min-height: 120px;">
 
-                        <img src="{{ asset('images/unipath-logo.png') }}" alt="Unipath Logo" style="width: 180px; display: block; transform: translate(40px, -30px);">
+                        <img src="{{ asset('images/unipath-logo.png') }}" alt="Unipath Logo" style="width: 180px; display: block; transform: translate(40px, -5px);">
 
                         <p class="mt-6 font-bold text-[#7F64CE] leading-tight" style="transform: translate(40px, -20px); font-size: 25px;">
                             Create Account

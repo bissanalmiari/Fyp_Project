@@ -2,6 +2,23 @@
 
     @push('styles')
         <link rel="stylesheet" href="{{ asset('css/comparison.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <style>
+            @font-face {
+                font-family: 'Blanche';
+                src: url("{{ asset('fonts/Blanche.ttf') }}") format('truetype');
+                font-weight: normal;
+                font-style: normal;
+            }
+
+            .blanche-font {
+                font-family: 'Blanche', cursive !important;
+                font-weight: normal !important;
+                display: block;
+            }
+        </style>
     @endpush
 
     <div class="comparison-page min-h-screen bg-[#F6F4FE]">
@@ -14,9 +31,19 @@
 
                 <div class="hero-text">
                     <span class="hero-label">OUR PLATFORM</span>
-                    <div class="hero-title">
-                        <h1>Program Comparison</h1>
-                        <p>Choose Smarter</p>
+                    <div class="hero-title relative inline-block text-center min-h-[130px]">
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
+                            Program
+                        </h1>
+
+                        <span class="absolute 
+                            left-1/2 -translate-x-1/2
+                            top-6 sm:top-8 lg:top-10
+                            text-3xl sm:text-4xl lg:text-5xl
+                            text-[#7F64CE] blanche-font whitespace-nowrap">
+                            Comparison
+                        </span>
+
                     </div>
 
                     <p class="hero-subtitle">
@@ -37,7 +64,9 @@
                         <div class="about-comparison-icon" aria-hidden="true">CT</div>
                         <div>
                             <span class="about-comparison-label">Smart comparison</span>
-                            <h2>About This Comparison Tool</h2>
+                            <h2 class="font-[Rammetto_One] text-[#C498F2]">
+                                About This Comparison Tool
+                            </h2>
                         </div>
                     </div>
 

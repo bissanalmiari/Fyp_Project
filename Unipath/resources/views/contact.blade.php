@@ -17,6 +17,8 @@
         </div>
         @endif
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap" rel="stylesheet">
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         * {
@@ -52,6 +54,18 @@
         .fade-scroll.animate-visible[data-direction="right"] {
             transform: translateX(0);
         }
+        @font-face {
+        font-family: 'Blanche';
+        src: url("{{ asset('fonts/Blanche.ttf') }}") format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .blanche-font {
+        font-family: 'Blanche', cursive !important;
+        font-weight: normal !important;
+        display: block;
+    }
     </style>
 
     <section class="relative overflow-hidden bg-[#F6F4FE]">
@@ -68,9 +82,19 @@
             <div class="grid grid-cols-2 items-center gap-6 md:gap-8 lg:gap-10">
 
                 <div class="max-w-xl relative z-10">
-                    <h1 class="mt-4 text-3xl font-bold leading-tight text-[#C498F2] sm:text-4xl md:text-5xl">
-                        We’d love to hear from you
-                    </h1>
+                    <div class="relative inline-block text-center mt-4 min-h-[120px]">
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One] leading-tight">
+                            We’d love to
+                        </h1>
+
+                        <span class="absolute 
+                            left-1/2 -translate-x-1/2
+                            top-8 sm:top-10 lg:top-12
+                            text-3xl sm:text-4xl lg:text-5xl
+                            text-[#7F64CE] blanche-font whitespace-nowrap">
+                            hear from you
+                        </span>
+                    </div>
 
                     <p class="mt-4 text-sm leading-7 text-gray-600 sm:mt-5 sm:text-base md:text-lg md:leading-8">
                         Whether you have a question, need support, or want to share your experience,
@@ -106,7 +130,7 @@
             <div class="grid lg:grid-cols-2 gap-12 items-start">
                 
                 <div class="max-w-xl fade-scroll" data-direction="left" data-delay="0s">
-                    <h2 class="mt-6 text-3xl md:text-4xl font-bold text-[#7F64CE] leading-tight">
+                    <h2 class="mt-6 text-3xl md:text-4xl font-extrabold text-[#C498F2] font-[Rammetto_One] leading-tight">
                         Let’s start the conversation
                     </h2>
 
@@ -229,7 +253,7 @@
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             @auth
             <div class="max-w-xl fade-scroll" data-delay="0s">
-                <h2 class="mt-6 text-3xl md:text-4xl font-bold text-[#7F64CE] leading-tight">
+                <h2 class="mt-6 text-3xl md:text-4xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
                     Share Your Story
                 </h2>
 
@@ -317,7 +341,7 @@
 
                         <div>
                             <div class="mb-8 max-w-xl text-left">
-                                <h3 class="mt-5 text-3xl font-bold text-[#7F64CE] md:text-4xl">
+                                <h3 class="mt-5 text-3xl md:text-4xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
                                     Share Your Success Story
                                 </h3>
 
@@ -414,7 +438,7 @@
     <section id="faq" class="bg-[#F6F4FE] py-20">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="fade-scroll mb-10" data-delay="0s">
-                <h2 class="text-3xl font-bold tracking-tight text-[#7F64CE] md:text-4xl">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-[#C498F2] font-[Rammetto_One] tracking-tight">
                     Frequently Asked Questions
                 </h2>
                 <p class="mt-3 max-w-2xl text-base text-gray-600">

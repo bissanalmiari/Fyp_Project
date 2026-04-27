@@ -1,5 +1,6 @@
 <x-app-layout>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap" rel="stylesheet">
 <style>
     body {
         scroll-behavior: smooth;
@@ -12,12 +13,9 @@
     }
 
     .blanche-font {
-        font-family: 'Blanche', cursive !important;
-        font-weight: normal !important;
-        display: block;
-        font-size: 1.2em;
-        line-height: 1;
-        letter-spacing: 1px;
+    font-family: 'Blanche', cursive !important;
+    font-weight: normal !important;
+    display: block;
     }
 
     .fade-scroll {
@@ -53,11 +51,27 @@
         <section class="relative grid items-center gap-10 py-16 sm:py-20 md:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:py-24">
     
             <div class="relative z-20 max-w-xl">
-                <h1 class="text-4xl font-bold leading-tight text-[#C498F2] sm:text-5xl lg:text-6xl">
-                    <span>Shaping the right</span>
+                <div class="relative inline-block text-center">
 
-                    <span class="blanche-font mt-1 block text-4xl text-[#7F64CE] sm:text-5xl lg:text-6xl">academic path</span>
-                </h1>
+                    <!-- Main title -->
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
+                        Shaping the 
+                        <span class="relative inline-block">
+                            
+                            <!-- Small overlay on the LEFT -->
+                            <span class="absolute 
+                                left-1/2 -translate-x-1/2
+                                top-[60%]
+                                text-3xl sm:text-4xl lg:text-5xl
+                                text-[#7F64CE] blanche-font whitespace-nowrap">
+                                academic path
+                            </span>
+
+                            right
+                        </span>
+                    </h1>
+
+                </div>
 
                 <p class="mt-5 max-w-lg text-base leading-8 text-[#6B6780] md:text-lg">Unipath helps students discover university programs that truly fit their goals, interests, skills, and budget through smart recommendations, interactive quizzes, and career-driven insights.</p>
 
@@ -86,8 +100,9 @@
                     <!-- 
                     <p class="inline-flex items-center justify-center text-xs font-semibold uppercase tracking-[0.25em] text-[#C498F2]"> Core Features</p>-->
 
-                    <h2 class="text-3xl font-extrabold text-[#C498F2] md:text-4xl"> Our Core Features <!--<br><span class="blanche-font text-[#7F64CE]"style="font-size: 30px; display: inline-block; margin-top: 6px;">Features </span> --></h2>
-
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
+                    Our Core Features
+                    </h2>
                     <p class="mt-4 text-base leading-8 text-[#6B6780] md:text-lg">Explore the key features designed to guide students in choosing <br>the right academic path.</p>
                 </div>
 
@@ -233,7 +248,7 @@
 
             <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl text-center fade-scroll" data-delay="0s">
-                    <h2 class="mt-3 text-2xl font-extrabold text-[#C498F2] md:text-3xl lg:text-4xl">
+                    <h2 class="mt-3 text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
                         Why Choose Unipath
                     </h2>
 
@@ -326,7 +341,7 @@
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
 
                 <div class="mx-auto max-w-2xl text-center fade-scroll" data-delay="0s">
-                    <h2 class="mt-3 text-2xl font-extrabold text-[#C498F2] md:text-3xl lg:text-4xl">
+                    <h2 class="mt-3 text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
                         How UniPath Guides You
                     </h2>
 
@@ -438,10 +453,9 @@
                 
                 <div class="mx-auto max-w-2xl text-center">
 
-                    <h2 class="mt-3 text-3xl font-extrabold text-[#C498F2] md:text-4xl">
+                    <h2 class="mt-3 text-3xl md:text-4xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
                         Meet the Team
                     </h2>
-
                     <p class="mt-4 text-sm leading-7 text-[#6B6780] md:text-base">
                         We are a passionate team of developers working together to build smart, 
                         student-focused solutions that make educational decisions easier and more effective.

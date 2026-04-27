@@ -1,5 +1,7 @@
 <x-app-layout>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap" rel="stylesheet">
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         * {
@@ -23,6 +25,14 @@
             .reveal-delay-1 { transition-delay: 0.4s; }
             .reveal-delay-2 { transition-delay: 0.6s; }
             .reveal-delay-3 { transition-delay: 0.8s; }
+            @font-face {
+                font-family: 'Blanche';
+                src: url("{{ asset('fonts/Blanche.ttf') }}") format('truetype');
+            }
+
+            .blanche-font {
+                font-family: 'Blanche', cursive !important;
+            }
     </style>
 
     <section class="relative overflow-hidden bg-[#F6F4FE]">
@@ -48,9 +58,23 @@
             <div class="grid grid-cols-2 items-center gap-6 md:gap-8 lg:gap-10">
 
                 <div class="max-w-xl relative z-10">
-                    <h1 class="mt-4 text-3xl font-bold leading-tight text-[#C498F2] sm:text-4xl md:text-5xl">
-                        Find Your Ideal Major
-                    </h1>
+                    <div class="relative inline-block text-center mt-4 min-h-[120px]">
+
+                        <!-- Main -->
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
+                            Find Your
+                        </h1>
+
+                        <!-- Overlay -->
+                        <span class="absolute 
+                            left-1/2 -translate-x-1/2
+                            top-4 sm:top-6 lg:top-8
+                            text-3xl sm:text-4xl lg:text-5xl
+                            text-[#7F64CE] blanche-font whitespace-nowrap">
+                            ideal major
+                        </span>
+
+                    </div>
 
                     <p class="mt-4 text-sm leading-7 text-gray-600 sm:mt-5 sm:text-base md:text-lg md:leading-8">
                         Answer a few quick questions and discover the major that best matches your interests, strengths, and future goals.
@@ -83,7 +107,7 @@
     <section id="how-it-works" class="bg-[#F6F4FE] px-4 py-28 sm:px-6 md:px-8 lg:px-12">
         <div class="mx-auto max-w-6xl">
             <div class="text-center reveal-up reveal-delay-1">
-                <h2 class="text-3xl font-bold text-[#7F64CE] sm:text-4xl">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
                     How It Works
                 </h2>
                 <p class="mx-auto mt-4 max-w-2xl text-sm leading-7 text-gray-600 sm:text-base">
@@ -161,7 +185,7 @@
         <div class="mx-auto max-w-4xl">
             <div class="reveal-up reveal-delay-2 rounded-[28px] border border-[#C3BFFA]/30 bg-[#F4EFFF] px-6 py-8 shadow-sm sm:px-8 md:flex md:items-center md:justify-between md:gap-6">
                 <div>
-                    <h3 class="text-2xl font-bold text-[#7F64CE] sm:text-3xl">
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
                         Ready to find your perfect major?
                     </h3>
                     <p class="mt-3 text-sm leading-7 text-gray-600 sm:text-base">

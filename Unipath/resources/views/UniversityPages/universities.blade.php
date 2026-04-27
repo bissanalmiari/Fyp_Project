@@ -1,7 +1,21 @@
 <x-app-layout>
 
     @push('styles')
-        <link rel="stylesheet" href="{{ asset('css/universities.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/universities.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ✅ ADD THIS -->
+    <style>
+        @font-face {
+            font-family: 'Blanche';
+            src: url("{{ asset('fonts/Blanche.ttf') }}") format('truetype');
+        }
+
+        .blanche-font {
+            font-family: 'Blanche', cursive !important;
+        }
+    </style>
     @endpush
 
     <div class="min-h-screen bg-[#F6F4FE]">
@@ -14,9 +28,22 @@
 
                 <div class="hero-text">
                     <span class="hero-label">OUR PLATFORM</span>
-                    <div class="hero-title">
-                        <h1>Browse Universities</h1>
-                        <p>Around the World</p>
+                    <div class="hero-title relative inline-block text-center">
+
+                        <!-- Main title -->
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
+                            Browse Universities
+                        </h1>
+
+                        <!-- Overlay -->
+                        <span class="absolute 
+                            left-1/2 -translate-x-1/2
+                            top-20 sm:top-24 lg:top-28
+                            text-3xl sm:text-4xl lg:text-5xl
+                            text-[#7F64CE] blanche-font whitespace-nowrap">
+                            around the world
+                        </span>
+
                     </div>
 
                     <p class="hero-subtitle">
