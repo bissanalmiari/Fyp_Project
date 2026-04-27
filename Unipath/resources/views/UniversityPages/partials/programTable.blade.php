@@ -1,30 +1,59 @@
 @php
     $favoriteProgramIds = $favoriteProgramIds ?? collect();
+    $programCount = method_exists($programs, 'total') ? $programs->total() : $programs->count();
 @endphp
 
 <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-    <div class="text-lg font-semibold text-[#7F64CE]">
-        {{ $programs->total() }} Programs
+    <div class="inline-flex w-fit items-center gap-2 rounded-full border border-[#E6E0F8] bg-white px-4 py-2 text-sm font-semibold text-[#7F64CE] shadow-sm">
+        <span class="h-2 w-2 rounded-full bg-[#C498F2]"></span>
+        {{ $programCount }} Programs
     </div>
 </div>
 
-<div class="space-y-6" >
+<div class="space-y-5">
     @forelse($programs as $program)
         @php
             $isSaved = auth()->check() && $favoriteProgramIds->contains($program->id);
+            $languagesText = $program->languages && $program->languages->count()
+                ? $program->languages->pluck('name')->join(', ')
+                : 'N/A';
         @endphp
 
-        <details class="group rounded-3xl bg-[#C3BFFA] p-6 shadow-md">
-            <summary class="flex cursor-pointer list-none items-start justify-between gap-4" id="program-{{ $program->id }}" data-name="{{ $program->name }}">
-                <div>
-                    <h3 class="text-2xl font-bold text-[#7F64CE]">{{ $program->name }}</h3>
+        <details class="group overflow-hidden rounded-[28px] border border-[#E6E0F8] bg-white shadow-[0_14px_35px_rgba(127,100,206,0.10)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(127,100,206,0.16)] open:translate-y-0 open:shadow-[0_22px_55px_rgba(127,100,206,0.18)]">
+
+            <summary id="program-{{ $program->id }}"
+                data-name="{{ $program->name }}"
+                class="flex cursor-pointer list-none items-center justify-between gap-5 px-7 py-6 transition group-open:border-b group-open:border-[#E6E0F8] group-open:bg-[#FBFAFF]">
+
+                <div class="flex min-w-0 items-center gap-4">
+                    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F1EDFF] text-lg font-bold text-[#7F64CE]">
+                        {{ $loop->iteration }}
+                    </div>
+
+                    <div class="min-w-0">
+                        <h3 class="text-xl font-extrabold text-[#7F64CE] md:text-2xl">
+                            {{ $program->name }}
+                        </h3>
+
+                        <p class="mt-1 text-sm text-gray-500">
+                            {{ $program->level ?: 'N/A' }}
+
+                            @if($program->study_mode)
+                                • {{ $program->study_mode }}
+                            @endif
+
+                            @if($program->course_intensity)
+                                • {{ $program->course_intensity }}
+                            @endif
+                        </p>
+                    </div>
                 </div>
 
                 <div class="flex shrink-0 items-center gap-4">
                     @auth
                         <button
                             type="button"
-                            class="favorite-toggle flex items-center gap-2"
+                            class="favorite-toggle flex items-center gap-2 rounded-full border border-[#E6E0F8] bg-white px-3 py-2 text-sm font-semibold text-[#7F64CE] transition hover:bg-[#F6F4FE]"
                             data-save-url="{{ route('program.favorite', $program->id) }}"
                             data-unsaved-icon="{{ asset('images/before_save_icon.png') }}"
                             data-saved-icon="{{ asset('images/after_save_icon.png') }}"
@@ -34,68 +63,81 @@
                                 alt="Save program"
                                 class="saveIcon h-4 w-4 cursor-pointer"
                             >
-                            <span class="text-sm text-[#7F64CE]">favorite</span>
+                            <span class="hidden sm:inline">Favorite</span>
                         </button>
                     @endauth
 
-                    <span class="program-chevron text-xl text-[#7F64CE] transition-transform">⌄</span>
+                    <span class="program-chevron flex h-10 w-10 items-center justify-center rounded-full bg-[#F6F4FE] text-[#7F64CE] transition duration-300 group-open:rotate-180 group-open:bg-[#7F64CE] group-open:text-white">
+                        ˅
+                    </span>
                 </div>
             </summary>
 
-            <div class="mt-6 space-y-6">
-                <div class="rounded-2xl p-2">
-                    <h5 class="text-lg font-semibold tracking-wide text-[#5B527D]">General</h5>
+            <div class="bg-gradient-to-br from-white to-[#F8F6FF] px-7 py-7">
 
-                    <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">Program Category</p>
-                            <p class="font-semibold text-[#7F64CE]">{{ optional($program->category)->name ?: 'N/A' }}</p>
-                        </div>
+                {{-- General --}}
+                <div class="mb-8">
+                    <h5 class="mb-4 text-lg font-bold text-[#7F64CE]">General</h5>
 
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">Study Level</p>
-                            <p class="font-semibold text-[#7F64CE]">{{ $program->level ?: 'N/A' }}</p>
-                        </div>
-
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">Study Mode</p>
-                            <p class="font-semibold text-[#7F64CE]">{{ $program->study_mode ?: 'N/A' }}</p>
-                        </div>
-
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">Course Intensity</p>
-                            <p class="font-semibold text-[#7F64CE]">{{ $program->course_intensity ?: 'N/A' }}</p>
-                        </div>
-
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">Languages</p>
-                            <p class="font-semibold text-[#7F64CE]">
-                                {{ $program->languages->pluck('name')->join(', ') ?: 'N/A' }}
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">Program Category</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
+                                {{ optional($program->category)->name ?: 'N/A' }}
                             </p>
                         </div>
 
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">Duration</p>
-                            <p class="font-semibold text-[#7F64CE]">
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">Study Level</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
+                                {{ $program->level ?: 'N/A' }}
+                            </p>
+                        </div>
+
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">Study Mode</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
+                                {{ $program->study_mode ?: 'N/A' }}
+                            </p>
+                        </div>
+
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">Course Intensity</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
+                                {{ $program->course_intensity ?: 'N/A' }}
+                            </p>
+                        </div>
+
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">Languages</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
+                                {{ $languagesText }}
+                            </p>
+                        </div>
+
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">Duration</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
                                 {{ $program->duration ? ($program->duration <= 1 ? $program->duration . ' year' : $program->duration . ' years') : 'N/A' }}
                             </p>
                         </div>
 
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">Website</p>
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm md:col-span-2">
+                            <p class="text-sm text-gray-500">Website</p>
                             @if($program->url)
-                                <a href="{{ $program->url }}" target="_blank" class="font-semibold text-[#7F64CE] underline">
+                                <a href="{{ $program->url }}" target="_blank" class="mt-2 inline-block font-semibold text-[#7F64CE] underline transition hover:text-[#5a43b5]">
                                     Open Program
                                 </a>
                             @else
-                                <p class="font-semibold text-[#7F64CE]">N/A</p>
+                                <p class="mt-2 font-semibold text-[#7F64CE]">N/A</p>
                             @endif
                         </div>
                     </div>
                 </div>
 
-                <div class="rounded-2xl p-2">
-                    <h5 class="text-lg font-semibold tracking-wide text-[#5B527D]">Tuition Fees</h5>
+                {{-- Tuition Fees --}}
+                <div class="mb-8">
+                    <h5 class="mb-4 text-lg font-bold text-[#7F64CE]">Tuition Fees</h5>
 
                     @php
                         $country = strtolower(trim($university->country));
@@ -125,68 +167,82 @@
                         }
                     @endphp
 
-                    <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">{{ $localLabel }}</p>
-                            <p class="font-semibold text-[#7F64CE]">{{ $localFee ? $localFee . '/year' : 'N/A' }}</p>
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">{{ $localLabel }}</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
+                                {{ $localFee ? $localFee . '/year' : 'N/A' }}
+                            </p>
                         </div>
 
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">{{ $otherLabel }}</p>
-                            <p class="font-semibold text-[#7F64CE]">{{ $otherFee ? $otherFee . '/year' : 'N/A' }}</p>
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">{{ $otherLabel }}</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
+                                {{ $otherFee ? $otherFee . '/year' : 'N/A' }}
+                            </p>
                         </div>
                     </div>
                 </div>
 
+                {{-- English Requirements --}}
                 @php
                     $req = $program->requirement;
                 @endphp
 
-                <div class="rounded-2xl p-2">
-                    <h5 class="text-lg font-semibold tracking-wide text-[#5B527D]">English Requirements</h5>
+                <div>
+                    <h5 class="mb-4 text-lg font-bold text-[#7F64CE]">English Requirements</h5>
 
-                    <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">SAT</p>
-                            <p class="font-semibold text-[#7F64CE]">{{ optional($req)->sat ?: 'N/A' }}</p>
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">SAT</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
+                                {{ optional($req)->sat ?: 'N/A' }}
+                            </p>
                         </div>
 
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">IELTS</p>
-                            <p class="font-semibold text-[#7F64CE]">{{ optional($req)->ielts ?: 'N/A' }}</p>
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">IELTS</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
+                                {{ optional($req)->ielts ?: 'N/A' }}
+                            </p>
                         </div>
 
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">TOEFL</p>
-                            <p class="font-semibold text-[#7F64CE]">{{ optional($req)->toefl ?: 'N/A' }}</p>
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">TOEFL</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
+                                {{ optional($req)->toefl ?: 'N/A' }}
+                            </p>
                         </div>
 
-                        <div class="rounded-xl bg-[#F6F4FE] p-3">
-                            <p class="mb-1 text-xs text-[#5B527D]">Minimum GPA</p>
-                            <p class="font-semibold text-[#7F64CE]">{{ optional($req)->minimum_gpa ?: 'N/A' }}</p>
+                        <div class="rounded-2xl border border-[#E6E0F8] bg-white p-5 shadow-sm">
+                            <p class="text-sm text-gray-500">Minimum GPA</p>
+                            <p class="mt-2 font-semibold text-[#7F64CE]">
+                                {{ optional($req)->minimum_gpa ?: 'N/A' }}
+                            </p>
                         </div>
                     </div>
                 </div>
+
             </div>
         </details>
     @empty
-        <div class="rounded-3xl bg-[#C3BFFA] p-8 text-center font-semibold text-[#7F64CE] shadow-md">
-            No programs found.
+        <div class="rounded-[28px] border border-[#E6E0F8] bg-white p-10 text-center shadow-sm">
+            <p class="font-semibold text-gray-500">No programs found.</p>
         </div>
     @endforelse
 </div>
 
-@if($programs->total() > 0)
-    <div class="results-bottombar">
-        <div class="results-range">
+@if(method_exists($programs, 'total') && $programs->total() > 0)
+    <div class="mt-10 flex w-full flex-col items-center justify-between gap-5 rounded-[24px] border border-[#E6E0F8] bg-white px-5 py-4 shadow-sm md:flex-row">
+        <div class="text-sm font-semibold text-[#5B527D]">
             {{ $programs->firstItem() }}-{{ $programs->lastItem() }} of {{ $programs->total() }}
         </div>
 
-        <div class="custom-pagination">
+        <div class="flex flex-wrap items-center gap-2">
             @if($programs->onFirstPage())
-                <span class="page-arrow disabled">‹</span>
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-[#F6F4FE] text-[#9B8FC0] opacity-50">‹</span>
             @else
-                <a href="#" class="page-arrow program-pagination-link" data-page="{{ $programs->currentPage() - 1 }}">‹</a>
+                <a href="#" class="program-pagination-link flex h-9 w-9 items-center justify-center rounded-full bg-[#F6F4FE] font-semibold text-[#7F64CE] transition hover:bg-[#7F64CE] hover:text-white" data-page="{{ $programs->currentPage() - 1 }}">‹</a>
             @endif
 
             @php
@@ -207,16 +263,20 @@
 
             @for($page = $start; $page <= $end; $page++)
                 @if($page == $current)
-                    <span class="page-number active">{{ $page }}</span>
+                    <span class="flex h-9 w-9 items-center justify-center rounded-full bg-[#7F64CE] font-semibold text-white">
+                        {{ $page }}
+                    </span>
                 @else
-                    <a href="#" class="page-number program-pagination-link" data-page="{{ $page }}">{{ $page }}</a>
+                    <a href="#" class="program-pagination-link flex h-9 w-9 items-center justify-center rounded-full bg-[#F6F4FE] font-semibold text-[#7F64CE] transition hover:bg-[#7F64CE] hover:text-white" data-page="{{ $page }}">
+                        {{ $page }}
+                    </a>
                 @endif
             @endfor
 
             @if($programs->hasMorePages())
-                <a href="#" class="page-arrow program-pagination-link" data-page="{{ $programs->currentPage() + 1 }}">›</a>
+                <a href="#" class="program-pagination-link flex h-9 w-9 items-center justify-center rounded-full bg-[#F6F4FE] font-semibold text-[#7F64CE] transition hover:bg-[#7F64CE] hover:text-white" data-page="{{ $programs->currentPage() + 1 }}">›</a>
             @else
-                <span class="page-arrow disabled">›</span>
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-[#F6F4FE] text-[#9B8FC0] opacity-50">›</span>
             @endif
         </div>
     </div>
