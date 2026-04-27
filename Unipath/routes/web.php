@@ -1,7 +1,7 @@
 <?php
+
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AdminController;
-
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\GoogleController;
@@ -10,10 +10,11 @@ use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\SuccessStoryController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\PublicRecommendationController;
-use App\Http\Controllers\UniversityController; 
-use App\Http\Controllers\ProgramController; 
+use App\Http\Controllers\UniversityController;
+use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ComparisonController;
-
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\StatisticsController;
 
 Route::middleware(['auth'])->group(function() {
     Route::get('student/personal', [StudentController::class, 'personal'])->name('student.personal');
@@ -22,87 +23,80 @@ Route::middleware(['auth'])->group(function() {
     Route::get('student/academic', [StudentController::class, 'academic'])->name('student.academic');
     Route::post('student/academic', [StudentController::class, 'academicStore'])->name('student.academic.store');
 
-     Route::get('student/preferences', [StudentController::class, 'preferences'])->name('student.preferences');
-     Route::post('student/preferences', [StudentController::class, 'preferencesStore'])->name('student.preferences.store');
+    Route::get('student/preferences', [StudentController::class, 'preferences'])->name('student.preferences');
+    Route::post('student/preferences', [StudentController::class, 'preferencesStore'])->name('student.preferences.store');
 
-       Route::get('student/professional', [StudentController::class, 'professional'])->name('student.professional');
-       Route::post('student/professional', [StudentController::class, 'professionalStore'])->name('student.professional.store');
+    Route::get('student/professional', [StudentController::class, 'professional'])->name('student.professional');
+    Route::post('student/professional', [StudentController::class, 'professionalStore'])->name('student.professional.store');
 
     Route::get('student/favorite', [StudentController::class, 'favorite'])->name('student.favorite');
-    Route::delete('/favorites/{id}', [StudentController::class, 'removeFavorite'])
-    ->name('favorites.remove');
+    Route::delete('/favorites/{id}', [StudentController::class, 'removeFavorite'])->name('favorites.remove');
 
     Route::get('student/quiz-history', [StudentController::class, 'quizHistory'])->name('student.quiz-history');
 
     Route::get('student/recommendations', [StudentController::class, 'recommendations'])->name('student.recommendations');
     Route::post('student/recommendations/generate', [StudentController::class, 'generateRecommendations'])->name('student.recommendations.generate');
 });
-use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/careers', [CareerController::class, 'index'])->name('career');
 Route::post('/match-career', [CareerController::class, 'match'])->name('match-career');
+
 Route::get('/recommendations', [PublicRecommendationController::class, 'index'])->name('public.recommendations');
 Route::post('/recommendations/generate', [PublicRecommendationController::class, 'generate'])->name('public.recommendations.generate');
 Route::post('/recommendations/feedback', [PublicRecommendationController::class, 'feedback'])->name('public.recommendations.feedback');
 
-Route::get('admin/users', [AdminController::class, 'users'])->name('Admin.users');
-Route::delete('admin/users/{id}', [AdminController::class, 'deleteUser'])->name('Admin.users.delete');
-Route::get('/admin/careers', [AdminController::class, 'careers'])->name('Admin.careers');
-
-Route::get('/admin/careers/create', [AdminController::class, 'createCareer'])->name('Admin.careers.create');
-
-Route::post('/admin/careers', [AdminController::class, 'storeCareer'])->name('Admin.careers.store');
-
-Route::get('/admin/careers/{id}/edit', [AdminController::class, 'editCareer'])->name('Admin.careers.edit');
-
-Route::put('/admin/careers/{id}', [AdminController::class, 'updateCareer'])->name('Admin.careers.update');
-
-Route::delete('/admin/careers/{id}', [AdminController::class, 'deleteCareer'])->name('Admin.careers.delete');
-
-Route::get('/admin/quiz', [AdminController::class, 'quiz'])->name('Admin.quiz');
-
 Route::post('/contact/send', [ContactMessageController::class, 'store'])->name('contact.send');
-
-Route::get('/admin/messages', [ContactMessageController::class, 'index'])->name('admin.messages.index');
-
-Route::delete('/admin/messages/{id}', [ContactMessageController::class, 'destroy'])->name('admin.messages.destroy');
 
 Route::post('/success-stories/send', [SuccessStoryController::class, 'store'])->name('success-stories.send');
 
-Route::get('/admin/success-stories', [SuccessStoryController::class, 'index'])->name('admin.success-stories.index');
+Route::middleware(['auth', 'admin'])->group(function () {
 
-Route::patch('/admin/success-stories/{id}/approve', [SuccessStoryController::class, 'approve'])->name('admin.success-stories.approve');
+    Route::get('/admin/statistics', [StatisticsController::class, 'index'])->name('admin.statistics');
 
-Route::patch('/admin/success-stories/{id}/disapprove', [SuccessStoryController::class, 'disapprove'])->name('admin.success-stories.disapprove');
+    Route::get('admin/users', [AdminController::class, 'users'])->name('Admin.users');
+    Route::delete('admin/users/{id}', [AdminController::class, 'deleteUser'])->name('Admin.users.delete');
 
-Route::delete('/admin/success-stories/{id}', [SuccessStoryController::class, 'destroy'])->name('admin.success-stories.destroy');
+    Route::get('/admin/careers', [AdminController::class, 'careers'])->name('Admin.careers');
+    Route::get('/admin/careers/create', [AdminController::class, 'createCareer'])->name('Admin.careers.create');
+    Route::post('/admin/careers', [AdminController::class, 'storeCareer'])->name('Admin.careers.store');
+    Route::get('/admin/careers/{id}/edit', [AdminController::class, 'editCareer'])->name('Admin.careers.edit');
+    Route::put('/admin/careers/{id}', [AdminController::class, 'updateCareer'])->name('Admin.careers.update');
+    Route::delete('/admin/careers/{id}', [AdminController::class, 'deleteCareer'])->name('Admin.careers.delete');
 
-Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::get('/admin/quiz', [AdminController::class, 'quiz'])->name('Admin.quiz');
 
-Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+    Route::get('/admin/messages', [ContactMessageController::class, 'index'])->name('admin.messages.index');
+    Route::delete('/admin/messages/{id}', [ContactMessageController::class, 'destroy'])->name('admin.messages.destroy');
 
-Route::prefix('admin')->name('Admin.')->group(function () {
-    // Universities Admin
-    Route::get('/universities', [AdminController::class, 'universities'])->name('universities');
-    Route::get('/cities/{country}', [AdminController::class, 'getCitiesByCountry'])->name('cities.byCountry');
+    Route::get('/admin/success-stories', [SuccessStoryController::class, 'index'])->name('admin.success-stories.index');
+    Route::patch('/admin/success-stories/{id}/approve', [SuccessStoryController::class, 'approve'])->name('admin.success-stories.approve');
+    Route::patch('/admin/success-stories/{id}/disapprove', [SuccessStoryController::class, 'disapprove'])->name('admin.success-stories.disapprove');
+    Route::delete('/admin/success-stories/{id}', [SuccessStoryController::class, 'destroy'])->name('admin.success-stories.destroy');
 
-    Route::get('/universities/create', [AdminController::class, 'createUniversity'])->name('universities.create');
-    Route::post('/universities', [AdminController::class, 'storeUniversity'])->name('universities.store');
-    Route::get('/universities/{id}', [AdminController::class, 'showUniversity'])->name('universities.show');
-    Route::get('/universities/{id}/edit', [AdminController::class, 'editUniversity'])->name('universities.edit');
-    Route::put('/universities/{id}', [AdminController::class, 'updateUniversity'])->name('universities.update');
-    Route::delete('/universities/{id}', [AdminController::class, 'deleteUniversity'])->name('universities.delete');
+    Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
 
-    // Programs Admin
-    Route::get('/programs', [AdminController::class, 'programs'])->name('programs');
-    Route::get('/programs/create', [AdminController::class, 'createProgram'])->name('programs.create');
-    Route::post('/programs', [AdminController::class, 'storeProgram'])->name('programs.store');
-    Route::get('/programs/{id}', [AdminController::class, 'showProgram'])->name('programs.show');
-    Route::get('/programs/{id}/edit', [AdminController::class, 'editProgram'])->name('programs.edit');
-    Route::put('/programs/{id}', [AdminController::class, 'updateProgram'])->name('programs.update');
-    Route::delete('/programs/{id}', [AdminController::class, 'deleteProgram'])->name('programs.delete');
+    Route::prefix('admin')->name('Admin.')->group(function () {
+        Route::get('/universities', [AdminController::class, 'universities'])->name('universities');
+        Route::get('/cities/{country}', [AdminController::class, 'getCitiesByCountry'])->name('cities.byCountry');
+
+        Route::get('/universities/create', [AdminController::class, 'createUniversity'])->name('universities.create');
+        Route::post('/universities', [AdminController::class, 'storeUniversity'])->name('universities.store');
+        Route::get('/universities/{id}', [AdminController::class, 'showUniversity'])->name('universities.show');
+        Route::get('/universities/{id}/edit', [AdminController::class, 'editUniversity'])->name('universities.edit');
+        Route::put('/universities/{id}', [AdminController::class, 'updateUniversity'])->name('universities.update');
+        Route::delete('/universities/{id}', [AdminController::class, 'deleteUniversity'])->name('universities.delete');
+
+        Route::get('/programs', [AdminController::class, 'programs'])->name('programs');
+        Route::get('/programs/create', [AdminController::class, 'createProgram'])->name('programs.create');
+        Route::post('/programs', [AdminController::class, 'storeProgram'])->name('programs.store');
+        Route::get('/programs/{id}', [AdminController::class, 'showProgram'])->name('programs.show');
+        Route::get('/programs/{id}/edit', [AdminController::class, 'editProgram'])->name('programs.edit');
+        Route::put('/programs/{id}', [AdminController::class, 'updateProgram'])->name('programs.update');
+        Route::delete('/programs/{id}', [AdminController::class, 'deleteProgram'])->name('programs.delete');
+    });
 });
 
 Route::get('/dashboard', function () {
@@ -134,36 +128,21 @@ Route::get('/quiz/results/{attempt}', [QuizController::class, 'results'])->name(
 Route::get('/quiz/completed/{attempt}', [QuizController::class, 'completed'])->name('quiz.completed');
 Route::get('/majors/{slug}', [QuizController::class, 'showMajor'])->name('majors.show');
 
-
-// University pages //
-
-Route::get('/universities', [UniversityController::class, 'index'])->name('university.index'); 
+Route::get('/universities', [UniversityController::class, 'index'])->name('university.index');
 Route::get('/universities/{id}', [UniversityController::class, 'show'])->name('university.show');
 Route::get('/universities/{id}/programs', [ProgramController::class, 'byUniversity'])->name('university.programs');
+
 Route::middleware('auth')->post('/programs/{program}/favorite', [ProgramController::class, 'toggleFavorite'])
     ->name('program.favorite');
 
-
-    //Compare Programs // 
-Route::get('/compare-programs', [ComparisonController::class, 'index'])
-    ->name('comparison.index');
+Route::get('/compare-programs', [ComparisonController::class, 'index'])->name('comparison.index');
 
 Route::middleware('auth')->group(function () {
-    Route::post('/compare-programs/compare', [ComparisonController::class, 'compare'])
-        ->name('comparison.compare');
-
-    Route::get('/compare-programs/export', [ComparisonController::class, 'export'])
-        ->name('comparison.export');
+    Route::post('/compare-programs/compare', [ComparisonController::class, 'compare'])->name('comparison.compare');
+    Route::get('/compare-programs/export', [ComparisonController::class, 'export'])->name('comparison.export');
 });
-
 
 Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('google.redirect');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
-
-use App\Http\Controllers\Admin\StatisticsController;
-
-Route::get('/admin/statistics', [StatisticsController::class, 'index'])
-    ->name('admin.statistics');
-
 
 require __DIR__.'/auth.php';

@@ -28,6 +28,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if (auth()->user()->is_admin) {
+            return redirect()->route('admin.statistics');
+        }
+
         return redirect()->route('student.personal');
     }
 
