@@ -1474,3 +1474,28 @@ select[multiple].input-select {
         width: 90%;
     }
 }
+
+.quiz-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: 8px;
+  margin-top: 10px;
+    background: var(--primary);
+    font-family: 'Poppins', sans-serif;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--white);
+    cursor: pointer;
+    transition: all 0.16s ease;
+    text-decoration: none;
+
+}
+.quiz-btn:hover {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    color: var(--title);
+   
+    box-shadow: 0 3px 10px rgba(196, 152, 242, 0.3);
+}

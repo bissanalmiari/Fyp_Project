@@ -124,7 +124,10 @@
 </div>
 
 @empty
-      <p>You haven't taken any quizzes yet. </p>
+      <p>Take a quick quiz and let UniPath guide you toward the right major. </p>
+     
+    <a href="{{ asset('quiz') }}" class="quiz-btn">Start Quiz</a>
+
 @endforelse
 
 
