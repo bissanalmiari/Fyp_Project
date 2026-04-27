@@ -52,14 +52,12 @@ class SuccessStoryController extends Controller
                 $query->where('status', $status);
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(9);
 
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('Admin.success-stories.partials.cards', compact('stories'))->render(),
-                'pagination' => $stories->hasPages()
-                    ? $stories->links('pagination::simple-tailwind')->render()
-                    : '',
+                 'pagination' => $stories->links('pagination::tailwind')->toHtml(),
             ]);
         }
 

@@ -4,32 +4,49 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class StudentSeeder extends Seeder
 {
     public function run(): void
     {
-        $students = [
-            ['name' => 'Ali Hassan', 'email' => 'ali@example.com', 'username' => 'ali_hassan'],
-            ['name' => 'Sara Khalil', 'email' => 'sara@example.com', 'username' => 'sara_khalil'],
-            ['name' => 'Omar Nasser', 'email' => 'omar@example.com', 'username' => 'omar_nasser'],
-            ['name' => 'Lina Farah', 'email' => 'lina@example.com', 'username' => 'lina_farah'],
-            ['name' => 'Hassan Saab', 'email' => 'hassan@example.com', 'username' => 'hassan_saab'],
-            ['name' => 'Maya Haddad', 'email' => 'maya@example.com', 'username' => 'maya_haddad'],
-            ['name' => 'Karim Darwish', 'email' => 'karim@example.com', 'username' => 'karim_darwish'],
-            ['name' => 'Nour Hamdan', 'email' => 'nour@example.com', 'username' => 'nour_hamdan'],
-            ['name' => 'Youssef Mansour', 'email' => 'youssef@example.com', 'username' => 'youssef_mansour'],
-            ['name' => 'Rana Salameh', 'email' => 'rana@example.com', 'username' => 'rana_salameh'],
-        ];
+        $users = User::all();   
+        $majors = [
+    'Computer Science',
+    'Business Administration',
+    'Engineering',
+    'Medicine',
+    'Architecture',
+    'Law',
+    'Pharmacy',
+    'Graphic Design'
+];
 
-        foreach ($students as $student) {
-            User::create([
-                'name' => $student['name'],
-                'email' => $student['email'],
-                'username' => $student['username'],
-                'password' => Hash::make('password123'), // same password for all
-            ]);
-        }
+
+foreach ($users as $user) {
+    Student::create([
+        'user_id' => $user->id,
+        'academic_level' => 'Undergraduate',
+        'major' => $majors[array_rand($majors)],
+        'gpa' => rand(85, 90),
+        'country' => 'Lebanon',
+        'city' => 'Beirut',
+        'nationality' => 'Lebanese',
+        'dob' => Carbon::createFromDate(
+    rand(1998, 2006),
+    rand(1, 12),
+    rand(1, 28)
+),
+        'preferred_location' => 'Lebanon',
+        'preferred_study_mode' => 'On Campus',
+        'preferred_course_intensity' => 'Full-time',
+        'budget' => rand(5000, 20000),
+        'sat' => rand(900, 1400),
+        'ielts' => rand(5, 8),
+        'toefl' => rand(60, 100),
+    ]);
+}
     }
 }

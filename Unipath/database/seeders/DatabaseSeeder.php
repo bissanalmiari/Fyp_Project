@@ -16,6 +16,10 @@ use Database\Seeders\QuizQuestionSeeder;
 use Database\Seeders\QuizOptionMajorScoreSeeder;
 use Database\Seeders\SubCategorySeeder;
 use Database\Seeders\StudentSeeder;
+use Database\Seeders\SuccessStorySeeder;
+use Database\Seeders\ContactMessageSeeder;
+use Database\Seeders\UserSeeder;
+
 
 
 class DatabaseSeeder extends Seeder
@@ -38,7 +42,11 @@ class DatabaseSeeder extends Seeder
             MajorSeeder::class,
             CareerSeeder::class,
             SubCategorySeeder::class,
-
+            UserSeeder::class,
+            StudentSeeder::class,
+            ContactMessageSeeder::class,
+            SuccessStorySeeder::class,
+            
         ]);
 
         $this->call(SuccessStorySeeder::class);

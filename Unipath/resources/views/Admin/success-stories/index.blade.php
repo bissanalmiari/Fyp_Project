@@ -43,11 +43,9 @@
 </div>
 
 @if($stories->hasPages())
-    <div id="stories-pagination-wrapper" class="flex justify-center">
-        {{ $stories->links('pagination::simple-tailwind') }}
-    </div>
-@else
-    <div id="stories-pagination-wrapper" class="flex justify-center"></div>
+<div class="mt-8 flex justify-center" id="pagination-wrapper">
+ {{ $stories->links('pagination::tailwind') }}
+</div>
 @endif
 
 <script>

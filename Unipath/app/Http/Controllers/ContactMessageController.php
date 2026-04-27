@@ -34,14 +34,12 @@ class ContactMessageController extends Controller
                 });
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(9);
 
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('Admin.messages.partials.table_rows', compact('messages'))->render(),
-                'pagination' => $messages->hasPages()
-                    ? $messages->links('pagination::simple-tailwind')->render()
-                    : '',
+                'pagination' => $messages->links('pagination::tailwind')->toHtml(),
                 'count' => $messages->total(),
                 'from' => $messages->firstItem() ?? 0,
                 'to' => $messages->lastItem() ?? 0,

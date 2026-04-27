@@ -38,9 +38,9 @@
 </div>
 
 {{-- PAGINATION --}}
-<div class="flex justify-center" id="messages-pagination-wrapper">
+<div class="mt-8 flex justify-center" id="pagination-wrapper">
     @if($messages->hasPages())
-        {{ $messages->links('pagination::simple-tailwind') }}
+        {{ $messages->links('pagination::tailwind') }}
     @endif
 </div>
 
@@ -66,13 +66,13 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(res => res.json())
         .then(data => {
             const tableBody = document.getElementById('messages-table-body');
-            const pagination = document.getElementById('messages-pagination-wrapper');
+    
             const countTop = document.getElementById('messages-count');
             const countBottom = document.getElementById('messages-count-bottom');
             const range = document.getElementById('messages-range');
 
             if (tableBody) tableBody.innerHTML = data.html;
-            if (pagination) pagination.innerHTML = data.pagination;
+
             if (countTop) countTop.innerText = data.count;
             if (countBottom) countBottom.innerText = data.count;
             if (range) range.innerText = `${data.from ?? 0}–${data.to ?? 0}`;
