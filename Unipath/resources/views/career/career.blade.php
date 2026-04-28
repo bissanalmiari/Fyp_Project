@@ -23,7 +23,7 @@
     <div class="hero-text">
 
         <span class="hero-label">OUR PLATFORM</span>
-        <div class="hero-title relative inline-block text-center min-h-[120px]">
+        <div class=" relative inline-block text-center ">
             <!-- Main -->
             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
                 Discover Your
@@ -44,10 +44,19 @@
           and find the perfect direction for your future.
         </p>
 
-        <div class="hero-btns">
-          <a href="#career-match" class="btn-primary">Get Started</a>
-          <a href="#explore" class="btn-secondary">Browse Careers</a>
-        </div>
+        <div class="mt-4 sm:mt-6 lg:mt-8 flex flex-row items-center justify-center gap-2 sm:gap-4">
+
+                        <a href="#career-match"
+                            class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base bg-[#7F64CE] text-white font-semibold rounded-full hover:opacity-80 transition-all duration-400">
+                            Get Started
+                        </a>
+
+                        <a href="#explore"
+                            class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base border border-[#7F64CE] text-[#7F64CE] font-semibold rounded-full bg-[#F6F4FE] hover:opacity-80 transition-all duration-400">
+                            Browse Careers
+                        </a>
+
+                    </div>
 
     </div>
 

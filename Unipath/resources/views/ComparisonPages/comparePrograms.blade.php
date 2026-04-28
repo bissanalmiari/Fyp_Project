@@ -31,7 +31,7 @@
 
                 <div class="hero-text">
                     <span class="hero-label">OUR PLATFORM</span>
-                    <div class="hero-title relative inline-block text-center min-h-[130px]">
+                    <div class="hero-title relative inline-block text-center ">
                         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
                             Program
                         </h1>
@@ -50,9 +50,11 @@
                         Select two universities, then choose one program from each to prepare them for comparison.
                     </p>
 
-                    <div class="hero-btns">
-                        <a href="#comparison-section" class="btn-primary">Get Started</a>
-                    </div>
+                   
+                    <a href="#comparison-section"
+                            class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base bg-[#7F64CE] text-white font-semibold rounded-full hover:opacity-80 transition-all duration-400 mt-4">
+                            Take Quiz
+                        </a>
                 </div>
             </div>
         </section>

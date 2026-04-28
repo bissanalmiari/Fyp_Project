@@ -99,27 +99,11 @@
   margin-bottom: 20px;
 }
 
-.comparison-page .hero-title h1 {
-  font-size: 60px;
-  font-weight: 700;
-  
-  color: var(--primary);
-  line-height: 1.2;
-}
 
-.comparison-page .hero-title p {
-  color: var(--title);
-  position: relative;
-  font-family: 'Blanche', sans-serif;
-  font-size: 20px;
-  margin-top: -30px;
-  font-weight: 600;
-  margin-left: 185px;
-}
 
 .comparison-page .hero-subtitle {
   font-size: 15px;
-  color: var(--muted);
+  color: var(--text);
   line-height: 1.8;
   max-width: 400px;
 }

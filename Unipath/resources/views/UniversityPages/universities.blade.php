@@ -28,7 +28,7 @@
 
                 <div class="hero-text">
                     <span class="hero-label">OUR PLATFORM</span>
-                    <div class="hero-title relative inline-block text-center">
+                    <div class="hero-title relative inline-block text-center mb-5">
 
                         <!-- Main title -->
                         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
@@ -38,9 +38,9 @@
                         <!-- Overlay -->
                         <span class="absolute 
                             left-1/2 -translate-x-1/2
-                            top-20 sm:top-24 lg:top-28
+                            top-50 sm:top-50 lg:top-50
                             text-3xl sm:text-4xl lg:text-5xl
-                            text-[#7F64CE] blanche-font whitespace-nowrap">
+                            text-[#7F64CE] blanche-font whitespace-nowrap ">
                             around the world
                         </span>
 
@@ -50,9 +50,19 @@
                         Browse universities, apply filters, and discover institutions that match your preferred location and study path.
                     </p>
 
-                    <div class="hero-btns">
-                        <a href="#body_part" class="btn-primary">Get Started</a>
-                        <a href="#university-table" class="btn-secondary">View Universities</a>
+                    
+                    <div class="mt-4 sm:mt-6 lg:mt-8 flex flex-row items-center justify-center gap-2 sm:gap-4">
+
+                        <a href="#body_part"
+                            class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base bg-[#7F64CE] text-white font-semibold rounded-full hover:opacity-80 transition-all duration-400">
+                            Get Started
+                        </a>
+
+                        <a href="#university-table"
+                            class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base border border-[#7F64CE] text-[#7F64CE] font-semibold rounded-full bg-[#F6F4FE] hover:opacity-80 transition-all duration-400">
+                            View Universities
+                        </a>
+
                     </div>
                 </div>
             </div>

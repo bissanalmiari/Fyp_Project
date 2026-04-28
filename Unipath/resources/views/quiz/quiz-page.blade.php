@@ -54,11 +54,11 @@
             class="pointer-events-none absolute bottom-[-40px] left-[-50px] w-[560px] opacity-20 lg:opacity-60 -rotate-180"
         />  
 
-        <div class="mt-20 relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 md:px-8 lg:px-12 lg:py-20">
+        <div class="mt-0 relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 md:px-8 lg:px-12 lg:py-20">
             <div class="grid grid-cols-2 items-center gap-6 md:gap-8 lg:gap-10">
 
                 <div class="max-w-xl relative z-10">
-                    <div class="relative inline-block text-center mt-4 min-h-[120px]">
+                    <div class="relative inline-block text-center mt-4 min-h-[120px] ">
 
                         <!-- Main -->
                         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
@@ -76,20 +76,23 @@
 
                     </div>
 
-                    <p class="mt-4 text-sm leading-7 text-gray-600 sm:mt-5 sm:text-base md:text-lg md:leading-8">
+                    <p class=" text-sm leading-7 text-gray-600 sm:mt-5 sm:text-base md:text-lg md:leading-8">
                         Answer a few quick questions and discover the major that best matches your interests, strengths, and future goals.
                     </p>
 
-                    <div class="mt-6 flex flex-wrap gap-3 sm:mt-8 sm:gap-4">
+                
+                     <div class="mt-4 sm:mt-6 lg:mt-8 flex flex-row  gap-2 sm:gap-4">
+
                         <a href="{{ route('quiz.start') }}"
-                            class="inline-flex items-center justify-center rounded-full bg-[#C498F2] px-4 py-2 text-xs font-semibold text-white shadow-md shadow-purple-200/50 transition duration-300 hover:-translate-y-0.5 hover:bg-[#7F64CE] hover:shadow-lg sm:px-6 sm:py-3 sm:text-sm">
+                            class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base bg-[#7F64CE] text-white font-semibold rounded-full hover:opacity-80 transition-all duration-400">
                             Take Quiz
                         </a>
 
                         <a href="#how-it-works"
-                            class="inline-flex items-center justify-center rounded-full border border-[#C3BFFA] bg-white px-4 py-2 text-xs font-semibold text-[#7F64CE] shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#C498F2] hover:bg-[#F4EFFF] sm:px-6 sm:py-3 sm:text-sm">
+                            class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base border border-[#7F64CE] text-[#7F64CE] font-semibold rounded-full bg-[#F6F4FE] hover:opacity-80 transition-all duration-400">
                             How It Works
                         </a>
+
                     </div>
                 </div>
 

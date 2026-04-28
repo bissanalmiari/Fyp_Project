@@ -50,20 +50,20 @@
 
         <section class="relative grid items-center gap-10 py-16 sm:py-20 md:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:py-24">
     
-            <div class="relative z-20 max-w-xl">
-                <div class="relative inline-block text-center">
+            <div class="relative z-20 max-w-xl ">
+                <div class="relative inline-block flex justify-center">
 
                     <!-- Main title -->
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One]  leading-tight">
                         Shaping the 
                         <span class="relative inline-block">
                             
                             <!-- Small overlay on the LEFT -->
                             <span class="absolute 
-                                left-1/2 -translate-x-1/2
+                                left-1/6 -translate-x-1/6
                                 top-[60%]
                                 text-3xl sm:text-4xl lg:text-5xl
-                                text-[#7F64CE] blanche-font whitespace-nowrap">
+                                text-[#7F64CE] blanche-font whitespace-nowrap ">
                                 academic path
                             </span>
 
@@ -73,12 +73,23 @@
 
                 </div>
 
-                <p class="mt-5 max-w-lg text-base leading-8 text-[#6B6780] md:text-lg">Unipath helps students discover university programs that truly fit their goals, interests, skills, and budget through smart recommendations, interactive quizzes, and career-driven insights.</p>
+                <p class="mt-5 max-w-lg text-base leading-8 text-[#6B6780] md:text-lg text-center">Unipath helps students discover university programs that truly fit their goals, interests, skills, and budget through smart recommendations, interactive quizzes, and career-driven insights.</p>
 
-                <div class="relative z-30 mt-6 flex flex-wrap gap-3 sm:gap-4">
-                    <a href="#why-unipath" class="inline-flex items-center justify-center rounded-full bg-[#C498F2] px-5 py-3 text-sm font-semibold text-white shadow-md shadow-purple-200/50 transition duration-300 hover:-translate-y-0.5 hover:bg-[#7F64CE] hover:shadow-lg">Why UniPath?</a>
+                <div class="relative z-30 mt-6 flex flex-wrap text-center gap-3 sm:gap-4">
+ 
+                    
 
-                    <a href="#features" class="inline-flex items-center justify-center rounded-full border border-[#C3BFFA] bg-white px-5 py-3 text-sm font-semibold text-[#7F64CE] shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#C498F2] hover:bg-[#F4EFFF]">Explore Features</a>
+                        <a href="#why-unipath"
+                            class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base bg-[#7F64CE] text-white font-semibold rounded-full hover:opacity-80 transition-all duration-400">
+                            Why UniPath?
+                        </a>
+
+                        <a href="#features"
+                            class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base border border-[#7F64CE] text-[#7F64CE] font-semibold rounded-full bg-[#F6F4FE] hover:opacity-80 transition-all duration-400">
+                            Explore Features
+                        </a>
+
+                
                 </div>
             </div>
 
