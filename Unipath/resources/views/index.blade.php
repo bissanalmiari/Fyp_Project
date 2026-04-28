@@ -42,7 +42,7 @@
 
                     <div class="mt-4 sm:mt-6 lg:mt-8 flex flex-row items-center justify-center gap-2 sm:gap-4">
 
-                        <a href="#why-section"
+                        <a href="{{ route('login') }}"
                             class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base bg-[#7F64CE] text-white font-semibold rounded-full hover:opacity-80 transition-all duration-400">
                             Get Started
                         </a>
