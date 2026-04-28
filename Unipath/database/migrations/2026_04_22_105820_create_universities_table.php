@@ -17,15 +17,15 @@ return new class extends Migration
             $table->string('country');
             $table->string('city');
             $table->integer('rank')->nullable();
-            $table->string('logo')->nullable();
-            $table->string('website_url')->nullable();
-            $table->string('image')->nullable();
-            $table->string('backup_image')->nullable();
+            $table->text('logo')->nullable();
+            $table->text('website_url')->nullable();
+            $table->text('image')->nullable();
+            $table->text('backup_image')->nullable();
             $table->text('description')->nullable();
             $table->string('type')->nullable();
-            $table->string('insta')->nullable();
-            $table->string('linkedin')->nullable();
-            $table->string('facebook')->nullable();
+            $table->text('insta')->nullable();
+            $table->text('linkedin')->nullable();
+            $table->text('facebook')->nullable();
             $table->timestamps();
         });
     }
