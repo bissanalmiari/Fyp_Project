@@ -14,7 +14,7 @@
                     <li><a href="{{ url('/') }}" class="hover:text-[#7F64CE] transition">Home</a></li>
                     <li><a href="{{ url('/about') }}" class="hover:text-[#7F64CE] transition">About Us</a></li>
                     <li><a href="{{ url('/contact') }}" class="hover:text-[#7F64CE] transition">Contact Us</a></li>
-                    <li><a href="{{ url('/programs') }}" class="hover:text-[#7F64CE] transition">Programs</a></li>
+                    <li><a href="{{ url('/universities') }}" class="hover:text-[#7F64CE] transition">Universities</a></li>
                     @auth
                         <li>
                             <a href="{{ url('student/personal') }}" class="hover:text-[#7F64CE] transition">
