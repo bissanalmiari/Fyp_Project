@@ -8,16 +8,16 @@
             <div class="flex items-center shrink-0">
                 <img src="{{ asset('images/logo.png') }}" alt="UniPath Logo" class="h-12 w-10 mr-2">
                 <a href="{{ url('/') }}"
-                    class="text-2xl sm:text-3xl font-extrabold text-[7F64CE] tracking-wide">
+                    class="text-2xl sm:text-3xl font-extrabold text-[#7F64CE] tracking-wide">
                     UniPath
                 </a>
             </div>
 
             <!-- Desktop Menu -->
             <div class="hidden lg:flex items-center gap-8">
-                <a href="{{ url('/') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Home</a>
-                <a href="{{ url('/about') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">About Us</a>
-                <a href="{{ url('/universities') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Universities</a>
+                <a href="{{ url('/') }}"class="{{ request()->is('/') ? 'text-[#7F64CE]' : 'text-gray-700' }} font-medium hover:text-[#7F64CE] transition">Home</a>
+                <a href="{{ url('/about') }}"class="{{ request()->is('about') ? 'text-[#7F64CE]' : 'text-gray-700' }} font-medium hover:text-[#7F64CE] transition">About Us</a>
+                <a href="{{ url('/universities') }}"class="{{ request()->is('universities') ? 'text-[#7F64CE]' : 'text-gray-700' }} font-medium hover:text-[#7F64CE] transition">Universities</a>
 
                 <!-- Tools Dropdown -->
                 <div class="relative group">
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ url('/contact') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Contact Us</a>
+                <a href="{{ url('/contact') }}"class="{{ request()->is('contact') ? 'text-[#7F64CE]' : 'text-gray-700' }} font-medium hover:text-[#7F64CE] transition">Contact Us</a> 
 
                 @auth
                         <a href="{{ url('student/personal') }}" 
@@ -58,10 +58,6 @@
                         <a href="{{ route('login') }}" 
                         class="text-gray-700 font-medium hover:text-[#7F64CE] transition">
                             Login
-                        </a>
-                        <a href="{{ route('register') }}" 
-                        class="text-gray-700 font-medium hover:text-[#7F64CE] transition">
-                            Sign Up
                         </a>
                     @endguest            
             </div>
