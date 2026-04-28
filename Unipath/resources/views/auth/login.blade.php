@@ -181,6 +181,7 @@
             </div>
         </div>
     </div>
+    @include('partials.scroll-top')
 </body>
 <script>
     function togglePassword() {

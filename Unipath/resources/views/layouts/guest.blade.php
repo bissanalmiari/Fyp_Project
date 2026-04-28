@@ -28,5 +28,6 @@
 
     </div>
 
+    @include('partials.scroll-top')
 </body>
 </html>

@@ -201,6 +201,7 @@
 
 </div>
 
+@include('partials.scroll-top')
 <script src="{{ asset('js/student.js') }}"></script>
 
 </body>

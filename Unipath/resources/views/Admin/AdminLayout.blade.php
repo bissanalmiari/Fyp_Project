@@ -265,6 +265,7 @@ transition-transform duration-300 z-40">
     </main>
 
 </div>
+@include('partials.scroll-top')
 @yield('script')
 <script src="{{ asset('js/admin.js') }}"></script>
 

@@ -754,14 +754,4 @@
 
         </div>
     </section>
-
-    <!-- Scroll To Top Button -->
-    <button id="scrollTopBtn" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full 
-           bg-[#7F64CE] text-white text-xl shadow-lg 
-           flex items-center justify-center
-           opacity-0 pointer-events-none
-           transition-all duration-300 hover:scale-110 rotate-[270deg]">
-        ➜
-    </button>
-
 </x-app-layout>

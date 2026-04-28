@@ -44,6 +44,7 @@
 
         {{-- FOOTER --}}
         @include('partials.footer')
+        @include('partials.scroll-top')
         <script src="{{ asset('js/common.js') }}"></script>
         
         @stack('scripts')
