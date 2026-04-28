@@ -34,6 +34,7 @@
     opacity: 0;
     transform: translateY(24px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -45,6 +46,7 @@
     opacity: 0;
     transform: translateX(-28px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -56,6 +58,7 @@
     opacity: 0;
     transform: translateX(28px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -66,6 +69,7 @@
   0%, 100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-12px);
   }
@@ -136,7 +140,7 @@
   letter-spacing: 2px;
   color: var(--muted);
   font-weight: 600;
-  font-family: 'Poppins';
+  font-family: 'Poppins', sans-serif;
 }
 
 .hero-title {
@@ -225,6 +229,8 @@
 
 #body_part {
   margin-top: 0;
+  position: relative;
+  overflow: visible;
 }
 
 #filter_form {
@@ -235,7 +241,8 @@
   padding: 0 20px;
   transform: translateY(-38px);
   position: relative;
-  z-index: 80;
+  z-index: 9999;
+  overflow: visible;
 }
 
 .filter-panel {
@@ -253,7 +260,8 @@
   backdrop-filter: blur(14px);
   animation: fadeSlideUp 0.65s ease 0.15s both;
   position: relative;
-  z-index: 80;
+  z-index: 9999;
+  overflow: visible;
 }
 
 #filter_section {
@@ -263,6 +271,7 @@
   gap: 18px;
   width: 100%;
   flex-wrap: wrap;
+  overflow: visible;
 }
 
 .filter-heading {
@@ -331,10 +340,14 @@
   flex: 1;
   flex-wrap: wrap;
   min-width: 0;
+  overflow: visible;
 }
 
 #city-select-container {
   min-width: 180px;
+  overflow: visible;
+  position: relative;
+  z-index: 10000;
 }
 
 #search_container {
@@ -396,11 +409,12 @@
 .custom-select {
   position: relative;
   min-width: 180px;
-  z-index: 90;
+  z-index: 10000;
+  overflow: visible;
 }
 
 .custom-select.open {
-  z-index: 9999;
+  z-index: 99999;
 }
 
 .custom-select.hidden {
@@ -462,7 +476,7 @@
   border-radius: 14px;
   padding: 8px;
   box-shadow: 0 18px 36px rgba(91, 82, 125, 0.16);
-  z-index: 10000;
+  z-index: 100000;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-6px);
@@ -508,6 +522,12 @@
 
 /* ================= RESULTS TOP BAR ================= */
 
+#university-table {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
 .results-topbar {
   width: 100%;
   max-width: 1250px;
@@ -521,6 +541,7 @@
   animation: fadeSlideUp 0.65s ease 0.25s both;
   position: relative;
   z-index: 100;
+  overflow: visible;
 }
 
 .results-count {
@@ -540,7 +561,8 @@
   padding: 10px 12px;
   box-shadow: 0 12px 28px rgba(127, 100, 206, 0.08);
   position: relative;
-  z-index: 110;
+  z-index: 200;
+  overflow: visible;
 }
 
 .results-sort label {
@@ -549,6 +571,18 @@
   font-size: 14px;
   font-weight: 700;
   line-height: 1;
+}
+
+.results-sort .custom-select {
+  z-index: 300;
+}
+
+.results-sort .custom-select.open {
+  z-index: 99999;
+}
+
+.results-sort .select-menu {
+  z-index: 100000;
 }
 
 /* ================= UNIVERSITIES RESULTS ================= */
@@ -886,21 +920,6 @@
   }
 }
 
-@media (max-width: 1024px) {
-  .hero-content {
-    gap: 40px;
-    padding: 45px 36px 85px;
-  }
-
-  .hero-img {
-    flex-basis: 420px;
-  }
-
-  .hero-title h1 {
-    font-size: 50px;
-  }
-}
-
 @media (max-width: 1100px) {
   .university-card {
     padding: 14px;
@@ -918,6 +937,21 @@
 
   .university-actions {
     flex: 0 0 150px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-content {
+    gap: 40px;
+    padding: 45px 36px 85px;
+  }
+
+  .hero-img {
+    flex-basis: 420px;
+  }
+
+  .hero-title h1 {
+    font-size: 50px;
   }
 }
 

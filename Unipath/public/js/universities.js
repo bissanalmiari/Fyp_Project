@@ -1,48 +1,3 @@
-$(document).ready(function () {
-   function loadUniversity(page = 1) {
-    $.ajax({
-        url: "/universities",
-        method: "GET",
-        data: {
-            search: $('#search').val(),
-            city: $('#city').val(),
-            country: $('#country').val(),
-            rank: $('#rank').val(),
-            sort: $('#sort').val(),
-            page: page
-        },
-        success: function (response) {
-            $('#university-table').html(response.table);
-            $('#city-select-container').html(response.citySelect);
-
-            initializeCustomSelects(document.getElementById('filter_section'));
-            initializeCustomSelects(document.getElementById('university-table'));
-
-            syncCityVisibility();
-        },
-        error: function (xhr, status, error) {
-            console.error('AJAX error:', error);
-            console.log(xhr.responseText);
-        }
-    });
-}
-
-    $('#search').on('keyup', function () {
-        loadUniversity(1);
-    });
-
-    $(document).on('change', '#country, #city, #rank, #sort', function () {
-        loadUniversity(1);
-    });
-
-    $(document).on('click', '.pagination-link', function (e) {
-        e.preventDefault();
-        const page = $(this).data('page');
-        loadUniversity($(this).data('page'));
-    });
-});
-
-/* for the filter sections */ 
 function initializeCustomSelects(scope = document) {
     const nativeSelects = scope.querySelectorAll('select.select:not([data-enhanced="true"])');
 
@@ -56,6 +11,7 @@ function initializeCustomSelects(scope = document) {
         if (nativeSelect.classList.contains('hidden')) {
             wrapper.classList.add('hidden');
         }
+
         if (nativeSelect.classList.contains('show')) {
             wrapper.classList.add('show');
         }
@@ -101,7 +57,9 @@ function initializeCustomSelects(scope = document) {
                     optionButton.classList.add('selected');
                 }
 
-                optionButton.addEventListener('click', function () {
+                optionButton.addEventListener('click', function (e) {
+                    e.stopPropagation();
+
                     nativeSelect.value = option.value;
 
                     Array.from(menu.querySelectorAll('.select-option')).forEach((btn) => {
@@ -141,37 +99,84 @@ function initializeCustomSelects(scope = document) {
     });
 }
 
-document.addEventListener('click', function () {
-    document.querySelectorAll('.custom-select').forEach((item) => {
-        item.classList.remove('open');
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    initializeCustomSelects(document);
-
+function syncCityVisibility() {
     const countrySelect = document.getElementById('country');
     const citySelect = document.getElementById('city');
+    const cityContainer = document.getElementById('city-select-container');
 
-    if (countrySelect && citySelect) {
-        function toggleCityVisibility() {
-            const cityWrapper = citySelect.closest('.custom-select');
-            if (!cityWrapper) return;
+    if (!countrySelect || !cityContainer) return;
 
-            if (countrySelect.value) {
-                cityWrapper.classList.remove('hidden');
-                cityWrapper.classList.add('show');
-            } else {
-                cityWrapper.classList.remove('show');
-                cityWrapper.classList.add('hidden');
-                citySelect.value = '';
-                citySelect.dispatchEvent(new Event('change', { bubbles: true }));
-            }
+    const cityWrapper = citySelect ? citySelect.closest('.custom-select') : null;
+
+    if (countrySelect.value) {
+        cityContainer.style.display = 'block';
+
+        if (cityWrapper) {
+            cityWrapper.classList.remove('hidden');
+            cityWrapper.classList.add('show');
+        }
+    } else {
+        if (citySelect) {
+            citySelect.value = '';
         }
 
-        toggleCityVisibility();
-        countrySelect.addEventListener('change', toggleCityVisibility);
+        if (cityWrapper) {
+            cityWrapper.classList.remove('show');
+            cityWrapper.classList.add('hidden');
+        }
     }
+}
+
+$(document).ready(function () {
+    initializeCustomSelects(document);
+    syncCityVisibility();
+
+    function loadUniversity(page = 1) {
+        $.ajax({
+            url: "/universities",
+            method: "GET",
+            data: {
+                search: $('#search').val(),
+                city: $('#city').val(),
+                country: $('#country').val(),
+                rank: $('#rank').val(),
+                sort: $('#sort').val(),
+                page: page
+            },
+            success: function (response) {
+                $('#university-table').html(response.table);
+                $('#city-select-container').html(response.citySelect);
+
+                initializeCustomSelects(document.getElementById('filter_section'));
+                initializeCustomSelects(document.getElementById('university-table'));
+
+                syncCityVisibility();
+            },
+            error: function (xhr, status, error) {
+                console.error('AJAX error:', error);
+                console.log(xhr.responseText);
+            }
+        });
+    }
+
+    $('#search').on('keyup', function () {
+        loadUniversity(1);
+    });
+
+    $(document).on('change', '#country, #city, #rank, #sort', function () {
+        loadUniversity(1);
+    });
+
+    $(document).on('click', '.pagination-link', function (e) {
+        e.preventDefault();
+
+        const page = $(this).data('page');
+        loadUniversity(page);
+    });
+
+    document.addEventListener('click', function () {
+        document.querySelectorAll('.custom-select').forEach((item) => {
+            item.classList.remove('open');
+        });
+    });
 });
-
-
