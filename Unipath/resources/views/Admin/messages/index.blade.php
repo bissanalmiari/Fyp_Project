@@ -38,11 +38,67 @@
 </div>
 
 {{-- PAGINATION --}}
-<div class="mt-8 flex justify-center" id="pagination-wrapper">
-    @if($messages->hasPages())
-        {{ $messages->links('pagination::tailwind') }}
-    @endif
-</div>
+@if($messages->total() > 0)
+    <div class="mt-8 flex items-center justify-between flex-wrap gap-4" id="pagination-wrapper">
+
+        <div class="text-sm text-muted">
+            {{ $messages->firstItem() }}-{{ $messages->lastItem() }} of {{ $messages->total() }}
+        </div>
+
+        <div class="flex items-center gap-2">
+            @if($messages->onFirstPage())
+                <span class="w-9 h-9 flex items-center justify-center rounded-lg border border-borderC text-lightText cursor-not-allowed">
+                    ‹
+                </span>
+            @else
+                <a href="{{ $messages->previousPageUrl() }}"
+                   class="w-9 h-9 flex items-center justify-center rounded-lg border border-borderC text-textMain hover:bg-[#F6F4FE] hover:text-[#7F64CE] transition">
+                    ‹
+                </a>
+            @endif
+
+            @php
+                $current = $messages->currentPage();
+                $last = $messages->lastPage();
+
+                $start = max(1, $current - 2);
+                $end = min($last, $current + 2);
+
+                if ($current <= 3) {
+                    $end = min($last, 5);
+                }
+
+                if ($current >= $last - 2) {
+                    $start = max(1, $last - 4);
+                }
+            @endphp
+
+            @for($page = $start; $page <= $end; $page++)
+                @if($page == $current)
+                    <span class="w-9 h-9 flex items-center justify-center rounded-lg bg-[#7F64CE] text-white font-semibold">
+                        {{ $page }}
+                    </span>
+                @else
+                    <a href="{{ $messages->url($page) }}"
+                       class="w-9 h-9 flex items-center justify-center rounded-lg border border-borderC text-textMain hover:bg-[#F6F4FE] hover:text-[#7F64CE] transition">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endfor
+
+            @if($messages->hasMorePages())
+                <a href="{{ $messages->nextPageUrl() }}"
+                   class="w-9 h-9 flex items-center justify-center rounded-lg border border-borderC text-textMain hover:bg-[#F6F4FE] hover:text-[#7F64CE] transition">
+                    ›
+                </a>
+            @else
+                <span class="w-9 h-9 flex items-center justify-center rounded-lg border border-borderC text-lightText cursor-not-allowed">
+                    ›
+                </span>
+            @endif
+        </div>
+    </div>
+@endif
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {

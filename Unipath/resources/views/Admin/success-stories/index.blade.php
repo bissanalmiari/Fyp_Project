@@ -42,10 +42,66 @@
     @include('Admin.success-stories.partials.cards', ['stories' => $stories])
 </div>
 
-@if($stories->hasPages())
-<div class="mt-8 flex justify-center" id="pagination-wrapper">
- {{ $stories->links('pagination::tailwind') }}
-</div>
+@if($stories->total() > 0)
+    <div class="mt-8 flex items-center justify-between flex-wrap gap-4" id="pagination-wrapper">
+
+        <div class="text-sm text-muted">
+            {{ $stories->firstItem() }}-{{ $stories->lastItem() }} of {{ $stories->total() }}
+        </div>
+
+        <div class="flex items-center gap-2">
+            @if($stories->onFirstPage())
+                <span class="w-9 h-9 flex items-center justify-center rounded-lg border border-borderC text-lightText cursor-not-allowed">
+                    ‹
+                </span>
+            @else
+                <a href="{{ $stories->previousPageUrl() }}"
+                   class="w-9 h-9 flex items-center justify-center rounded-lg border border-borderC text-textMain hover:bg-[#F6F4FE] hover:text-[#7F64CE] transition">
+                    ‹
+                </a>
+            @endif
+
+            @php
+                $current = $stories->currentPage();
+                $last = $stories->lastPage();
+
+                $start = max(1, $current - 2);
+                $end = min($last, $current + 2);
+
+                if ($current <= 3) {
+                    $end = min($last, 5);
+                }
+
+                if ($current >= $last - 2) {
+                    $start = max(1, $last - 4);
+                }
+            @endphp
+
+            @for($page = $start; $page <= $end; $page++)
+                @if($page == $current)
+                    <span class="w-9 h-9 flex items-center justify-center rounded-lg bg-[#7F64CE] text-white font-semibold">
+                        {{ $page }}
+                    </span>
+                @else
+                    <a href="{{ $stories->url($page) }}"
+                       class="w-9 h-9 flex items-center justify-center rounded-lg border border-borderC text-textMain hover:bg-[#F6F4FE] hover:text-[#7F64CE] transition">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endfor
+
+            @if($stories->hasMorePages())
+                <a href="{{ $stories->nextPageUrl() }}"
+                   class="w-9 h-9 flex items-center justify-center rounded-lg border border-borderC text-textMain hover:bg-[#F6F4FE] hover:text-[#7F64CE] transition">
+                    ›
+                </a>
+            @else
+                <span class="w-9 h-9 flex items-center justify-center rounded-lg border border-borderC text-lightText cursor-not-allowed">
+                    ›
+                </span>
+            @endif
+        </div>
+    </div>
 @endif
 
 <script>

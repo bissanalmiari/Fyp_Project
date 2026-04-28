@@ -53,7 +53,7 @@
                    
                     <a href="#comparison-section"
                             class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base bg-[#7F64CE] text-white font-semibold rounded-full hover:opacity-80 transition-all duration-400 mt-4">
-                            Take Quiz
+                            Compare Programs
                         </a>
                 </div>
             </div>
