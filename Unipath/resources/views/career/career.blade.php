@@ -2,7 +2,18 @@
 
 
 <link rel="stylesheet" href="{{ asset('css/career.css') }}">
- 
+ <link href="https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap" rel="stylesheet">
+
+<style>
+    @font-face {
+        font-family: 'Blanche';
+        src: url("{{ asset('fonts/Blanche.ttf') }}") format('truetype');
+    }
+
+    .blanche-font {
+        font-family: 'Blanche', cursive !important;
+    }
+</style>
 <!-- HERO -->
 <section class="hero">
 
@@ -11,20 +22,32 @@
     <!-- TEXT -->
     <div class="hero-text">
 
-      <span class="hero-label">OUR PLATFORM</span>
-<div class="hero-title">
-      <h1 > Discover Your </h1>
-<p >Future Path</p>
-</div>
-      <p class="hero-subtitle">
-        Explore careers tailored to your major, understand salary trends,
-        and find the perfect direction for your future.
-      </p>
+        <span class="hero-label">OUR PLATFORM</span>
+        <div class="hero-title relative inline-block text-center min-h-[120px]">
+            <!-- Main -->
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One]">
+                Discover Your
+            </h1>
 
-      <div class="hero-btns">
-        <a href="#career-match" class="btn-primary">Get Started</a>
-        <a href="#explore" class="btn-secondary">Browse Careers</a>
-      </div>
+            <!-- Overlay -->
+            <span class="absolute 
+                left-1/2 -translate-x-1/2
+                top-6 sm:top-8 lg:top-10
+                text-3xl sm:text-4xl lg:text-5xl
+                text-[#7F64CE] blanche-font whitespace-nowrap">
+                future path
+            </span>
+
+        </div>
+        <p class="hero-subtitle">
+          Explore careers tailored to your major, understand salary trends,
+          and find the perfect direction for your future.
+        </p>
+
+        <div class="hero-btns">
+          <a href="#career-match" class="btn-primary">Get Started</a>
+          <a href="#explore" class="btn-secondary">Browse Careers</a>
+        </div>
 
     </div>
 
@@ -43,7 +66,9 @@
   <!-- TRENDING MAJORS -->
   <section class="trending">
     <div class="section-head">
-      <h2>Trending Majors</h2>
+      <h2 class="font-[Rammetto_One] text-[#C498F2]">
+        Trending Majors
+      </h2>
       <p>The most in-demand fields of study right now</p>
     </div>
     <div class="majors-grid">
@@ -65,7 +90,9 @@
  
     <!-- Jobs -->
     <div class="jobs-card">
-      <h2 class="card-title">In-Demand Jobs</h2>
+      <h2 class="card-title font-[Rammetto_One] text-[#C498F2]">
+        In-Demand Jobs
+    </h2>
       <div class="job-list">
   @foreach($inDemandCareers as $career)
     @php
@@ -92,7 +119,9 @@
  
     <!-- Salary Range -->
     <div class="salary-card">
-      <h2 class="card-title">Salary Range</h2>
+      <h2 class="card-title font-[Rammetto_One] text-[#C498F2]">
+          Salary Range
+      </h2>
     <div class="salary-bars">
   @foreach($inDemandCareers as $career)
     @php
@@ -119,7 +148,9 @@
   <div class="match-grid">
 
     <div class="match-form-side">
-      <h2>Find Your Career Match</h2>
+      <h2 class="font-[Rammetto_One] text-[#C498F2]">
+        Find Your Career Match
+    </h2>
       <p>
         Turn your degree into a dream job. Enter your field of study to see where it can take you.
       </p>
@@ -156,7 +187,9 @@
   <!-- EXPLORE ALL CAREERS -->
 <section class="explore" id="explore">
   <div class="explore-head">
-    <h2>Explore Careers</h2>
+    <h2 class="font-[Rammetto_One] text-[#C498F2]">
+        Explore Careers
+    </h2>
 
     <div class="explore-controls">
   <select class="filter-select" name="category" id="category">
