@@ -78,11 +78,11 @@
 
         <img src="{{ asset('images/c-shape.png') }}" class="pointer-events-none absolute bottom-[-40px] left-[-50px] w-[460px] opacity-20 lg:opacity-60 -rotate-180" />
 
-        <div class="mt-16 relative mx-20 max-w-7xl px-4 py-12 sm:px-6 sm:py-16 md:px-8 lg:px-12 lg:py-20">
-            <div class="grid grid-cols-2 items-center gap-6 md:gap-8 lg:gap-10">
+        <div class="mt-16 relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 md:px-8 lg:px-12 lg:py-20">
+            <div class="grid grid-cols-1 items-center justify-items-center gap-8 md:gap-10 lg:grid-cols-2 lg:gap-12">
 
-                <div class="max-w-xl relative z-10">
-                    <div class="relative inline-block text-center  min-h-[120px] ">
+                <div class="max-w-xl relative z-10 text-center lg:text-left">
+                    <div class="relative inline-block text-center min-h-[120px]">
                         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#C498F2] font-[Rammetto_One] leading-tight">
                             We’d love to
                         </h1>
@@ -102,7 +102,7 @@
                     </p>
 
     
-                    <div class="mt-4 sm:mt-6 lg:mt-8 flex flex-row  gap-2 sm:gap-4">
+                    <div class="mt-4 sm:mt-6 lg:mt-8 flex flex-row justify-center gap-2 sm:gap-4 lg:justify-start">
 
                         <a href="#send-message"
                             class="px-4 sm:px-6 py-1.5 sm:py-2 text-sm sm:text-base bg-[#7F64CE] text-white font-semibold rounded-full hover:opacity-80 transition-all duration-400">
@@ -117,7 +117,7 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end relative z-10">
+                <div class="flex justify-center relative z-10">
                     <img
                         src="{{ asset('images/contact-pic.png') }}"
                         alt="Contact Illustration"
