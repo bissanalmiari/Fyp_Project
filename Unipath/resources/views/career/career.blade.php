@@ -131,6 +131,7 @@
     <div class="salary-row">
       <div class="salary-row-head">
         <span>{{ $career->title }}</span>
+        <span>${{ number_format($career->max_salary) }}</span>
       </div>
 
       <div class="bar-track">
