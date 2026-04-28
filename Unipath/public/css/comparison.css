@@ -42,10 +42,6 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url(../images/home-hero-bg.png);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
   z-index: 0;
   opacity: 1;
   filter: blur(3px);

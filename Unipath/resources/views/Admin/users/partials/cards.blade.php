@@ -25,13 +25,13 @@
 @if($student->user)
         <form method="POST"
               action="{{ route('Admin.users.delete', $student->user->id) }}"
-              onsubmit="return confirm('Delete this user?');">
+              onsubmit="return confirm('Ban this user?');">
 
             @csrf
             @method('DELETE')
 
             <button class="bg-primary text-white px-4 py-2 rounded-lg mt-3">
-                Delete User
+                Ban User
             </button>
         </form>
 @endif
