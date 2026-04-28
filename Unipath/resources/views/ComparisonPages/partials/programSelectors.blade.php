@@ -21,7 +21,7 @@
 
                         <div class="dropdown-options max-h-72 space-y-2 overflow-y-auto pr-1">
                             @foreach($programsA as $program)
-                                <label class="dropdown-option flex cursor-pointer items-start gap-3 rounded-xl px-3 py-2 hover:bg-[#F6F4FE]">
+                                <label class="dropdown-option flex min-h-[72px] cursor-pointer items-start gap-5 rounded-xl px-4 py-4 hover:bg-[#F6F4FE]">
                                     <input
                                         type="radio"
                                         name="draft_program_a"
@@ -31,7 +31,7 @@
                                         {{ (string)$selectedProgramAId === (string)$program->id ? 'checked' : '' }}
                                     >
                                     <div>
-                                        <p class="font-medium text-[#5B527D]">{{ $program->name }}</p>
+                                        <p class="leading-relaxed font-medium text-[#5B527D]">{{ $program->name }} ({{$program->level}})</p>
                                     </div>
                                 </label>
                             @endforeach
@@ -67,7 +67,7 @@
 
                         <div class="dropdown-options max-h-72 space-y-2 overflow-y-auto pr-1">
                             @foreach($programsB as $program)
-                                <label class="dropdown-option flex cursor-pointer items-start gap-3 rounded-xl px-3 py-2 hover:bg-[#F6F4FE]">
+                                <label class="dropdown-option flex min-h-[72px] cursor-pointer items-start gap-5 rounded-xl px-4 py-4 hover:bg-[#F6F4FE]">
                                     <input
                                         type="radio"
                                         name="draft_program_b"
@@ -77,7 +77,7 @@
                                         {{ (string)$selectedProgramBId === (string)$program->id ? 'checked' : '' }}
                                     >
                                     <div>
-                                        <p class="font-medium text-[#5B527D]">{{ $program->name }}</p>
+                                        <p class="leading-relaxed font-medium text-[#5B527D]">{{ $program->name }} ({{$program->level}})</p>
                                     </div>
                                 </label>
                             @endforeach

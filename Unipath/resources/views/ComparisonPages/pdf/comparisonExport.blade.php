@@ -106,8 +106,9 @@
     @endphp
 
     <h1>Program Comparison Report</h1>
-
+    <p><strong>University of Program A:</strong> {{$programA->university->name}}</p>
     <p><strong>Program A:</strong> {{ $programA->name }}</p>
+     <p><strong>University of Program B:</strong> {{$programB->university->name}}</p>
     <p><strong>Program B:</strong> {{ $programB->name }}</p>
 
     <div class="section">
@@ -193,32 +194,56 @@
         <h2>Profile Compatibility</h2>
 
         @if(count($tiedPrograms) > 1)
-            <p><strong>Result:</strong> Tie between selected programs</p>
+    <p><strong>Result:</strong> Tie between selected programs</p>
 
-            <table class="compat-grid">
-                <tr>
-                    @foreach($tiedPrograms as $item)
-                        <td class="compat-box">
-                            <h3>{{ $item['program_name'] }}</h3>
-                            <p><strong>Overall Points:</strong> {{ $formatPoints($item['overall']) }}</p>
-                            <p><strong>Academic:</strong> {{ round($item['groups']['academic'] ?? 0) }}%</p>
-                            <p><strong>Preferences:</strong> {{ round($item['groups']['preferences'] ?? 0) }}%</p>
-                            <p><strong>Relevance:</strong> {{ round($item['groups']['relevance'] ?? 0) }}%</p>
-                            <p><strong>Cost:</strong> {{ round($item['groups']['cost'] ?? 0) }}%</p>
-                        </td>
-                    @endforeach
-                </tr>
-            </table>
-        @else
-            <div class="card">
-                <p><strong>Best Match:</strong> {{ $comparisonData['winner']['program_name'] }}</p>
-                <p><strong>Overall Points:</strong> {{ $formatPoints($comparisonData['winner']['overall'] ?? null) }}</p>
-                <p><strong>Academic:</strong> {{ round($comparisonData['winner']['groups']['academic'] ?? 0) }}%</p>
-                <p><strong>Preferences:</strong> {{ round($comparisonData['winner']['groups']['preferences'] ?? 0) }}%</p>
-                <p><strong>Relevance:</strong> {{ round($comparisonData['winner']['groups']['relevance'] ?? 0) }}%</p>
-                <p><strong>Cost:</strong> {{ round($comparisonData['winner']['groups']['cost'] ?? 0) }}%</p>
-            </div>
-        @endif
+    <table class="compat-grid">
+        <tr>
+            @foreach($tiedPrograms as $index => $item)
+                @php
+                    $currentProgram = $index === 0 ? $programA : $programB;
+                @endphp
+
+                <td class="compat-box">
+                    <h3>{{ $item['program_name'] }}</h3>
+
+                    <p>
+                        <strong>University:</strong>
+                        {{ $currentProgram->university->name ?? 'N/A' }}
+                    </p>
+
+                    <p><strong>Overall Points:</strong> {{ $formatPoints($item['overall']) }}</p>
+                    <p><strong>Academic:</strong> {{ round($item['groups']['academic'] ?? 0) }}%</p>
+                    <p><strong>Preferences:</strong> {{ round($item['groups']['preferences'] ?? 0) }}%</p>
+                    <p><strong>Relevance:</strong> {{ round($item['groups']['relevance'] ?? 0) }}%</p>
+                    <p><strong>Cost:</strong> {{ round($item['groups']['cost'] ?? 0) }}%</p>
+                </td>
+            @endforeach
+        </tr>
+    </table>
+@else
+    @php
+        $winnerKey = $comparisonData['winner']['key'] ?? null;
+
+        $winnerProgram = $winnerKey === 'A'
+            ? $programA
+            : ($winnerKey === 'B' ? $programB : null);
+    @endphp
+
+    <div class="card">
+        <p><strong>Best Match:</strong> {{ $comparisonData['winner']['program_name'] }}</p>
+
+        <p>
+            <strong>University:</strong>
+            {{ $winnerProgram?->university?->name ?? 'N/A' }}
+        </p>
+
+        <p><strong>Overall Points:</strong> {{ $formatPoints($comparisonData['winner']['overall'] ?? null) }}</p>
+        <p><strong>Academic:</strong> {{ round($comparisonData['winner']['groups']['academic'] ?? 0) }}%</p>
+        <p><strong>Preferences:</strong> {{ round($comparisonData['winner']['groups']['preferences'] ?? 0) }}%</p>
+        <p><strong>Relevance:</strong> {{ round($comparisonData['winner']['groups']['relevance'] ?? 0) }}%</p>
+        <p><strong>Cost:</strong> {{ round($comparisonData['winner']['groups']['cost'] ?? 0) }}%</p>
+    </div>
+@endif
     </div>
 </body>
 </html>
