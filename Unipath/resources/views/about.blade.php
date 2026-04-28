@@ -75,7 +75,7 @@
 
                 <p class="mt-5 max-w-lg text-base leading-8 text-[#6B6780] md:text-lg text-center">Unipath helps students discover university programs that truly fit their goals, interests, skills, and budget through smart recommendations, interactive quizzes, and career-driven insights.</p>
 
-                <div class="relative z-30 mt-6 flex flex-wrap text-center gap-3 sm:gap-4">
+                <div class="relative z-30 mt-6 flex flex-wrap justify-center gap-3 sm:gap-4">
  
                     
 
