@@ -19,6 +19,7 @@ use Database\Seeders\StudentSeeder;
 use Database\Seeders\SuccessStorySeeder;
 use Database\Seeders\ContactMessageSeeder;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\AdminUserSeeder;
 
 
 
@@ -46,6 +47,7 @@ class DatabaseSeeder extends Seeder
             StudentSeeder::class,
             ContactMessageSeeder::class,
             SuccessStorySeeder::class,
+            AdminUserSeeder::class,
             
         ]);
 

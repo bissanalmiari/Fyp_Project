@@ -74,7 +74,7 @@
 
                 <div class="form-group">
                     <label>GPA</label>
-                    <input type="number" name="gpa" class="input-field" step="0.01" placeholder="e.g. 85"
+                    <input type="number" name="gpa" class="input-field" step="0.01" placeholder="e.g. 3.75" min="0" max="4"
                            value="{{ old('gpa', $student->gpa) }}">
                 </div>
 
@@ -88,19 +88,19 @@
 
                 <div class="form-group">
                     <label>IELTS Score</label>
-                    <input type="number" name="ielts" class="input-field" step="0.1" placeholder="e.g. 7.0"
+                    <input type="number" name="ielts" class="input-field" step="0.1"  min="0" max="10" placeholder="e.g. 7.0"
                            value="{{ old('ielts', $student->ielts) }}">
                 </div>
 
                 <div class="form-group">
                     <label>TOEFL Score</label>
-                    <input type="number" name="toefl" class="input-field" step="1" placeholder="e.g. 580"
+                    <input type="number" name="toefl" class="input-field" step="1" min="0" max="120" placeholder="e.g. 580"
                            value="{{ old('toefl', $student->toefl) }}">
                 </div>
 
                 <div class="form-group">
                     <label>English SAT Score</label>
-                    <input type="number" name="sat" class="input-field" step="1" placeholder="e.g. 450"
+                    <input type="number" name="sat" class="input-field" step="1" min="400" max="1600" placeholder="e.g. 450"
                            value="{{ old('sat', $student->sat) }}">
                 </div>
 
