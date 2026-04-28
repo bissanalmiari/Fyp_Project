@@ -468,7 +468,7 @@
                             MM
                         </div>
                         <p class="mt-4 text-base font-semibold text-[#4B3F72]">Mira Masri</p>
-                        <p class="text-sm text-[#6B6780]">Frontend Developer</p>
+                        
                     </div>
 
                     <div class="group flex flex-col items-center text-center transition duration-300">
@@ -476,7 +476,7 @@
                             MM
                         </div>
                         <p class="mt-4 text-base font-semibold text-[#4B3F72]">Mohammad Marakebji</p>
-                        <p class="text-sm text-[#6B6780]">Backend Developer</p>
+                        
                     </div>
 
                     <div class="group flex flex-col items-center text-center transition duration-300">
@@ -484,7 +484,7 @@
                             NM
                         </div>
                         <p class="mt-4 text-base font-semibold text-[#4B3F72]">Noha Mardini</p>
-                        <p class="text-sm text-[#6B6780]">UI/UX Designer</p>
+                        
                     </div>
 
                     <div class="group flex flex-col items-center text-center transition duration-300">
@@ -492,7 +492,7 @@
                             KN
                         </div>
                         <p class="mt-4 text-base font-semibold text-[#4B3F72]">Khodor Nahhas</p>
-                        <p class="text-sm text-[#6B6780]">Database Engineer</p>
+                        
                     </div>
 
                     <div class="group flex flex-col items-center text-center transition duration-300">
@@ -500,7 +500,7 @@
                             BA
                         </div>
                         <p class="mt-4 text-base font-semibold text-[#4B3F72]">Bissan Al Miaari</p>
-                        <p class="text-sm text-[#6B6780]">Project Manager</p>
+                        
                     </div>
 
                 </div>

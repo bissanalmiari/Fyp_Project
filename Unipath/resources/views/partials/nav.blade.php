@@ -47,7 +47,7 @@
                 </div>
                 <a href="{{ url('/contact') }}"class="{{ request()->is('contact') ? 'text-[#7F64CE]' : 'text-gray-700' }} font-medium hover:text-[#7F64CE] transition">Contact Us</a> 
 
-                @auth
+                    @auth
                         <a href="{{ url('student/personal') }}" 
                         class="text-gray-700 font-medium hover:text-[#7F64CE] transition">
                             Profile
