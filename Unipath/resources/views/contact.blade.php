@@ -191,7 +191,7 @@
                                 type="text"
                                 id="full_name"
                                 name="full_name"
-                                value="{{ old('full_name') }}"
+                                value="{{ old('full_name', auth()->user()->name ?? '') }}"
                                 placeholder="Enter your full name"
                                 class="w-full rounded-xl border border-[#C3BFFA] bg-[#F6F4FE] px-4 py-3 text-gray-700 placeholder-gray-400 outline-none transition focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/20"
                             >
@@ -205,7 +205,7 @@
                                 type="email"
                                 id="email"
                                 name="email"
-                                value="{{ old('email') }}"
+                                value="{{ old('email', auth()->user()->email ?? '') }}"
                                 placeholder="Enter your email"
                                 class="w-full rounded-xl border border-[#C3BFFA] bg-[#F6F4FE] px-4 py-3 text-gray-700 placeholder-gray-400 outline-none transition focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/20"
                             >
@@ -219,7 +219,7 @@
                                 type="text"
                                 id="phone"
                                 name="phone"
-                                value="{{ old('phone') }}"
+                                value="{{ old('phone', auth()->user()->student->phone ?? '') }}"
                                 placeholder="Enter your phone number"
                                 class="w-full rounded-xl border border-[#C3BFFA] bg-[#F6F4FE] px-4 py-3 text-gray-700 placeholder-gray-400 outline-none transition focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/20"
                             >
@@ -280,8 +280,8 @@
                                 type="text"
                                 id="full_name"
                                 name="full_name"
-                                placeholder="Enter your full name"
-                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-[#7F64CE] placeholder:text-[#8E97AE] outline-none transition duration-300 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
+                                value="{{ auth()->user()->name }}"
+                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-gray-700 outline-none transition duration-300 focus:text-gray-700 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
                             >
                         </div>
 
@@ -293,8 +293,8 @@
                                 type="email"
                                 id="email"
                                 name="email"
-                                placeholder="Enter your email"
-                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-[#7F64CE] placeholder:text-[#8E97AE] outline-none transition duration-300 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
+                                value="{{ auth()->user()->email }}"
+                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-gray-700 outline-none transition duration-300 focus:text-gray-700 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
                             >
                         </div>
 
@@ -306,8 +306,9 @@
                                 type="text"
                                 id="phone"
                                 name="phone"
-                                placeholder="Enter your phone number"
-                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-[#7F64CE] placeholder:text-[#8E97AE] outline-none transition duration-300 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
+                                value="{{ auth()->user()->student->phone ?? '' }}"
+                                placeholder="Please enter your phone number"
+                                class="w-full rounded-2xl border border-[#C3BFFA]/80 bg-[#F6F4FE] px-5 py-4 text-gray-700 placeholder:text-gray-400 outline-none transition duration-300 focus:text-gray-700 focus:border-[#C498F2] focus:ring-2 focus:ring-[#C498F2]/10"
                             >
                         </div>
                     </div>

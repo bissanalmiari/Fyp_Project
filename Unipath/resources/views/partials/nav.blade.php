@@ -1,10 +1,6 @@
 <nav class="w-full bg-white shadow-sm border-b border-gray-100">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        @php
-            $isHighSchooler = auth()->check()
-                && auth()->user()->student
-                && auth()->user()->student->academic_level === 'High School';
-        @endphp
+
         <!-- Top Navbar Row -->
         <div class="flex items-center justify-between h-20">
 
@@ -38,21 +34,8 @@
                     <div
                         class="absolute right-0 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
                         <div class="w-64 bg-white rounded-2xl shadow-lg border border-gray-100 py-3">
-                            @guest
-                                <a href="{{ route('login') }}"
-                                class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">
-                                    Quiz
-                                </a>
-                            @endguest
-
-                            @auth
-                                @if($isHighSchooler)
-                                    <a href="{{ url('/quiz') }}"
-                                    class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">
-                                        Quiz
-                                    </a>
-                                @endif
-                            @endauth
+                            <a href="{{ url('/quiz') }}"
+                                class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">Quiz</a>
                             <a href="{{ route('public.recommendations') }}"
                                 class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">Recommendation</a>
                             <a href="{{ url('/compare-programs') }}"
@@ -72,9 +55,24 @@
                     @endauth
 
                     @guest
-                        <a href="{{ route('login') }}" 
-                        class="text-gray-700 font-medium hover:text-[#7F64CE] transition">
-                            Login
+                        <a href="{{ route('login') }}"
+                        aria-label="Login"
+                        class="flex items-center justify-center w-8 h-8 text-gray-700 hover:text-[#7F64CE] transition">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M12 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8Z" />
+                                <path d="M4.5 20a7.5 7.5 0 0 1 9.5-7.2" />
+                                <path d="M14 17h6" />
+                                <path d="M17 14l3 3l-3 3" />
+                            </svg>
+
                         </a>
                     @endguest            
             </div>
