@@ -14,7 +14,11 @@
 </head>
 
 <body class="bg-bg text-text-main font-sans">
-
+@php
+    $isHighSchooler = auth()->check()
+        && auth()->user()->student
+        && auth()->user()->student->academic_level === 'High School';
+@endphp
 <button id="menuToggle" class="md:hidden p-4 text-title fixed top-2 left-2 z-50 bg-white rounded-lg shadow">
     <!-- 3 lines icon -->
     <div class="space-y-1 ">
@@ -137,19 +141,21 @@
             </li>
 
             <!-- Quiz -->
-            <li>
-                <a href="{{ route('student.quiz-history') }}"
-                   class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm transition
-                   {{ request()->routeIs('student.quiz-history') ? 'bg-purple-100 text-title font-semibold' : 'text-muted hover:bg-bg hover:text-title' }}">
-                    
-                    <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="M9 11l3 3L22 4"/>
-                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-                    </svg>
+           @if($isHighSchooler)
+                <li>
+                    <a href="{{ route('student.quiz-history') }}"
+                    class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm transition
+                    {{ request()->routeIs('student.quiz-history') ? 'bg-purple-100 text-title font-semibold' : 'text-muted hover:bg-bg hover:text-title' }}">
+                        
+                        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <path d="M9 11l3 3L22 4"/>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                        </svg>
 
-                    Quiz History
-                </a>
-            </li>
+                        <span>Quiz History</span>
+                    </a>
+                </li>
+            @endif
 
         </ul>
 
