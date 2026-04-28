@@ -159,6 +159,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateCount();
 
+    /* GPA CONVERTER */
+    const gpaInput = document.getElementById('gpa');
+    const gpaScoreInput = document.getElementById('gpaScore');
+    const gpaOutOfInput = document.getElementById('gpaOutOf');
+    const convertGpaBtn = document.getElementById('convertGpaBtn');
+    const gpaConverterMessage = document.getElementById('gpaConverterMessage');
+
+    if (gpaInput && gpaScoreInput && gpaOutOfInput && convertGpaBtn && gpaConverterMessage) {
+        convertGpaBtn.addEventListener('click', () => {
+            const score = Number(gpaScoreInput.value);
+            const outOf = Number(gpaOutOfInput.value);
+
+            gpaConverterMessage.classList.remove('error', 'success');
+
+            if (!Number.isFinite(score) || !Number.isFinite(outOf) || score < 0 || outOf <= 0) {
+                gpaConverterMessage.textContent = 'Enter a valid score and scale.';
+                gpaConverterMessage.classList.add('error');
+                return;
+            }
+
+            if (score > outOf) {
+                gpaConverterMessage.textContent = 'Score cannot be higher than the scale.';
+                gpaConverterMessage.classList.add('error');
+                return;
+            }
+
+            const convertedGpa = ((score / outOf) * 4).toFixed(2);
+            gpaInput.value = convertedGpa;
+            gpaConverterMessage.textContent = `Converted GPA: ${convertedGpa} / 4.00`;
+            gpaConverterMessage.classList.add('success');
+        });
+    }
+
     /* ───── QUIZ TOGGLE ───── */
     window.toggleQuiz = function(id) {
         document.getElementById(id)?.classList.toggle('open');

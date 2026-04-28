@@ -126,7 +126,7 @@
 @empty
       <p>Take a quick quiz and let UniPath guide you toward the right major. </p>
      
-    <a href="{{ asset('quiz.start') }}" class="quiz-btn">Start Quiz</a>
+    <a href="{{ route('quiz.start') }}" class="quiz-btn">Start Quiz</a>
 
 @endforelse
 

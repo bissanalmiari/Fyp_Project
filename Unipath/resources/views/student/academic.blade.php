@@ -74,8 +74,20 @@
 
                 <div class="form-group">
                     <label>GPA</label>
-                    <input type="number" name="gpa" class="input-field" step="0.01" placeholder="e.g. 3.75" min="0" max="4"
+                    <input type="number" id="gpa" name="gpa" class="input-field" step="0.01" placeholder="e.g. 3.75" min="0" max="4"
                            value="{{ old('gpa', $student->gpa) }}">
+                </div>
+
+                <div class="form-group">
+                    <label>GPA Converter</label>
+                    <div class="gpa-converter">
+                        <div class="gpa-converter-inputs">
+                            <input type="number" id="gpaScore" class="input-field" step="0.01" min="0" placeholder="Score">
+                            <input type="number" id="gpaOutOf" class="input-field" step="0.01" min="0.01" placeholder="Out of">
+                            <button type="button" id="convertGpaBtn" class="btn-convert-gpa">Convert</button>
+                        </div>
+                        <small id="gpaConverterMessage" class="gpa-converter-message">Converts your score to a 4.00 GPA scale.</small>
+                    </div>
                 </div>
 
             </div>
