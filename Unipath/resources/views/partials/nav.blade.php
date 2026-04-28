@@ -47,7 +47,23 @@
                 </div>
                 <a href="{{ url('/contact') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Contact Us</a>
 
-                <a href="{{ url('student/personal') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Profile</a>            
+                @auth
+                        <a href="{{ url('student/personal') }}" 
+                        class="text-gray-700 font-medium hover:text-[#7F64CE] transition">
+                            Profile
+                        </a>
+                    @endauth
+
+                    @guest
+                        <a href="{{ route('login') }}" 
+                        class="text-gray-700 font-medium hover:text-[#7F64CE] transition">
+                            Login
+                        </a>
+                        <a href="{{ route('register') }}" 
+                        class="text-gray-700 font-medium hover:text-[#7F64CE] transition">
+                            Sign Up
+                        </a>
+                    @endguest            
             </div>
 
             <!-- Mobile Menu Button -->
@@ -107,7 +123,23 @@
                     </div>
                 </div>
                 <a href="{{ url('/contact') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Contact Us</a>
-                <a href="{{ url('student/personal') }}" class="text-gray-700 font-medium hover:text-[#7F64CE] transition">Profile</a>           
+                @auth
+                    <a href="{{ url('student/personal') }}" 
+                    class="text-gray-700 font-medium hover:text-[#7F64CE] transition">
+                        Profile
+                    </a>
+                @endauth
+
+                @guest
+                    <a href="{{ route('login') }}" 
+                    class="text-gray-700 font-medium hover:text-[#7F64CE] transition">
+                        Login
+                    </a>
+                    <a href="{{ route('register') }}" 
+                    class="text-gray-700 font-medium hover:text-[#7F64CE] transition">
+                        Sign Up
+                    </a>
+                @endguest           
             </div>
         </div>
     </div>
