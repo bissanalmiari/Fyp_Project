@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('student/favorite', [StudentController::class, 'favorite'])->name('student.favorite');
     Route::delete('/favorites/{id}', [StudentController::class, 'removeFavorite'])->name('favorites.remove');
 
-    Route::get('student/quiz-history', [StudentController::class, 'quizHistory'])->name('student.quiz-history');
+    Route::get('student/quiz-history', [StudentController::class, 'quizHistory'])->middleware(['auth', 'highschooler'])->name('student.quiz-history');
 
     Route::get('student/recommendations', [StudentController::class, 'recommendations'])->name('student.recommendations');
     Route::post('student/recommendations/generate', [StudentController::class, 'generateRecommendations'])->name('student.recommendations.generate');
@@ -117,17 +117,18 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
-Route::get('/quiz', function () {
-    return view('quiz.quiz-page');
-});
-
-Route::get('/quiz/start', [QuizController::class, 'start'])->name('quiz.start');
-Route::get('/quiz/questions/{attempt}/{order}', [QuizController::class, 'showQuestion'])->name('quiz.question');
-Route::post('/quiz/questions/{attempt}/{order}', [QuizController::class, 'storeAnswer'])->name('quiz.answer');
-Route::get('/quiz/results/{attempt}', [QuizController::class, 'results'])->name('quiz.results');
-Route::get('/quiz/completed/{attempt}', [QuizController::class, 'completed'])->name('quiz.completed');
 Route::get('/majors/{slug}', [QuizController::class, 'showMajor'])->name('majors.show');
+Route::middleware(['auth', 'highschooler'])->group(function () {
+    Route::get('/quiz', function () {
+        return view('quiz.quiz-page');
+    });
 
+    Route::get('/quiz/start', [QuizController::class, 'start'])->name('quiz.start');
+    Route::get('/quiz/questions/{attempt}/{order}', [QuizController::class, 'showQuestion'])->name('quiz.question');
+    Route::post('/quiz/questions/{attempt}/{order}', [QuizController::class, 'storeAnswer'])->name('quiz.answer');
+    Route::get('/quiz/results/{attempt}', [QuizController::class, 'results'])->name('quiz.results');
+    Route::get('/quiz/completed/{attempt}', [QuizController::class, 'completed'])->name('quiz.completed');
+});
 Route::get('/universities', [UniversityController::class, 'index'])->name('university.index');
 Route::get('/universities/{id}', [UniversityController::class, 'show'])->name('university.show');
 Route::get('/universities/{id}/programs', [ProgramController::class, 'byUniversity'])->name('university.programs');

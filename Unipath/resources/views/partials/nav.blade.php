@@ -1,6 +1,10 @@
 <nav class="w-full bg-white shadow-sm border-b border-gray-100">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-
+        @php
+            $isHighSchooler = auth()->check()
+                && auth()->user()->student
+                && auth()->user()->student->academic_level === 'High School';
+        @endphp
         <!-- Top Navbar Row -->
         <div class="flex items-center justify-between h-20">
 
@@ -34,8 +38,21 @@
                     <div
                         class="absolute right-0 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
                         <div class="w-64 bg-white rounded-2xl shadow-lg border border-gray-100 py-3">
-                            <a href="{{ url('/quiz') }}"
-                                class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">Quiz</a>
+                            @guest
+                                <a href="{{ route('login') }}"
+                                class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">
+                                    Quiz
+                                </a>
+                            @endguest
+
+                            @auth
+                                @if($isHighSchooler)
+                                    <a href="{{ url('/quiz') }}"
+                                    class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">
+                                        Quiz
+                                    </a>
+                                @endif
+                            @endauth
                             <a href="{{ route('public.recommendations') }}"
                                 class="block px-5 py-3 text-gray-700 hover:bg-[#f6f1ff] hover:text-[#7F64CE] transition">Recommendation</a>
                             <a href="{{ url('/compare-programs') }}"
