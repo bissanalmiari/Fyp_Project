@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Program;
 use App\Models\Student;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class ProgramComparisonService
@@ -215,6 +216,7 @@ class ProgramComparisonService
             $b = $evaluationB['criteria'][$key];
 
             $rowWinner = 'Tie';
+
             if ($a['points'] > $b['points']) {
                 $rowWinner = 'Program A';
             } elseif ($b['points'] > $a['points']) {
@@ -274,6 +276,7 @@ class ProgramComparisonService
         }
 
         $tiedPrograms = [];
+
         if ($overallA === $overallB) {
             $tiedPrograms = [
                 [
@@ -351,13 +354,16 @@ class ProgramComparisonService
         ];
 
         $blueprint = self::blueprint();
+
         $totalPoints = 0;
+
         $groupPoints = [
             'academic' => 0,
             'cost' => 0,
             'preferences' => 0,
             'relevance' => 0,
         ];
+
         $groupMax = [
             'academic' => 35,
             'cost' => 10,
@@ -367,13 +373,19 @@ class ProgramComparisonService
 
         foreach ($criteria as $key => &$criterion) {
             $weight = $blueprint[$key]['weight'];
+
             $criterion['max'] = $weight;
             $criterion['percent'] = round(($criterion['points'] / $weight) * 100, 1);
+
             $totalPoints += $criterion['points'];
+
             $groupPoints[$blueprint[$key]['group']] += $criterion['points'];
         }
 
+        unset($criterion);
+
         $groups = [];
+
         foreach ($groupPoints as $group => $points) {
             $groups[$group] = round(($points / $groupMax[$group]) * 100, 1);
         }
@@ -498,15 +510,25 @@ class ProgramComparisonService
         $studentIelts = $student->ielts;
         $studentToefl = $student->toefl;
 
-        $ieltsPass = !is_null($requiredIelts) && !is_null($studentIelts) && (float) $studentIelts >= (float) $requiredIelts;
-        $toeflPass = !is_null($requiredToefl) && !is_null($studentToefl) && (float) $studentToefl >= (float) $requiredToefl;
+        $ieltsPass = !is_null($requiredIelts)
+            && !is_null($studentIelts)
+            && (float) $studentIelts >= (float) $requiredIelts;
+
+        $toeflPass = !is_null($requiredToefl)
+            && !is_null($studentToefl)
+            && (float) $studentToefl >= (float) $requiredToefl;
 
         if ($ieltsPass || $toeflPass) {
             return ['points' => 10, 'note' => 'English requirement satisfied'];
         }
 
-        $ieltsNear = !is_null($requiredIelts) && !is_null($studentIelts) && (float) $studentIelts >= ((float) $requiredIelts - 0.5);
-        $toeflNear = !is_null($requiredToefl) && !is_null($studentToefl) && (float) $studentToefl >= ((float) $requiredToefl - 10);
+        $ieltsNear = !is_null($requiredIelts)
+            && !is_null($studentIelts)
+            && (float) $studentIelts >= ((float) $requiredIelts - 0.5);
+
+        $toeflNear = !is_null($requiredToefl)
+            && !is_null($studentToefl)
+            && (float) $studentToefl >= ((float) $requiredToefl - 10);
 
         if ($ieltsNear || $toeflNear) {
             return ['points' => 5, 'note' => 'English score is close to requirement'];
@@ -573,61 +595,82 @@ class ProgramComparisonService
     protected function scoreLocation(Student $student, Program $program): array
     {
         $preferredLocations = $this->normalizedPreferenceValues($student, 'preferred_location');
+
         $country = $this->normalizeText($program->university?->country);
         $city = $this->normalizeText($program->university?->city);
 
         if (empty($preferredLocations)) {
-            return ['points' => 0, 'note' => 'No preferred location'];
+            return ['points' => 0, 'note' => 'No preferred location selected'];
         }
 
-        $match = in_array($country, $preferredLocations, true) || in_array($city, $preferredLocations, true);
+        if (!$country && !$city) {
+            return ['points' => 0, 'note' => 'Program location data not available'];
+        }
+
+        $match = in_array($country, $preferredLocations, true)
+            || in_array($city, $preferredLocations, true);
 
         return [
             'points' => $match ? 10 : 0,
-            'note' => $match ? 'Location matches preference' : 'Location does not match preference',
+            'note' => $match
+                ? 'Location matches one of the selected preferences'
+                : 'Location does not match selected preferences',
         ];
     }
 
     protected function scoreStudyMode(Student $student, Program $program): array
     {
         $preferredModes = $this->normalizedPreferenceValues($student, 'preferred_study_mode');
+
         $mode = $this->normalizeText($program->study_mode);
 
-        if (empty($preferredModes) || !$mode) {
-            return ['points' => 0, 'note' => 'Missing study mode data'];
+        if (empty($preferredModes)) {
+            return ['points' => 0, 'note' => 'No preferred study mode selected'];
+        }
+
+        if (!$mode) {
+            return ['points' => 0, 'note' => 'Program study mode not available'];
         }
 
         if (in_array($mode, $preferredModes, true)) {
-            return ['points' => 10, 'note' => 'Study mode matches'];
+            return ['points' => 10, 'note' => 'Study mode matches one of the selected preferences'];
         }
 
         if (in_array('hybrid', $preferredModes, true) || $mode === 'hybrid') {
             return ['points' => 5, 'note' => 'Hybrid gives partial match'];
         }
 
-        return ['points' => 0, 'note' => 'Study mode does not match'];
+        return ['points' => 0, 'note' => 'Study mode does not match selected preferences'];
     }
 
     protected function scoreCourseIntensity(Student $student, Program $program): array
     {
         $preferredIntensities = $this->normalizedPreferenceValues($student, 'preferred_course_intensity');
+
         $intensity = $this->normalizeText($program->course_intensity);
 
-        if (empty($preferredIntensities) || !$intensity) {
-            return ['points' => 0, 'note' => 'Missing course intensity data'];
+        if (empty($preferredIntensities)) {
+            return ['points' => 0, 'note' => 'No preferred course intensity selected'];
+        }
+
+        if (!$intensity) {
+            return ['points' => 0, 'note' => 'Program course intensity not available'];
         }
 
         $match = in_array($intensity, $preferredIntensities, true);
 
         return [
             'points' => $match ? 5 : 0,
-            'note' => $match ? 'Course intensity matches' : 'Course intensity does not match',
+            'note' => $match
+                ? 'Course intensity matches one of the selected preferences'
+                : 'Course intensity does not match selected preferences',
         ];
     }
 
     protected function scoreCategoryMatch(Student $student, Program $program): array
     {
         $studentCategories = $student->categories->pluck('name')->filter()->values()->all();
+
         $programCategory = $program->category?->name;
 
         if (empty($studentCategories) || !$programCategory) {
@@ -635,19 +678,23 @@ class ProgramComparisonService
         }
 
         $best = 0;
+
         foreach ($studentCategories as $studentCategory) {
             $best = max($best, $this->categorySimilarity($studentCategory, $programCategory));
         }
 
         return [
             'points' => round($best * 10, 1),
-            'note' => $best >= 1 ? 'Exact category match' : ($best > 0 ? 'Related category match' : 'No category relation'),
+            'note' => $best >= 1
+                ? 'Exact category match'
+                : ($best > 0 ? 'Related category match' : 'No category relation'),
         ];
     }
 
     protected function scoreSubcategoryMatch(Student $student, Program $program): array
     {
         $studentSubcategories = $student->subcategories ?? collect();
+
         $programSubcategory = $program->subcategory;
 
         if ($studentSubcategories->isEmpty() || !$programSubcategory) {
@@ -676,6 +723,7 @@ class ProgramComparisonService
     protected function scoreMajorRelevance(Student $student, Program $program): array
     {
         $studentLevel = $this->normalizeText($student->academic_level);
+
         $isHighSchool = str_contains($studentLevel, 'high');
 
         if ($isHighSchool) {
@@ -695,6 +743,7 @@ class ProgramComparisonService
         $programSubcategory = $program->subcategory?->name;
 
         $majorCategory = $this->mapMajorToCategory($major);
+
         $categoryScore = $majorCategory && $programCategory
             ? $this->categorySimilarity($majorCategory, $programCategory)
             : 0;
@@ -734,6 +783,7 @@ class ProgramComparisonService
     protected function effectiveTuitionForStudent(Student $student, Program $program): ?float
     {
         $studentNationality = $this->normalizeText($student->nationality ?: $student->country);
+
         $uniCountry = $this->normalizeText($program->university?->country);
 
         if ($uniCountry === 'lebanon') {
@@ -741,7 +791,14 @@ class ProgramComparisonService
                 return $this->firstAvailableFee($program, ['leb_fees']);
             }
 
-            return $this->firstAvailableFee($program, ['arab_fees', 'eu_fees', 'us_fees', 'non_eu_fees', 'pal_fees', 'leb_fees']);
+            return $this->firstAvailableFee($program, [
+                'arab_fees',
+                'eu_fees',
+                'us_fees',
+                'non_eu_fees',
+                'pal_fees',
+                'leb_fees',
+            ]);
         }
 
         if (in_array($uniCountry, $this->euCountries, true)) {
@@ -749,7 +806,14 @@ class ProgramComparisonService
                 return $this->firstAvailableFee($program, ['eu_fees']);
             }
 
-            return $this->firstAvailableFee($program, ['non_eu_fees', 'us_fees', 'arab_fees', 'leb_fees', 'pal_fees', 'eu_fees']);
+            return $this->firstAvailableFee($program, [
+                'non_eu_fees',
+                'us_fees',
+                'arab_fees',
+                'leb_fees',
+                'pal_fees',
+                'eu_fees',
+            ]);
         }
 
         if (in_array($uniCountry, ['united states', 'usa', 'us'], true)) {
@@ -757,10 +821,24 @@ class ProgramComparisonService
                 return $this->firstAvailableFee($program, ['us_fees']);
             }
 
-            return $this->firstAvailableFee($program, ['non_eu_fees', 'eu_fees', 'arab_fees', 'leb_fees', 'pal_fees', 'us_fees']);
+            return $this->firstAvailableFee($program, [
+                'non_eu_fees',
+                'eu_fees',
+                'arab_fees',
+                'leb_fees',
+                'pal_fees',
+                'us_fees',
+            ]);
         }
 
-        return $this->firstAvailableFee($program, ['non_eu_fees', 'eu_fees', 'arab_fees', 'leb_fees', 'pal_fees', 'us_fees']);
+        return $this->firstAvailableFee($program, [
+            'non_eu_fees',
+            'eu_fees',
+            'arab_fees',
+            'leb_fees',
+            'pal_fees',
+            'us_fees',
+        ]);
     }
 
     protected function firstAvailableFee(Program $program, array $columns): ?float
@@ -822,6 +900,7 @@ class ProgramComparisonService
     protected function detectDomains(string $text): array
     {
         $text = $this->normalizeText($text);
+
         $domains = [];
 
         foreach ($this->domainKeywords as $domain => $keywords) {
@@ -857,8 +936,11 @@ class ProgramComparisonService
     protected function normalizeText(?string $value): string
     {
         $value = Str::lower(trim((string) $value));
+
         $value = str_replace(['-', '_'], ' ', $value);
+
         $value = preg_replace('/[^\pL\pN\s]/u', ' ', $value);
+
         $value = preg_replace('/\s+/', ' ', $value);
 
         return trim($value);
@@ -866,12 +948,63 @@ class ProgramComparisonService
 
     protected function normalizedPreferenceValues(Student $student, string $field): array
     {
-        return collect($student->preferenceValues($field))
-            ->map(fn ($value) => $this->normalizeText($value))
+        $rawValue = $student->getAttribute($field);
+
+        return collect($this->preferenceValueArray($rawValue))
+            ->map(fn ($value) => $this->normalizeText((string) $value))
             ->filter()
             ->unique()
             ->values()
             ->all();
+    }
+
+    protected function preferenceValueArray($value): array
+    {
+        if (is_null($value) || $value === '') {
+            return [];
+        }
+
+        if (is_array($value)) {
+            return collect($value)
+                ->flatten()
+                ->filter()
+                ->values()
+                ->all();
+        }
+
+        if ($value instanceof Collection) {
+            return $value
+                ->flatten()
+                ->filter()
+                ->values()
+                ->all();
+        }
+
+        if (is_string($value)) {
+            $trimmed = trim($value);
+
+            $decoded = json_decode($trimmed, true);
+
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                return collect($decoded)
+                    ->flatten()
+                    ->filter()
+                    ->values()
+                    ->all();
+            }
+
+            if (str_contains($trimmed, ',')) {
+                return collect(explode(',', $trimmed))
+                    ->map(fn ($item) => trim($item))
+                    ->filter()
+                    ->values()
+                    ->all();
+            }
+
+            return [$trimmed];
+        }
+
+        return [];
     }
 
     protected function normalizeStudentGpa($studentGpa): ?float
